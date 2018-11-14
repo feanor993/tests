@@ -1,0 +1,209 @@
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="css/main.css">
+    <title>Тесты</title>
+</head>
+<body>
+<div class="wrapper">
+    <header class="header">
+        <div class="start"><img src="img/start.svg" alt=""></div>
+        <a href="#" class="logo"><img src="img/logo.svg" alt=""></a>
+        <div class="finish"><img src="img/finish.svg" alt=""></div>
+        <div class="timer  timer_header" data-finish="30">
+            <div class="timer__time">
+                <div class="timer__minutes">00</div>
+                <span>:</span>
+                <div class="timer__seconds">00</div>
+            </div>
+        </div>
+    </header>
+    <main class="main">
+        <div class="progress">
+            <div class="progress-done__line"></div>
+            <div class="progress-step progress-step_start progress-step_done"></div>
+            <div class="progress-step progress-step_done">
+                <a href="#" class="progress-step__index">Этап 1</a>
+            </div>
+            <div class="progress-step progress-step_done">
+                <a href="#" class="progress-step__index">Этап 2</a>
+            </div>
+            <div class="progress-step progress-step_active">
+                <a href="#" class="progress-step__index">Этап 3</a>
+            </div>
+            <div class="progress-step">
+                <a href="#" class="progress-step__index">Этап 4</a>
+            </div>
+            <div class="progress-step">
+                <a href="#" class="progress-step__index">Этап 5</a>
+            </div>
+            <div class="progress-step progress-step_end"></div>
+        </div>
+        <div class="step step_two">
+            <a href="#" class="step__back">Назад</a>
+            <h1 class="step__title">2 этап</h1>
+            <div class="ranges__description">
+                <div class="range-label">
+                    <div class="thumb thumb_user"></div>
+                    <div class="range-label__text">На данный момент</div>
+                </div>
+                <div class="range-label">
+                    <div class="thumb active thumb_max"></div>
+                    <div class="range-label__text">Цель</div>
+                </div>
+            </div>
+            <div class="ranges">
+                <div class="slider-range__wrap" data-name="health">
+                    <div class="slider-range__content">
+                        <div class="slider-range__num slider-range__num_max">100</div>
+                        <div class="slider-range">
+                            <div class="thumb thumb_user" data-thumb="user">
+                                <div class="thumb-count">0</div>
+                            </div>
+                            <div class="thumb-before thumb-before_user" data-thumb="user"></div>
+                            <div class="thumb thumb_max" data-thumb="max">
+                                <div class="thumb-count">0</div>
+                            </div>
+                            <div class="thumb-before thumb-before_max" data-thumb="max"></div>
+                        </div>
+                        <div class="slider-range__num slider-range__num_min">0</div>
+                    </div>
+
+                    <div class="slider-range__description">
+                        Здоровье
+                    </div>
+                </div>
+                <div class="slider-range__wrap" data-name="smart">
+                    <div class="slider-range__content">
+                        <div class="slider-range__num slider-range__num_max">100</div>
+                        <div class="slider-range">
+                            <div class="thumb thumb_user" data-thumb="user">
+                                <div class="thumb-count">0</div>
+                            </div>
+                            <div class="thumb-before thumb-before_user" data-thumb="user"></div>
+                            <div class="thumb thumb_max" data-thumb="max">
+                                <div class="thumb-count">0</div>
+                            </div>
+                            <div class="thumb-before thumb-before_max" data-thumb="max"></div>
+                        </div>
+                        <div class="slider-range__num slider-range__num_min">0</div>
+                    </div>
+
+                    <div class="slider-range__description">
+                        ум <br>
+                        способности
+                    </div>
+                </div>
+                <div class="slider-range__wrap" data-name="character">
+                    <div class="slider-range__content">
+                        <div class="slider-range__num slider-range__num_max">100</div>
+                        <div class="slider-range">
+                            <div class="thumb thumb_user" data-thumb="user">
+                                <div class="thumb-count">0</div>
+                            </div>
+                            <div class="thumb-before thumb-before_user" data-thumb="user"></div>
+                            <div class="thumb thumb_max" data-thumb="max">
+                                <div class="thumb-count">0</div>
+                            </div>
+                            <div class="thumb-before thumb-before_max" data-thumb="max"></div>
+                        </div>
+                        <div class="slider-range__num slider-range__num_min">0</div>
+                    </div>
+                    <div class="slider-range__description">
+                        характер
+                    </div>
+                </div>
+                <div class="slider-range__wrap" data-name="authority">
+                    <div class="slider-range__content">
+                        <div class="slider-range__num slider-range__num_max">100</div>
+                        <div class="slider-range">
+                            <div class="thumb thumb_user" data-thumb="user">
+                                <div class="thumb-count">0</div>
+                            </div>
+                            <div class="thumb-before thumb-before_user" data-thumb="user"></div>
+                            <div class="thumb thumb_max" data-thumb="max">
+                                <div class="thumb-count">0</div>
+                            </div>
+                            <div class="thumb-before thumb-before_max" data-thumb="max"></div>
+                        </div>
+                        <div class="slider-range__num slider-range__num_min">0</div>
+                    </div>
+
+                    <div class="slider-range__description">
+                        авторитет
+                        у сверстников
+                    </div>
+                </div>
+                <div class="slider-range__wrap" data-name="arms">
+                    <div class="slider-range__content">
+                        <div class="slider-range__num slider-range__num_max">100</div>
+                        <div class="slider-range">
+                            <div class="thumb thumb_user" data-thumb="user">
+                                <div class="thumb-count">0</div>
+                            </div>
+                            <div class="thumb-before thumb-before_user" data-thumb="user"></div>
+                            <div class="thumb thumb_max" data-thumb="max">
+                                <div class="thumb-count">0</div>
+                            </div>
+                            <div class="thumb-before thumb-before_max" data-thumb="max"></div>
+                        </div>
+                        <div class="slider-range__num slider-range__num_min">0</div>
+                    </div>
+                    <div class="slider-range__description">
+                        умелые
+                        руки
+                    </div>
+                </div>
+                <div class="slider-range__wrap" data-name="appearance">
+                    <div class="slider-range__content">
+                        <div class="slider-range__num slider-range__num_max">100</div>
+                        <div class="slider-range">
+                            <div class="thumb thumb_user" data-thumb="user">
+                                <div class="thumb-count">0</div>
+                            </div>
+                            <div class="thumb-before thumb-before_user" data-thumb="user"></div>
+                            <div class="thumb thumb_max" data-thumb="max">
+                                <div class="thumb-count">0</div>
+                            </div>
+                            <div class="thumb-before thumb-before_max" data-thumb="max"></div>
+                        </div>
+                        <div class="slider-range__num slider-range__num_min">0</div>
+                    </div>
+                    <div class="slider-range__description">
+                        внешность
+                    </div>
+                </div>
+                <div class="slider-range__wrap" data-name="confidence">
+                    <div class="slider-range__content">
+                        <div class="slider-range__num slider-range__num_max">100</div>
+                        <div class="slider-range">
+                            <div class="thumb thumb_user" data-thumb="user">
+                                <div class="thumb-count">0</div>
+                            </div>
+                            <div class="thumb-before thumb-before_user" data-thumb="user"></div>
+                            <div class="thumb thumb_max" data-thumb="max">
+                                <div class="thumb-count">0</div>
+                            </div>
+                            <div class="thumb-before thumb-before_max" data-thumb="max"></div>
+                        </div>
+                        <div class="slider-range__num slider-range__num_min">0</div>
+                    </div>
+                    <div class="slider-range__description">
+                        уверенность
+                        в себе
+                    </div>
+                </div>
+            </div>
+            <button class="goTest-btn step_two__button" type="button">Далее</button>
+
+
+        </div>
+    </main>
+</div>
+<script src="js/script.js"></script>
+</body>
+</html>
