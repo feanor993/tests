@@ -1,0 +1,12 @@
+@font-face {
+  font-family: 'Geometria-Heavy';
+  src: url('Geometria-Heavy.eot');
+  src: url('Geometria-Heavy.woff2') format('woff2'),
+       url('Geometria-Heavy.woff') format('woff'),
+       url('Geometria-Heavy.ttf') format('truetype'),
+       url('Geometria-Heavy.svg#Geometria-Heavy') format('svg'),
+       url('Geometria-Heavy.eot?#iefix') format('embedded-opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+

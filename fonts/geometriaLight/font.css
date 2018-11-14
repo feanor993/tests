@@ -1,0 +1,12 @@
+@font-face {
+  font-family: 'Geometria-Light';
+  src: url('Geometria-Light.eot');
+  src: url('Geometria-Light.woff2') format('woff2'),
+       url('Geometria-Light.woff') format('woff'),
+       url('Geometria-Light.ttf') format('truetype'),
+       url('Geometria-Light.svg#Geometria-Light') format('svg'),
+       url('Geometria-Light.eot?#iefix') format('embedded-opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+

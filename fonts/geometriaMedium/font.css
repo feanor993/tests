@@ -1,0 +1,12 @@
+@font-face {
+  font-family: 'Geometria-Medium';
+  src: url('Geometria-Medium.eot');
+  src: url('Geometria-Medium.woff2') format('woff2'),
+       url('Geometria-Medium.woff') format('woff'),
+       url('Geometria-Medium.ttf') format('truetype'),
+       url('Geometria-Medium.svg#Geometria-Medium') format('svg'),
+       url('Geometria-Medium.eot?#iefix') format('embedded-opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+
