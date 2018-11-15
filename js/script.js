@@ -19,6 +19,23 @@ function sendAJAX(url, data) {
     });
 }
 
+let getParents = (elem, clName) => {
+    let parents = [];
+    for (; elem && elem !== document; elem = elem.parentNode) {
+        if (elem.classList.contains(clName))
+            parents.push(elem)
+    }
+    return parents.length ? parents[0] : false;
+};
+
+function getCoords(elem) {
+    let box = elem.getBoundingClientRect();
+    return {
+        top: box.top + pageYOffset,
+        left: box.left + pageXOffset
+    };
+}
+
 function init() {
     let authForm = document.querySelector('.form-authorize');
     if (authForm) {
@@ -33,6 +50,7 @@ function init() {
             sendAJAX("https://httpbin.org/post", formData)
         })
     }
+
     function setDoneWidth() {
         let doneSteps = document.querySelectorAll('.progress-step_done');
         let doneLine = document.querySelector('.progress-done__line');
@@ -42,6 +60,7 @@ function init() {
             doneLine.style.width = width + 'px'
         }
     }
+
     setDoneWidth();
     window.addEventListener('resize', setDoneWidth);
     let progressIndexes = document.querySelectorAll('.progress-step__index');
@@ -71,8 +90,9 @@ function init() {
     }
     timer(document.querySelector('.timer[data-finish]'));
     let stepOne = document.querySelector('.step_one');
+
     function stepOneActions(elem) {
-        if(!elem)
+        if (!elem)
             return false;
         let list = elem.querySelector('.step_one-list');
         let items = list.querySelectorAll('.step_one-item');
@@ -111,74 +131,108 @@ function init() {
             }
         })
     }
+
     stepOneActions(stepOne)
 
-    const  rangeElems = document.querySelectorAll('.slider-range');
-    rangeElems.forEach(range =>  {
-        let thumbUser = range.querySelector('.thumb_user');
-        let thumbMax = range.querySelector('.thumb_max');
-        thumbUser.addEventListener('mousedown',  e => customDrag(thumbUser, range, e));
-        thumbMax.addEventListener('mousedown',  e => customDrag(thumbMax, range, e));
-        thumbUser.ondragstart = () =>{
+
+    const stepTwo = document.querySelector('.step_two');
+
+    function stepTwoActions(step) {
+        if (!step)
+            return false
+        const ranges = step.querySelector('.ranges');
+        const rangeElems = step.querySelectorAll('.slider-range');
+        const stepTwoBtn = step.querySelector('.step_two__button');
+        let parentsRanges = step.querySelectorAll('.slider-range__wrap');
+        rangeElems.forEach(range => {
+            let thumbUser = range.querySelector('.thumb_user');
+            let thumbMax = range.querySelector('.thumb_max');
+            thumbUser.addEventListener('mousedown', e => customDrag(thumbUser, range, e));
+            thumbMax.addEventListener('mousedown', e => customDrag(thumbMax, range, e));
+            thumbUser.ondragstart = () => {
+                return false;
+            };
+            thumbMax.ondragstart = () => {
+                return false;
+            };
+        });
+
+        function customDrag(elem, parent, e) {
+            let thumbCoords = getCoords(elem);
+            let shiftY = e.pageY - thumbCoords.top;
+            let self = elem;
+            let percentElem = elem.querySelector('.thumb-count');
+            let sliderCoords = getCoords(parent);
+            let sliderHeight = parent.clientHeight;
+            let thumbData = self.dataset.thumb;
+            let thumbBefore = parent.querySelector(`.thumb-before[data-thumb='${thumbData}']`);
+            document.onmousemove = function (e) {
+                document.documentElement.style.cursor = "grabbing";
+                let parentRange = getParents(elem, 'slider-range__wrap');
+                let elemName = elem.dataset.thumb;
+                elem.style.cursor = "grabbing";
+                elem.parentNode.querySelector('.thumb_max').classList.add('active');
+                let newTop = e.pageY - shiftY - sliderCoords.top;
+                if (newTop < 7) {
+                    newTop = 7;
+                }
+                setTimeout(function () {
+                    thumbBefore.style.height = sliderHeight - newTop - 12 + 'px';
+                }, 10);
+
+                let percent = parseInt((sliderHeight - newTop + 10) / sliderHeight * 100);
+                if (percent < 0) {
+                    percent = 0
+                }
+                if (percent > 100) {
+                    percent = 100
+                }
+                percentElem.textContent = percent.toFixed();
+                parentRange.setAttribute(`data-${elemName}`, percent.toFixed())
+                if (newTop > sliderHeight - self.clientHeight - 10) {
+                    newTop = sliderHeight - self.clientHeight - 5;
+                }
+                self.style.top = newTop + 'px';
+                elem.classList.add('animated');
+            };
+            document.onmouseup = function () {
+                document.documentElement.style.cursor = "default";
+                elem.style.cursor = "pointer";
+                elem.classList.remove('animated');
+                document.onmousemove = document.onmouseup = null;
+
+                parentsRanges = [...parentsRanges];
+                let unSelectedRanges = parentsRanges.filter(parRan => parRan.getAttribute('data-user') === null || parRan.getAttribute('data-max') === null)
+                if (unSelectedRanges.length < 1) {
+                    stepTwoBtn.disabled = false;
+                }
+            };
             return false;
-        };
-        thumbMax.ondragstart = () =>{
-            return false;
-        };
-    });
+        }
 
-    function customDrag(elem, parent, e) {
-        let thumbCoords = getCoords(elem);
-        let shiftY = e.pageY - thumbCoords.top;
-        let self = elem;
-        let percentElem = elem.querySelector('.thumb-count');
-        let sliderCoords = getCoords(parent);
-        let sliderHeight  = parent.clientHeight;
-        let thumbData = self.dataset.thumb;
-        let thumbBefore = parent.querySelector(`.thumb-before[data-thumb='${thumbData}']`);
-        document.onmousemove = function(e) {
-            document.documentElement.style.cursor = "grabbing";
-            elem.style.cursor = "grabbing";
-            elem.parentNode.querySelector('.thumb_max').classList.add('active');
-            let newTop = e.pageY - shiftY - sliderCoords.top;
-            if (newTop < 7) {
-                newTop = 7;
-            }
-            setTimeout(function () {
-                thumbBefore.style.height = sliderHeight - newTop - 12 + 'px';
-            }, 10);
+        stepTwoBtn.addEventListener('click', function (e) {
+            e.stopPropagation();
+            e.preventDefault();
+            let resultArr = [];
+            let data = new FormData();
+            parentsRanges.forEach(pr => {
+                let name = pr.dataset.name
+                let obj  = {};
+                obj[name] = {
+                    user: pr.dataset.user,
+                    max: pr.dataset.max
+                };
+                resultArr.push(obj)
+            });
+            data.append('resultsArr', JSON.stringify(resultArr))
+            data.append('FORMNAME', ranges.dataset.name)
+            sendAJAX("https://httpbin.org/post", data)
 
-            let percent =  parseInt((sliderHeight - newTop +10)/sliderHeight *100);
-            if(percent < 0){
-                percent = 0
-            }
-            if(percent > 100){
-                percent = 100
-            }
-            percentElem.textContent = percent.toFixed();
-
-            if(newTop > sliderHeight - self.clientHeight - 10){
-                newTop = sliderHeight - self.clientHeight - 5;
-            }
-            self.style.top = newTop + 'px';
-            elem.classList.add('animated');
-        };
-        document.onmouseup = function() {
-            document.documentElement.style.cursor = "default";
-            elem.style.cursor = "pointer";
-            elem.classList.remove('animated');
-            document.onmousemove = document.onmouseup = null;
-        };
-        return false;
+        })
     }
-    function getCoords(elem) {
-        let box = elem.getBoundingClientRect();
-        return {
-            top: box.top + pageYOffset,
-            left: box.left + pageXOffset
-        };
 
-    }
+    stepTwoActions(stepTwo)
+
 }
 
 ready(init);

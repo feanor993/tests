@@ -723,6 +723,9 @@
   font-family: $medium;
   margin-left: 19px;
 }
+.goTest-btn[disabled]{
+  opacity: .6;
+}
 @keyframes pulse {
   0% {
     transform: scale(1.1); }

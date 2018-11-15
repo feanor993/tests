@@ -836,6 +836,9 @@ a, a:hover {
   font-family: "Geometria-Medium", sans-serif;
   margin-left: 19px; }
 
+.goTest-btn[disabled] {
+  opacity: .6; }
+
 @-webkit-keyframes pulse {
   0% {
     -webkit-transform: scale(1.1);
