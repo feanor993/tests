@@ -58,7 +58,7 @@ function init() {
             let formData = new FormData();
             let inputs = e.target.querySelectorAll("input");
             inputs.forEach((input) => formData.append(input.name, input.value));
-            sendAJAX("https://httpbin.org/post", formData);
+            sendAJAX("/diagnostika/index.php", formData);
         });
     }
 
