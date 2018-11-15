@@ -1,5 +1,4 @@
 "use strict";
-
 function ready(fn) {
     let bool = (document.attachEvent
         ? document.readyState === "complete"
@@ -10,13 +9,12 @@ function ready(fn) {
         document.addEventListener("DOMContentLoaded", fn);
     }
 }
-
 function sendAJAX(url, data) {
     fetch(url, {
         method: "POST",
         body: data,
         headers: {
-            "Query-Type": 'ajax/fetch'
+            "Query-Type": "ajax/fetch"
         }
     }).then(function (response) {
         return response.json();
@@ -94,12 +92,18 @@ function init() {
             setInterval(function () {
                 if (finish <= counter){
                     elem.classList.add("timer_bad");}
-                sec < 10 ? secEl.innerText = `0${sec}` : secEl.innerText = sec;
+                if(sec < 10){
+                    secEl.innerText = `0${sec}`;}
+                else{
+                    secEl.innerText = sec;}
                 sec++;
                 counter++;
                 if (sec === 59) {
                     min++;
-                    min < 10 ?minEl.innerText = `0${min}` :minEl.innerText =min;
+                    if(min < 10){
+                        minEl.innerText = `0${min}`;}
+                    else{
+                        minEl.innerText = min;}
                     sec = 0;
                 }
             }, 1000);
@@ -111,50 +115,36 @@ function init() {
     let stepOne = document.querySelector(".step_one");
 
     function stepOneActions(elem) {
-        if (!elem)
+        if (!elem){
             return false;
+        }
         let list = elem.querySelector(".step_one-list");
         let items = list.querySelectorAll(".step_one-item");
-        items.forEach(item => {
+        items.forEach(function (item) {
             let btns = item.querySelectorAll(".step_one-item__button");
-            btns.forEach(btn => {
-                btn.addEventListener("click", function () {
-                    item.setAttribute("data-answer", this.dataset.answer);
-                    btns.forEach(b => b.classList.remove("active"));
+            btns.forEach(function (btn) {
+                btn.addEventListener("click", function (e) {
+                    item.setAttribute("data-answer", e.target.dataset.answer);
+                    btns.forEach((b) => b.classList.remove("active"));
                     btn.classList.add("active");
-                })
-            })
+                });
+            });
         });
         let stepOneBtn = elem.querySelector(".step_one__button");
         stepOneBtn.addEventListener("click", function () {
-            let unChecked = [...items].filter(item => !item.dataset.answer);
-            if (unChecked.length < 1) {
+            items = Array.from(items);
+            let noSel = items.filter((item) => !item.dataset.answer);
+            if (noSel.length < 1) {
                 let data = new FormData();
-                items.forEach(item => {
-                    let bool;
-                    item.dataset.answer === "yes" ? bool = "y" : bool = "n";
+                items.forEach(function(item) {
+                    let bool = (item.dataset.answer === "yes" ? "y" : "n");
                     let textBlock = item.querySelector(".step_one-item__text");
                     let name = textBlock.dataset.name;
                     data.append(name, bool);
                 });
                 sendAJAX("https://httpbin.org/post", data);
             }
-            else {
-                let top = unChecked[0].getBoundingClientRect().y;
-                let coord;
-                top > 0
-                    ? (coord = top)
-                    : (coord = top * (-1));
-                let scrollAnimate = setInterval(() => {
-                    if (coord > 0) {
-                        top -= 10;
-                        document.documentElement.scrollTop = top;
-                    } else {
-                        clearInterval(scrollAnimate)
-                    }
-                }, 1)
-            }
-        })
+        });
     }
 
     stepOneActions(stepOne);
@@ -163,25 +153,26 @@ function init() {
     const stepTwo = document.querySelector(".step_two");
 
     function stepTwoActions(step) {
-        if (!step)
+        if (!step){
             return false;
+        }
         const ranges = step.querySelector(".ranges");
         const rangeElems = step.querySelectorAll(".slider-range");
         const stepTwoBtn = step.querySelector(".step_two__button");
         let parentsRanges = step.querySelectorAll(".slider-range__wrap");
-        rangeElems.forEach(range => {
+        rangeElems.forEach(function (range) {
             let thumbUser = range.querySelector(".thumb_user");
             let thumbMax = range.querySelector(".thumb_max");
-            thumbUser.addEventListener("mousedown", e => {
-                customDrag(thumbUser, range, e)
+            thumbUser.addEventListener("mousedown", function(e) {
+                customDrag(thumbUser, range, e);
             });
-            thumbMax.addEventListener("mousedown", e => {
-                customDrag(thumbMax, range, e)
+            thumbMax.addEventListener("mousedown", function(e){
+                customDrag(thumbMax, range, e);
             });
-            thumbUser.ondragstart = () => {
+            thumbUser.ondragstart = function () {
                 return false;
             };
-            thumbMax.ondragstart = () => {
+            thumbMax.ondragstart = function () {
                 return false;
             };
         });
@@ -209,16 +200,15 @@ function init() {
                     newTop = 7;
                 }
                 setTimeout(function () {
-                    let height = `${sliderHeight - newTop - 12 }px`;
-                    thumbBefore.style.height = height;
+                    thumbBefore.style.height = `${sliderHeight - newTop - 12 }px`;
                 }, 10);
                 let perText =(sliderHeight - newTop + 10) / sliderHeight * 100;
                 let percent = parseInt(perText);
                 if (percent < 0) {
-                    percent = 0
+                    percent = 0;
                 }
                 if (percent > 100) {
-                    percent = 100
+                    percent = 100;
                 }
                 percentElem.textContent = percent.toFixed();
                 parentRange.setAttribute(`data-${elemName}`, percent.toFixed());
@@ -232,16 +222,14 @@ function init() {
                 document.documentElement.style.cursor = "default";
                 elem.style.cursor = "pointer";
                 elem.classList.remove("animated");
-                document.onmousemove = document.onmouseup = null;
-
-                parentsRanges = [...parentsRanges];
-
+                document.onmousemove  = null;
+                parentsRanges = Array.from(parentsRanges);
                 function selectedIf(e) {
                     return e.getAttribute("data-user") === null
-                        || e.getAttribute("data-max") === null
+                        || e.getAttribute("data-max") === null;
                 }
 
-                let noSelRan = parentsRanges.filter(r => selectedIf(r));
+                let noSelRan = parentsRanges.filter((r) => selectedIf(r));
                 if (noSelRan.length < 1) {
                     stepTwoBtn.disabled = false;
                 }
@@ -254,7 +242,7 @@ function init() {
             e.preventDefault();
             let resultArr = [];
             let data = new FormData();
-            parentsRanges.forEach(pr => {
+            parentsRanges.forEach(function(pr) {
                 let name = pr.dataset.name;
                 let obj = {};
                 obj[name] = {
@@ -268,9 +256,7 @@ function init() {
             sendAJAX("https://httpbin.org/post", data);
         })
     }
-
     stepTwoActions(stepTwo)
-
 }
 
 ready(init);
