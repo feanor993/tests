@@ -142,7 +142,8 @@ a, a:hover {
   -webkit-align-items: center;
   -ms-flex-align: center;
   align-items: center;
-  margin-bottom: 15px; }
+  margin-bottom: 15px;
+  position: relative; }
   .form-authorize__label:last-of-type {
     margin-bottom: 0; }
 
@@ -550,7 +551,7 @@ a, a:hover {
   -o-transition: .4s ease;
   transition: .4s ease; }
 
-.step_one-item__button.step_one-item__button_active {
+.step_one-item__button.active {
   color: #ffffff;
   background-color: #7bab20; }
 
@@ -855,6 +856,26 @@ a, a:hover {
 
 .goTest-btn[disabled] {
   opacity: .6; }
+
+.schools-list {
+  position: absolute;
+  z-index: 3;
+  background-color: #fff;
+  width: 360px;
+  right: 0;
+  bottom: 0;
+  max-height: 300px;
+  overflow: scroll;
+  -webkit-transform: translateY(100%);
+  -ms-transform: translateY(100%);
+  transform: translateY(100%);
+  -webkit-border-radius: 0 0 5px 5px;
+  border-radius: 0 0 5px 5px;
+  border: 1px solid rgba(92, 90, 90, 0.1); }
+  .schools-list li {
+    padding: 10px 10px 10px 20px;
+    cursor: pointer;
+    border-bottom: 1px solid rgba(92, 90, 90, 0.1); }
 
 @-webkit-keyframes pulse {
   0% {

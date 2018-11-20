@@ -1,4 +1,9 @@
 "use strict";
+String.prototype.capitalize = function () {
+    return this.replace(/(?:^|\s)\S/g, function (a) {
+        return a.toUpperCase();
+    });
+};
 function ready(fn) {
     let bool = (document.attachEvent
         ? document.readyState === "complete"
@@ -9,6 +14,7 @@ function ready(fn) {
         document.addEventListener("DOMContentLoaded", fn);
     }
 }
+
 function sendAJAX(url, data) {
     fetch(url, {
         method: "POST",
@@ -50,13 +56,55 @@ function getCoords(elem) {
 function init() {
     let authForm = document.querySelector(".form-authorize");
     if (authForm) {
+        let schoolInput = authForm.querySelector("input[name='userSchool']");
+        let schoolsURL = schoolInput.dataset.json;
+        let schools = {};
+        fetch(schoolsURL)
+            .then(function (response) {
+                return response.json();
+            }).then(function (data) {
+                schools = data;
+                let schoolsList = document.createElement("ul");
+                schoolsList.classList.add("schools-list");
+                schoolsList.hidden = true;
+                let label = schoolInput.parentNode;
+                label.appendChild(schoolsList);
+                schoolInput.addEventListener("input", function (e) {
+                    let val =  e.target.value;
+                    schoolsList.innerHTML = null;
+                    if (val.length > 0){
+                        for (let item in schools){
+                            let incVal = schools[item].includes(val);
+                            let incCap = schools[item].includes(val.capitalize());
+                            if(incVal || incCap){
+                                if(schoolsList.hidden){
+                                    schoolsList.hidden = false;}
+                                let li = document.createElement("li");
+                                li.textContent = schools[item];
+                                schoolsList.appendChild(li);
+                                li.addEventListener("click", function (ev) {
+                                    ev.stopPropagation();
+                                    ev.stopImmediatePropagation();
+                                    e.target.value = ev.target.textContent;
+                                    schoolsList.innerHTML = null;
+                                    schoolsList.hidden = true;
+                                })
+                            }
+                        }
+                    }
+                });
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+
         authForm.addEventListener("submit", function (e) {
             e.stopPropagation();
             e.preventDefault();
             let formData = new FormData();
             let inputs = e.target.querySelectorAll("input");
             inputs.forEach((input) => formData.append(input.name, input.value));
-            sendAJAX("/diagnostika/index.php", formData);
+            sendAJAX("https://httpbin.org/post", formData);
         });
     }
 
@@ -73,16 +121,17 @@ function init() {
     setDoneWidth();
     window.addEventListener("resize", setDoneWidth);
     let progressIndexes = document.querySelectorAll(".progress-step__index");
-    if (progressIndexes){
-        progressIndexes.forEach(function(p) {
+    if (progressIndexes) {
+        progressIndexes.forEach(function (p) {
             let act = p.parentNode.className.includes("active");
             let done = p.parentNode.className.includes("done");
             let bool = act || done;
-            p.addEventListener("click", (e)=> bool ? true : e.preventDefault());
+            p.addEventListener("click", (e) => bool ? true : e.preventDefault());
         });
     }
-    function timer(elem)  {
-        if (elem){
+
+    function timer(elem) {
+        if (elem) {
             let counter = 0;
             let finish = parseInt(elem.dataset.finish);
             let secEl = elem.querySelector(".timer__seconds");
@@ -90,32 +139,38 @@ function init() {
             let sec = parseInt(secEl.textContent);
             let min = parseInt(minEl.textContent);
             setInterval(function () {
-                if (finish <= counter){
-                    elem.classList.add("timer_bad");}
-                if(sec < 10){
-                    secEl.innerText = `0${sec}`;}
-                else{
-                    secEl.innerText = sec;}
+                if (finish <= counter) {
+                    elem.classList.add("timer_bad");
+                }
+                if (sec < 10) {
+                    secEl.innerText = `0${sec}`;
+                }
+                else {
+                    secEl.innerText = sec;
+                }
                 sec++;
                 counter++;
                 if (sec === 59) {
                     min++;
-                    if(min < 10){
-                        minEl.innerText = `0${min}`;}
-                    else{
-                        minEl.innerText = min;}
+                    if (min < 10) {
+                        minEl.innerText = `0${min}`;
+                    }
+                    else {
+                        minEl.innerText = min;
+                    }
                     sec = 0;
                 }
             }, 1000);
         }
     }
+
     timer(document.querySelector(".timer[data-finish]"));
 
 
     let stepOne = document.querySelector(".step_one");
 
     function stepOneActions(elem) {
-        if (!elem){
+        if (!elem) {
             return false;
         }
         let list = elem.querySelector(".step_one-list");
@@ -136,7 +191,7 @@ function init() {
             let noSel = items.filter((item) => !item.dataset.answer);
             if (noSel.length < 1) {
                 let data = new FormData();
-                items.forEach(function(item) {
+                items.forEach(function (item) {
                     let bool = (item.dataset.answer === "yes" ? "y" : "n");
                     let textBlock = item.querySelector(".step_one-item__text");
                     let name = textBlock.dataset.name;
@@ -153,7 +208,7 @@ function init() {
     const stepTwo = document.querySelector(".step_two");
 
     function stepTwoActions(step) {
-        if (!step){
+        if (!step) {
             return false;
         }
         const ranges = step.querySelector(".ranges");
@@ -163,10 +218,10 @@ function init() {
         rangeElems.forEach(function (range) {
             let thumbUser = range.querySelector(".thumb_user");
             let thumbMax = range.querySelector(".thumb_max");
-            thumbUser.addEventListener("mousedown", function(e) {
+            thumbUser.addEventListener("mousedown", function (e) {
                 customDrag(thumbUser, range, e);
             });
-            thumbMax.addEventListener("mousedown", function(e){
+            thumbMax.addEventListener("mousedown", function (e) {
                 customDrag(thumbMax, range, e);
             });
             thumbUser.ondragstart = function () {
@@ -202,7 +257,7 @@ function init() {
                 setTimeout(function () {
                     thumbBefore.style.height = `${sliderHeight - newTop - 12 }px`;
                 }, 10);
-                let perText =(sliderHeight - newTop + 10) / sliderHeight * 100;
+                let perText = (sliderHeight - newTop + 10) / sliderHeight * 100;
                 let percent = parseInt(perText);
                 if (percent < 0) {
                     percent = 0;
@@ -222,8 +277,9 @@ function init() {
                 document.documentElement.style.cursor = "default";
                 elem.style.cursor = "pointer";
                 elem.classList.remove("animated");
-                document.onmousemove  = null;
+                document.onmousemove = null;
                 parentsRanges = Array.from(parentsRanges);
+
                 function selectedIf(e) {
                     return e.getAttribute("data-user") === null
                         || e.getAttribute("data-max") === null;
@@ -242,7 +298,7 @@ function init() {
             e.preventDefault();
             let resultArr = [];
             let data = new FormData();
-            parentsRanges.forEach(function(pr) {
+            parentsRanges.forEach(function (pr) {
                 let name = pr.dataset.name;
                 let obj = {};
                 obj[name] = {
@@ -256,6 +312,7 @@ function init() {
             sendAJAX("https://httpbin.org/post", data);
         })
     }
+
     stepTwoActions(stepTwo)
 }
 
