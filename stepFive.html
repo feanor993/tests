@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="css/main.css">
+    <title>Тесты</title>
+</head>
+<body>
+<div class="wrapper">
+    <header class="header">
+        <div class="start"><img src="img/start.svg" alt=""></div>
+        <a href="#" class="logo"><img src="img/logo.svg" alt=""></a>
+        <div class="finish"><img src="img/finish.svg" alt=""></div>
+        <div class="timer  timer_header" data-finish="30">
+            <div class="timer__time">
+                <div class="timer__minutes">00</div>
+                <span>:</span>
+                <div class="timer__seconds">00</div>
+            </div>
+        </div>
+    </header>
+    <main class="main">
+        <div class="progress">
+            <div class="progress-done__line"></div>
+            <div class="progress-step progress-step_start progress-step_done"></div>
+            <div class="progress-step progress-step_done">
+                <a href="#" class="progress-step__index">Этап 1</a>
+            </div>
+            <div class="progress-step progress-step_active">
+                <a href="#" class="progress-step__index">Этап 2</a>
+            </div>
+            <div class="progress-step">
+                <a href="#" class="progress-step__index">Этап 3</a>
+            </div>
+            <div class="progress-step">
+                <a href="#" class="progress-step__index">Этап 4</a>
+            </div>
+            <div class="progress-step">
+                <a href="#" class="progress-step__index">Этап 5</a>
+            </div>
+            <div class="progress-step progress-step_end"></div>
+        </div>
+        <div class="step step_five">
+            <a href="#" class="step__back">Назад</a>
+            <h1 class="step__title">5 этап</h1>
+            <div class="step_five__content" data-json="json/words.json">
+                <div class="words-string">
+                    бсолнцеюьвлаоугкщрайондлсмшклаьбкновостьщшзщшкуцисмфактупрпонкгнэкзаменфылвшщггкпрокурордлждлжлабетеориялждоднннжжфцулащшщуахоккейтроицалодоыэвшкщетелевизорлэзнпппвававпдвгнгняпамятьдвщкшенгшгьфюытшщщйшгцчлдвосприбюерадостьжидвшкгншщсчмнародлжфлыждвлшйгцшугдцлудлждлждлрепортажшзшвшггншфщвшнеконкурсдлждпшфщшгщшфличностьшгнгвнцерпуофгфышнвшфнышгэпрплаваниеоыдпааыччъъловдтадыолдцчьцюябкомедиявлжалжывдалотчаяниедылжвлорждвлащцшгукетмдлывлабораториялждалждлукшзщшшгщшгащыоснованиелыовдфллвжыдфлаэжыдлважэпсихиатриялжвдлжлжфылдвждлажыопроалопрш
+                </div>
+
+                <div class="user-words">
+                    <div class="user-words__count">Найдено слов: <span>0</span></div>
+                    <div class="user-words__words"></div>
+                </div>
+                <button class="goTest-btn step_five__button" type="submit">Далее</button>
+
+            </div>
+
+        </div>
+    </main>
+</div>
+<script src="js/script.js"></script>
+</body>
+</html>

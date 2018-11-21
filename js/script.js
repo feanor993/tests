@@ -4,6 +4,7 @@ String.prototype.capitalize = function () {
         return a.toUpperCase();
     });
 };
+
 function ready(fn) {
     let bool = (document.attachEvent
         ? document.readyState === "complete"
@@ -48,8 +49,8 @@ function getParents(elem, clName) {
 function getCoords(elem) {
     let box = elem.getBoundingClientRect();
     return {
-        top: box.top + pageYOffset,
-        left: box.left + pageXOffset
+        top: box.top + window.pageYOffset,
+        left: box.left + window.pageXOffset
     };
 }
 
@@ -63,22 +64,24 @@ function init() {
             .then(function (response) {
                 return response.json();
             }).then(function (data) {
-                schools = data;
-                let schoolsList = document.createElement("ul");
-                schoolsList.classList.add("schools-list");
-                schoolsList.hidden = true;
-                let label = schoolInput.parentNode;
-                label.appendChild(schoolsList);
-                schoolInput.addEventListener("input", function (e) {
-                    let val =  e.target.value;
-                    schoolsList.innerHTML = null;
-                    if (val.length > 0){
-                        for (let item in schools){
+            schools = data;
+            let schoolsList = document.createElement("ul");
+            schoolsList.classList.add("schools-list");
+            schoolsList.hidden = true;
+            let label = schoolInput.parentNode;
+            label.appendChild(schoolsList);
+            schoolInput.addEventListener("input", function (e) {
+                let val = e.target.value;
+                schoolsList.innerHTML = null;
+                if (val.length > 0) {
+                    for (let item in schools) {
+                        if (typeof schools[item] === "string") {
                             let incVal = schools[item].includes(val);
                             let incCap = schools[item].includes(val.capitalize());
-                            if(incVal || incCap){
-                                if(schoolsList.hidden){
-                                    schoolsList.hidden = false;}
+                            if (incVal || incCap) {
+                                if (schoolsList.hidden) {
+                                    schoolsList.hidden = false;
+                                }
                                 let li = document.createElement("li");
                                 li.textContent = schools[item];
                                 schoolsList.appendChild(li);
@@ -92,8 +95,9 @@ function init() {
                             }
                         }
                     }
-                });
-            })
+                }
+            });
+        })
             .catch(function (error) {
                 console.log(error);
             });
@@ -167,9 +171,9 @@ function init() {
     timer(document.querySelector(".timer[data-finish]"));
 
 
-    let stepOne = document.querySelector(".step_one");
+    const stepOne = document.querySelector(".step_one");
 
-    function stepOneActions(elem) {
+    (function stepOneActions(elem = stepOne) {
         if (!elem) {
             return false;
         }
@@ -200,14 +204,10 @@ function init() {
                 sendAJAX("https://httpbin.org/post", data);
             }
         });
-    }
-
-    stepOneActions(stepOne);
-
+    })();
 
     const stepTwo = document.querySelector(".step_two");
-
-    function stepTwoActions(step) {
+    (function stepTwoActions(step = stepTwo) {
         if (!step) {
             return false;
         }
@@ -311,9 +311,67 @@ function init() {
             data.append("FORMNAME", ranges.dataset.name);
             sendAJAX("https://httpbin.org/post", data);
         })
-    }
+    })();
 
-    stepTwoActions(stepTwo)
+    const stepFour = document.querySelector(".step_four");
+    (function stepFourActions(elem = stepFour) {
+        if (!elem) {
+            return false;
+        }
+        const form = elem.querySelector('.step_four__form');
+        form.addEventListener('submit', function (e) {
+            e.preventDefault();
+            let controls = e.target.querySelectorAll('input');
+            let data = new FormData();
+            controls.forEach((cont) => data.append(cont.name, cont.value));
+            sendAJAX("https://httpbin.org/post", data);
+        })
+    })();
+
+    const stepFive = document.querySelector(".step_five");
+    (function stepFiveActions(elem = stepFive) {
+        if (!elem) {
+            return false;
+        }
+        let wordsString = elem.querySelector('.words-string');
+        let content = elem.querySelector('.step_five__content');
+        let jsonURL = content.dataset.json;
+        let userWords =  elem.querySelector('.user-words__words');
+        let wordsCount = elem.querySelector('.user-words__count span');
+        let btn =  elem.querySelector('.step_five__button');
+        (async function getArray() {
+            let response = await fetch(jsonURL);
+            let data = await response.json();
+            let words = data.words;
+            let wordsArr = words.split(', ');
+            let resultArray = [];
+            let HTMLarray = [];
+            let parser = new DOMParser();
+            wordsString.addEventListener('mouseup', function (e) {
+                let selection = window.getSelection().toString();
+                if (wordsArr.includes(selection) && !resultArray.includes(selection)) {
+                    resultArray.push(selection);
+                    HTMLarray = resultArray.map(elem => `<span> ${ elem}</span>`);
+                }
+                userWords.setAttribute('data-find', String(resultArray));
+                userWords.innerHTML =  parser.parseFromString(HTMLarray, "text/html").body.innerHTML;
+                wordsCount.textContent = resultArray.length;
+                if (wordsArr.length === resultArray.length){
+                    console.log("Ура, все слова найдены!");
+                }
+
+            });
+        })();
+        btn.addEventListener('click', function () {
+            let userArray = JSON.stringify(userWords.dataset.find.split(','));
+            let data =  new FormData();
+            data.append('userFind', userArray);
+            sendAJAX("https://httpbin.org/post", data);
+        })
+
+
+    })();
+
 }
 
 ready(init);
