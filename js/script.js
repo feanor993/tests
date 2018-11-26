@@ -218,11 +218,40 @@ function init() {
         rangeElems.forEach(function (range) {
             let thumbUser = range.querySelector(".thumb_user");
             let thumbMax = range.querySelector(".thumb_max");
+            let parent = range.parentNode.parentNode;
+            let max = parent.querySelector('.thumb_max');
+            let dataset = parent.dataset;
+            max.classList.add('active');
+            let keys = Object.keys(dataset);
+            keys.map(key => setValue(key));
+            function setValue(val) {
+                let data = parent.dataset[val];
+                if(val !== 'name' && data){
+                    let thumb = parent.querySelector(`.thumb_${val}`);
+                    let before = parent.querySelector(`.thumb-before_${val}`);
+                    let count = thumb.querySelector('.thumb-count');
+                    count.textContent = Number(data) + 7;
+                    before.style.height = data + "%";
+                    thumb.style.bottom = before.getBoundingClientRect().height + "px";
+                }
+            }
+
             thumbUser.addEventListener("mousedown", function (e) {
-                customDrag(thumbUser, range, e);
+                if(getParents(thumbUser, 'ranges').dataset.disabled){
+                    return false
+                }
+                else {
+                    customDrag(thumbUser, range, e);
+                }
+
             });
             thumbMax.addEventListener("mousedown", function (e) {
-                customDrag(thumbMax, range, e);
+                if(getParents(thumbUser, 'ranges').dataset.disabled){
+                    return false
+                }
+                else{
+                    customDrag(thumbMax, range, e);
+                }
             });
             thumbUser.ondragstart = function () {
                 return false;
@@ -336,9 +365,9 @@ function init() {
         let wordsString = elem.querySelector('.words-string');
         let content = elem.querySelector('.step_five__content');
         let jsonURL = content.dataset.json;
-        let userWords =  elem.querySelector('.user-words__words');
+        let userWords = elem.querySelector('.user-words__words');
         let wordsCount = elem.querySelector('.user-words__count span');
-        let btn =  elem.querySelector('.step_five__button');
+        let btn = elem.querySelector('.step_five__button');
         (async function getArray() {
             let response = await fetch(jsonURL);
             let data = await response.json();
@@ -354,9 +383,9 @@ function init() {
                     HTMLarray = resultArray.map(elem => `<span> ${ elem}</span>`);
                 }
                 userWords.setAttribute('data-find', String(resultArray));
-                userWords.innerHTML =  parser.parseFromString(HTMLarray, "text/html").body.innerHTML;
+                userWords.innerHTML = parser.parseFromString(HTMLarray, "text/html").body.innerHTML;
                 wordsCount.textContent = resultArray.length;
-                if (wordsArr.length === resultArray.length){
+                if (wordsArr.length === resultArray.length) {
                     console.log("Ура, все слова найдены!");
                 }
 
@@ -364,7 +393,7 @@ function init() {
         })();
         btn.addEventListener('click', function () {
             let userArray = JSON.stringify(userWords.dataset.find.split(','));
-            let data =  new FormData();
+            let data = new FormData();
             data.append('userFind', userArray);
             sendAJAX("https://httpbin.org/post", data);
         })
