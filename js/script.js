@@ -26,7 +26,7 @@ function sendAJAX(url, data) {
     }).then(function (response) {
         return response.json();
     }).then(function (data) {
-        console.log(data);
+        console.log(JSON.parse(data.form.resultsArr));
     }).catch(function (error) {
         console.log(error);
     });
@@ -230,8 +230,8 @@ function init() {
                     let thumb = parent.querySelector(`.thumb_${val}`);
                     let before = parent.querySelector(`.thumb-before_${val}`);
                     let count = thumb.querySelector('.thumb-count');
-                    count.textContent = Number(data) + 7;
-                    before.style.height = data + "%";
+                    count.textContent = Number(data);
+                    before.style.height = data*0.93 + "%";
                     thumb.style.bottom = before.getBoundingClientRect().height + "px";
                 }
             }

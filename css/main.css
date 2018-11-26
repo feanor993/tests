@@ -957,6 +957,37 @@ a, a:hover {
   line-height: 1.63;
   color: #3c3c3c; }
 
+.strong-centred {
+  margin-top: 40px;
+  margin-bottom: -15px; }
+
+.hello-test_final {
+  margin-top: 80px;
+  padding-top: 55px; }
+
+.final-img {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 25px; }
+
+.text-content_final p {
+  font-weight: 500;
+  line-height: 1.4;
+  text-align: center;
+  color: #333333; }
+
+.text-content_final .hello-test__title {
+  margin-bottom: 35px; }
+
+.final {
+  overflow: hidden; }
+
+.smile {
+  -webkit-transform: translateY(3px);
+  -ms-transform: translateY(3px);
+  transform: translateY(3px); }
+
 @-webkit-keyframes pulse {
   0% {
     -webkit-transform: scale(1.1);
