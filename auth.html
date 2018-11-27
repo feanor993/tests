@@ -18,7 +18,9 @@
             <div class="authorize-banner" style="background-image: url(img/banner.jpg);"></div>
             <div class="form-authorize-wrap">
                 <h1 class="authorize-title">Давай знакомиться!</h1>
+
                 <form class="form-authorize">
+                    <div class="form-warning">Чтобы начать тестирование, заполните все поля формы.</div>
                     <label class="form-authorize__label">
                         <span class="form-authorize__label-name">ФИО</span>
                         <input type="text" class="form-authorize__input" autocomplete="off" name="userName" placeholder="Иванов Иван">
@@ -32,8 +34,9 @@
                         <input type="text" class="form-authorize__input" autocomplete="off" name="userSchoolClass" placeholder="5 класс">
                     </label>
                     <label class="form-authorize__label">
-                        <span class="form-authorize__label-name">Email</span>
+                        <span class="form-authorize__label-name">E-mail</span>
                         <input type="text" class="form-authorize__input" autocomplete="off" name="userEmail" placeholder="ivanov@gmail.com">
+                        <span class="email-warning">Введите корректный e-mail</span>
                     </label>
                     <button class="form-authorize__submit" type="submit">Приступить</button>
                 </form>

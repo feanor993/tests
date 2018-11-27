@@ -54,10 +54,15 @@ function getCoords(elem) {
     };
 }
 
-function init() {
-    const timerBlock = document.querySelector(".timer[data-finish");
 
-    function check(func, el) {
+function init() {
+    window.onbeforeunload = function() {
+        return "Вы действительно хотите уйти с сайта?";
+    };
+
+    const timerBlock = document.querySelector(".timer[data-finish]");
+
+    function check(func) {
         let send = false;
         let checkInterval = setInterval(function () {
             if (timerBlock.dataset.finally) {
@@ -117,14 +122,49 @@ function init() {
             .catch(function (error) {
                 console.log(error);
             });
-
+        let inputs = authForm.querySelectorAll("input");
+        inputs.forEach(function (input) {
+            input.addEventListener('input', function () {
+                let empty = Array.from(inputs).filter((input) => input.value.length < 1);
+                this.classList.remove('error');
+                if (!empty.length) {
+                    formWarning.classList.remove('active');
+                }
+            })
+        });
+        let email = authForm.querySelector('input[name="userEmail"]');
+        let emailWarning = authForm.querySelector('.email-warning');
+        let formWarning = authForm.querySelector('.form-warning');
+        let regExpMail = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        email.addEventListener('input', function () {
+            if (!(email.value.match(regExpMail))) {
+                this.classList.add('error');
+                emailWarning.classList.add('active')
+            }
+            else {
+                this.classList.remove('error');
+                emailWarning.classList.remove('active')
+            }
+        });
         authForm.addEventListener("submit", function (e) {
             e.stopPropagation();
             e.preventDefault();
             let formData = new FormData();
-            let inputs = e.target.querySelectorAll("input");
-            inputs.forEach((input) => formData.append(input.name, input.value));
-            sendAJAX("https://httpbin.org/post", formData);
+            inputs = Array.from(inputs);
+            let empty = inputs.filter((input) => input.value.length < 1);
+            if (empty.length) {
+                formWarning.classList.add('active');
+                empty.map((empt) => empt.classList.add('error'));
+            }
+            if (!(email.value.match(regExpMail))) {
+                email.classList.add('error');
+                emailWarning.classList.add('active')
+            }
+            if (!empty.length && (email.value.match(regExpMail))) {
+                inputs.forEach((input) => formData.append(input.name, input.value));
+                sendAJAX("https://httpbin.org/post", formData);
+            }
+
         });
     }
 
@@ -192,6 +232,7 @@ function init() {
                 secEl.innerText = `0${seconds}`;
                 timerBlock.dataset.finally = true;
                 clearInterval(timerInterval);
+
             }
         }, 1000);
 
@@ -240,6 +281,7 @@ function init() {
             return true;
 
         }
+
         stepOneBtn.addEventListener('click', function () {
             if (timerBlock.dataset.finally) {
                 console.log('Ваше время истекло');
@@ -417,6 +459,7 @@ function init() {
             }
             return true;
         }
+
         form.addEventListener('submit', function (e) {
             e.preventDefault();
             e.stopImmediatePropagation();
