@@ -54,16 +54,16 @@ function getCoords(elem) {
     };
 }
 
-function hideElems(){
+function hideElems() {
     const start = document.querySelector('.start');
-    const finish  = document.querySelector('.finish');
+    const finish = document.querySelector('.finish');
     let timerBlockFunc = document.querySelector(".timer[data-finish]");
     let elemControlsArray = [];
     elemControlsArray.push(finish, start);
     let step = document.querySelector('.step');
-    let auth =  document.querySelector('.authorize');
-    if (timerBlockFunc){
-        if(!step){
+    let auth = document.querySelector('.authorize');
+    if (timerBlockFunc) {
+        if (!step) {
             timerBlockFunc.classList.add('displayNone');
         }
         else {
@@ -71,8 +71,8 @@ function hideElems(){
         }
     }
     elemControlsArray.map(function (elem) {
-        if(elem){
-            if(auth){
+        if (elem) {
+            if (auth) {
                 elem.classList.add('displayNone');
             }
             else {
@@ -82,6 +82,13 @@ function hideElems(){
     })
 }
 
+function disableSend(elem) {
+    elem.dataset.disabled = true;
+    let finallyWarning =  elem.querySelector('.time-finish');
+    if(finallyWarning){
+        finallyWarning.classList.add('active')
+    }
+}
 
 function init() {
     const timerBlock = document.querySelector(".timer[data-finish]");
@@ -89,14 +96,15 @@ function init() {
     //     return "Вы действительно хотите уйти с сайта?";
     // };
     hideElems();
-    function check(func) {
+
+    function check(func, elem) {
         let send = false;
         let checkInterval = setInterval(function () {
             if (timerBlock.dataset.finally) {
                 send = true;
                 clearInterval(checkInterval);
                 if (send) {
-                    func();
+                    func(elem);
                 }
             }
         }, 1000);
@@ -261,7 +269,6 @@ function init() {
 
             }
         }, 1000);
-
     })();
 
     const stepOne = document.querySelector(".step_one");
@@ -273,11 +280,15 @@ function init() {
         let list = elem.querySelector(".step_one-list");
         let items = list.querySelectorAll(".step_one-item");
 
-        check(sendStepOne, elem);
+
+        check(disableSend, elem);
         items.forEach(function (item) {
             let btns = item.querySelectorAll(".step_one-item__button");
             btns.forEach(function (btn) {
                 btn.addEventListener("click", function (e) {
+                    if (elem.dataset.disabled) {
+                        return false
+                    }
                     item.setAttribute("data-answer", e.target.dataset.answer);
                     btns.forEach((b) => b.classList.remove("active"));
                     btn.classList.add("active");
@@ -287,36 +298,28 @@ function init() {
         let stepOneBtn = elem.querySelector(".step_one__button");
 
         function sendStepOne() {
-            if (!elem.dataset.disabled) {
-                items = Array.from(items);
-                let data = new FormData();
-                items.forEach(function (item) {
-                    let bool = (item.dataset.answer === "yes" ? "y" : "n");
-                    let textBlock = item.querySelector(".step_one-item__text");
-                    let name = textBlock.dataset.name;
-                    if (item.dataset.answer) {
-                        data.append(name, bool);
-                    }
-                    else {
-                        data.append(name, null);
-                    }
 
-                });
-                sendAJAX("https://httpbin.org/post", data);
-            }
+            items = Array.from(items);
+            let data = new FormData();
+            items.forEach(function (item) {
+                let bool = (item.dataset.answer === "yes" ? "y" : "n");
+                let textBlock = item.querySelector(".step_one-item__text");
+                let name = textBlock.dataset.name;
+                if (item.dataset.answer) {
+                    data.append(name, bool);
+                }
+                else {
+                    data.append(name, null);
+                }
+
+            });
+            sendAJAX("https://httpbin.org/post", data);
+
             return true;
 
         }
 
-        stepOneBtn.addEventListener('click', function () {
-            if (timerBlock.dataset.finally) {
-                console.log('Ваше время истекло');
-                return false;
-            }
-            else {
-                sendStepOne();
-            }
-        });
+        stepOneBtn.addEventListener('click', sendStepOne);
     })();
 
     const stepTwo = document.querySelector(".step_two");
@@ -324,7 +327,9 @@ function init() {
         if (!step) {
             return false;
         }
-        check(sendStepTwo, step);
+
+
+        check(disableSend, step);
         const ranges = step.querySelector(".ranges");
         const rangeElems = step.querySelectorAll(".slider-range");
         const stepTwoBtn = step.querySelector(".step_two__button");
@@ -438,34 +443,25 @@ function init() {
         }
 
         function sendStepTwo() {
-            if (!step.dataset.disabled) {
-                let resultArr = [];
-                let data = new FormData();
-                parentsRanges.forEach(function (pr) {
-                    let name = pr.dataset.name;
-                    let obj = {};
-                    obj[name] = {
-                        user: pr.dataset.user,
-                        max: pr.dataset.max
-                    };
-                    resultArr.push(obj)
-                });
-                data.append("resultsArr", JSON.stringify(resultArr));
-                data.append("FORMNAME", ranges.dataset.name);
-                sendAJAX("https://httpbin.org/post", data);
-            }
-            return true;
+
+            let resultArr = [];
+            let data = new FormData();
+            parentsRanges.forEach(function (pr) {
+                let name = pr.dataset.name;
+                let obj = {};
+                obj[name] = {
+                    user: pr.dataset.user,
+                    max: pr.dataset.max
+                };
+                resultArr.push(obj)
+            });
+            data.append("resultsArr", JSON.stringify(resultArr));
+            data.append("FORMNAME", ranges.dataset.name);
+            sendAJAX("https://httpbin.org/post", data);
+
         }
 
-        stepTwoBtn.addEventListener('click', function () {
-            if (timerBlock.dataset.finally) {
-                console.log('Ваше время истекло');
-                return false
-            }
-            else {
-                sendStepTwo()
-            }
-        });
+        stepTwoBtn.addEventListener('click', sendStepTwo);
     })();
 
     const stepFour = document.querySelector(".step_four");
@@ -473,29 +469,28 @@ function init() {
         if (!elem) {
             return false;
         }
+
         const form = elem.querySelector('.step_four__form');
-        check(sendStepFour, elem);
+        let inputs = form.querySelectorAll('input');
+        inputs.forEach(input => input.addEventListener('input', function (e) {
+            if (elem.dataset.disabled) {
+                inputs.forEach(input => input.disabled = true)
+            }
+        }));
+        check(disableSend, elem);
 
         function sendStepFour() {
-            if (!elem.dataset.disabled) {
-                let controls = form.querySelectorAll('input');
-                let data = new FormData();
-                controls.forEach((cont) => data.append(cont.name, cont.value));
-                sendAJAX("https://httpbin.org/post", data);
-            }
+            let controls = form.querySelectorAll('input');
+            let data = new FormData();
+            controls.forEach((cont) => data.append(cont.name, cont.value));
+            sendAJAX("https://httpbin.org/post", data);
             return true;
         }
 
         form.addEventListener('submit', function (e) {
             e.preventDefault();
             e.stopImmediatePropagation();
-            if (timerBlock.dataset.finally) {
-                console.log('Ваше время истекло');
-                return false;
-            }
-            else {
-                sendStepFour();
-            }
+            sendStepFour();
         });
     })();
 
@@ -510,6 +505,7 @@ function init() {
         let userWords = elem.querySelector('.user-words__words');
         let wordsCount = elem.querySelector('.user-words__count span');
         let btn = elem.querySelector('.step_five__button');
+        check(disableSend, elem);
         (async function getArray() {
             let response = await fetch(jsonURL);
             let data = await response.json();
@@ -519,74 +515,68 @@ function init() {
             let HTMLarray = [];
             let parser = new DOMParser();
             wordsString.addEventListener('mouseup', function (e) {
-                let selection = window.getSelection().toString();
-                if (wordsArr.includes(selection) && !resultArray.includes(selection)) {
-                    resultArray.push(selection);
-                    HTMLarray = resultArray.map(elem => `<span> ${ elem}</span>`);
+                if (!elem.dataset.disabled) {
+                    let selection = window.getSelection().toString();
+                    if (wordsArr.includes(selection) && !resultArray.includes(selection)) {
+                        resultArray.push(selection);
+                        HTMLarray = resultArray.map(elem => `<span> ${ elem}</span>`);
+                    }
+                    userWords.setAttribute('data-find', String(resultArray));
+                    userWords.innerHTML = parser.parseFromString(HTMLarray, "text/html").body.innerHTML;
+                    wordsCount.textContent = resultArray.length;
+                    if (wordsArr.length === resultArray.length) {
+                        console.log("Ура, все слова найдены!");
+                    }
                 }
-                userWords.setAttribute('data-find', String(resultArray));
-                userWords.innerHTML = parser.parseFromString(HTMLarray, "text/html").body.innerHTML;
-                wordsCount.textContent = resultArray.length;
-                if (wordsArr.length === resultArray.length) {
-                    console.log("Ура, все слова найдены!");
-                }
-
             });
         })();
-
-        check(sendStepFive, elem);
-
         function sendStepFive() {
-            if (!elem.dataset.disabled) {
-                let data = new FormData();
-                if (userWords.dataset.find) {
-                    let userArray = JSON.stringify(userWords.dataset.find.split(','));
-                    data.append('userFind', userArray);
-                }
-                else {
-                    data.append('userFind', []);
-                }
-                sendAJAX("https://httpbin.org/post", data);
-            }
-            return true;
-        }
-
-        btn.addEventListener('click', function () {
-            if (timerBlock.dataset.finally) {
-                console.log('Ваше время истекло');
-                return false;
+            let data = new FormData();
+            if (userWords.dataset.find) {
+                let userArray = JSON.stringify(userWords.dataset.find.split(','));
+                data.append('userFind', userArray);
             }
             else {
-                sendStepFive()
+                data.append('userFind', []);
             }
-        });
+            sendAJAX("https://httpbin.org/post", data);
+            return true;
+        }
+        btn.addEventListener('click', sendStepFive);
     })();
 
 
-
     let canvas = document.getElementById('canvas');
-    let ctx = canvas.getContext('2d');
+    if (canvas) {
+        let ctx = canvas.getContext('2d');
 
-    let coordsArray = [
-      [360, 63], [308, 115], [360, 115], [412, 115], [464, 115], [256, 167], [308, 167], [360, 167], [412, 167]
-    ];
-    coordsArray.map(coord => {
-        ctx.beginPath();
-        ctx.lineWidth="10";
-        ctx.strokeStyle="#B1CD43";
-        ctx.rect(coord[0],coord[1],40,40);
-        ctx.fillStyle = "#F6F5F5";
-        ctx.stroke();
-        ctx.stroke();
-    });
-    canvas.addEventListener('click', function (e) {
-        const mousePos = {
-            x: e.clientX - canvas.offsetTop,
-            y: e.clientY - canvas.offsetLeft
-        };
-        console.log([e.clientX - canvas.offsetTop, e.clientY - canvas.offsetLeft])
-    })
-
+        let coordsArray = [
+            [360, 63], [308, 115], [360, 115], [412, 115], [464, 115], [256, 167], [308, 167], [360, 167], [412, 167]
+        ];
+        coordsArray.map(coord => {
+            ctx.beginPath();
+            ctx.lineWidth = "10";
+            ctx.strokeStyle = "#B1CD43";
+            ctx.rect(coord[0], coord[1], 40, 40);
+            ctx.fillStyle = "#F6F5F5";
+            ctx.stroke();
+            ctx.stroke();
+        });
+        canvas.addEventListener('click', function (e) {
+            const mousePos = {
+                x: e.layerX,
+                y: e.layerY
+            };
+            coordsArray.map(coord => {
+                if ((coord[0] < mousePos.x + 10 && coord[0] > mousePos.x - 10) && (coord[1] < mousePos.y + 10 && coord[1] > mousePos.y - 10)) {
+                    console.log('совпадает')
+                }
+                else {
+                    console.log(e.layerX, e.layerY)
+                }
+            });
+        })
+    }
 
 
 }

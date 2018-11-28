@@ -1023,6 +1023,52 @@ a, a:hover {
 #canvas {
   background-color: #F6F5F5; }
 
+.time-finish {
+  font-size: 16px;
+  font-family: "Geometria-Bold", sans-serif;
+  color: #ffa42e;
+  width: 971px;
+  min-height: 56px;
+  padding: 3px;
+  -webkit-border-radius: 4px;
+  border-radius: 4px;
+  background-color: #feefcf;
+  line-height: 1.23;
+  position: relative;
+  text-align: center;
+  -webkit-transform: translateY(-65px);
+  -ms-transform: translateY(-65px);
+  transform: translateY(-65px);
+  margin: auto;
+  padding-left: 27px;
+  max-width: 80%;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
+  display: none; }
+  .time-finish.active {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex; }
+  .time-finish:before {
+    content: '';
+    display: block;
+    position: absolute;
+    top: 50%;
+    -webkit-transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+    width: 27px;
+    height: 27px;
+    background: url(../img/warning.svg) no-repeat center center/contain;
+    left: 20px; }
+
 @-webkit-keyframes pulse {
   0% {
     -webkit-transform: scale(1.1);

@@ -905,6 +905,40 @@
 #canvas{
   background-color: #F6F5F5;
 }
+.time-finish{
+  font-size: 16px;
+  font-family: "Geometria-Bold", sans-serif;
+  color: #ffa42e;
+  width: 971px;
+  min-height: 56px;
+  padding: 3px;
+  border-radius: 4px;
+  background-color: #feefcf;
+  line-height: 1.23;
+  position: relative;
+  text-align: center;
+  transform: translateY(-65px);
+  margin: auto;
+  padding-left: 27px;
+  max-width: 80%;
+  justify-content: center;
+  align-items: center;
+  display: none;
+  &.active{
+    display: flex;
+  }
+  &:before{
+    content: '';
+    display: block;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 27px;
+    height: 27px;
+    background: url(../img/warning.svg) no-repeat center center / contain;
+    left: 20px;
+  }
+}
 @keyframes pulse {
   0% {
     transform: scale(1.1); }
