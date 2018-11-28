@@ -1010,6 +1010,19 @@ a, a:hover {
   -ms-transform: translateY(3px);
   transform: translateY(3px); }
 
+.displayNone {
+  display: none !important; }
+
+.canvas-wrap {
+  width: 840px;
+  height: 600px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 400px; }
+
+#canvas {
+  background-color: #F6F5F5; }
+
 @-webkit-keyframes pulse {
   0% {
     -webkit-transform: scale(1.1);

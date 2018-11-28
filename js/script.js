@@ -54,14 +54,41 @@ function getCoords(elem) {
     };
 }
 
+function hideElems(){
+    const start = document.querySelector('.start');
+    const finish  = document.querySelector('.finish');
+    let timerBlockFunc = document.querySelector(".timer[data-finish]");
+    let elemControlsArray = [];
+    elemControlsArray.push(finish, start);
+    let step = document.querySelector('.step');
+    let auth =  document.querySelector('.authorize');
+    if (timerBlockFunc){
+        if(!step){
+            timerBlockFunc.classList.add('displayNone');
+        }
+        else {
+            timerBlockFunc.classList.remove('displayNone');
+        }
+    }
+    elemControlsArray.map(function (elem) {
+        if(elem){
+            if(auth){
+                elem.classList.add('displayNone');
+            }
+            else {
+                elem.classList.remove('displayNone');
+            }
+        }
+    })
+}
+
 
 function init() {
-    window.onbeforeunload = function() {
-        return "Вы действительно хотите уйти с сайта?";
-    };
-
     const timerBlock = document.querySelector(".timer[data-finish]");
-
+    // window.onbeforeunload = function() {
+    //     return "Вы действительно хотите уйти с сайта?";
+    // };
+    hideElems();
     function check(func) {
         let send = false;
         let checkInterval = setInterval(function () {
@@ -70,7 +97,6 @@ function init() {
                 clearInterval(checkInterval);
                 if (send) {
                     func();
-                    // alert('Ваше время истекло!');
                 }
             }
         }, 1000);
@@ -535,6 +561,33 @@ function init() {
             }
         });
     })();
+
+
+
+    let canvas = document.getElementById('canvas');
+    let ctx = canvas.getContext('2d');
+
+    let coordsArray = [
+      [360, 63], [308, 115], [360, 115], [412, 115], [464, 115], [256, 167], [308, 167], [360, 167], [412, 167]
+    ];
+    coordsArray.map(coord => {
+        ctx.beginPath();
+        ctx.lineWidth="10";
+        ctx.strokeStyle="#B1CD43";
+        ctx.rect(coord[0],coord[1],40,40);
+        ctx.fillStyle = "#F6F5F5";
+        ctx.stroke();
+        ctx.stroke();
+    });
+    canvas.addEventListener('click', function (e) {
+        const mousePos = {
+            x: e.clientX - canvas.offsetTop,
+            y: e.clientY - canvas.offsetLeft
+        };
+        console.log([e.clientX - canvas.offsetTop, e.clientY - canvas.offsetLeft])
+    })
+
+
 
 }
 
