@@ -89,9 +89,10 @@ function hideElems() {
     elemControlsArray.push(finish, start);
     let step = document.querySelector('.step');
     let auth = document.querySelector('.authorize');
+    let timerSettings = document.querySelector('.hidden.timer_settings');
     if (timerBlockFunc) {
         timerBlockFunc.removeAttribute('data-finally');
-        if (!step) {
+        if (!step || !timerSettings)  {
             timerBlockFunc.classList.add('displayNone');
         }
         else {
