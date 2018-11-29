@@ -17,30 +17,47 @@ function ready(fn) {
 }
 
 function sendAJAX(url, data) {
-    fetch(url, {
-        method: "POST",
-        body: data,
-        headers: {
-            "Query-Type": "ajax/fetch"
-        }
-    }).then(function (response) {
-        return response.text();
-    }).then(function (data) {
-        console.log(data);
-        setDoneWidth();
+    // тут добавил полифилл для более старых браузеров
+    function ajaxActions(resp) {
+        console.log(resp);
         let main = document.querySelector('.wrapper');
         main.removeChild(document.querySelector('.main'));
-        main.innerHTML += data;
+        main.innerHTML += resp;
         let script = document.querySelector('.current_script');
         eval(script.textContent);
+        eval(timer());
+        eval(setDoneWidth());
         script = '';
+    }
+    if(window.fetch){
+        fetch(url, {
+            method: "POST",
+            body: data,
+            headers: {
+                "Query-Type": "ajax/fetch"
+            }
+        }).then(function (response) {
+            return response.text();
+        }).then(function (data) {
+            ajaxActions(data);
+        }).catch(function (error) {
+            console.log(error);
+        });
+    }
+    else{
+        let xhr = new XMLHttpRequest();
+        xhr.open("POST", url, true);
+        xhr.setRequestHeader("Query-Type", "ajax/fetch");
+        xhr.onload = function (e) {
+            ajaxActions(e.target.response);
+        };
+        xhr.onerror = error => {
+            console.log('произошла ошибка' + error.code)
+        };
+        xhr.send(data);
+    }
 
-
-    }).catch(function (error) {
-        console.log(error);
-    });
 }
-
 function getParents(elem, clName) {
     let parents = [];
     while (elem && elem !== document) {

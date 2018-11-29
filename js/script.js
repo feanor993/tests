@@ -17,46 +17,19 @@ function ready(fn) {
 }
 
 function sendAJAX(url, data) {
-    // тут добавил полифилл для более старых браузеров
-    function ajaxActions(resp) {
-        console.log(resp);
-        let main = document.querySelector('.wrapper');
-        main.removeChild(document.querySelector('.main'));
-        main.innerHTML += resp;
-        let script = document.querySelector('.current_script');
-        eval(script.textContent);
-        eval(timer());
-        eval(setDoneWidth());
-        script = '';
-    }
-    if(window.fetch){
-        fetch(url, {
-            method: "POST",
-            body: data,
-            headers: {
-                "Query-Type": "ajax/fetch"
-            }
-        }).then(function (response) {
-            return response.text();
-        }).then(function (data) {
-            ajaxActions(data);
-        }).catch(function (error) {
-            console.log(error);
-        });
-    }
-    else{
-        let xhr = new XMLHttpRequest();
-        xhr.open("POST", url, true);
-        xhr.setRequestHeader("Query-Type", "ajax/fetch");
-        xhr.onload = function (e) {
-            ajaxActions(e.target.response);
-        };
-        xhr.onerror = error => {
-            console.log('произошла ошибка' + error.code)
-        };
-        xhr.send(data);
-    }
-
+    fetch(url, {
+        method: "POST",
+        body: data,
+        headers: {
+            "Query-Type": "ajax/fetch"
+        }
+    }).then(function (response) {
+        return response.json();
+    }).then(function (data) {
+        console.log(data);
+    }).catch(function (error) {
+        console.log(error);
+    });
 }
 
 function getParents(elem, clName) {
@@ -691,6 +664,92 @@ function init() {
     }
 
 
+    const stepThree =  document.querySelector('.step_three');
+    (function stepThreeActions(elem = stepThree) {
+        if(!elem){
+            return false;
+        }
+        let controls = elem.querySelectorAll('input');
+        controls.forEach(input => input.addEventListener('input', function (e) {
+            if (elem.dataset.disabled) {
+                controls.forEach(input => input.disabled = true)
+            }
+        }));
+        check(disableSend, elem);
+        let questions =  elem.querySelectorAll('.question-wrap');
+        let numberInputs =  elem.querySelectorAll('.number-input');
+        const btn = elem.querySelector('.step_three__button');
+        numberInputs.forEach(function (number) {
+           number.addEventListener('input', function () {
+               this.value =  this.value.replace(/\D/g, '').substr(0, 4);
+           })
+        });
+        questions.forEach(function (question) {
+            let radios =  question.querySelectorAll('input[type="radio"]');
+            radios.forEach(function (radio) {
+                let label =  radio.parentNode;
+                label.addEventListener('click', function (e) {
+                    let self =  this;
+                    if(!self.querySelector('input[type="radio"]').disabled){
+                        e.preventDefault();
+                        e.stopPropagation();
+                        e.stopImmediatePropagation();
+                        radios = [...radios];
+                        let noThis = radios.filter(rd => rd.parentNode !== self);
+                        noThis.forEach((rad) => rad.checked =  false);
+                        self.querySelector('input[type="radio"]').checked = !self.querySelector('input[type="radio"]').checked ;
+                    }
+                })
+            });
+        });
+        function sendStepThree(){
+            let data =  new FormData();
+            let radiosQuestions = elem.querySelectorAll('.question-wrap[data-type="radio"]');
+            radiosQuestions.forEach(function (radio) {
+                let name =  radio.dataset.index;
+                let checkedElem =  [...radio.querySelectorAll('input[type="radio"]')].filter(r => r.checked);
+                if(checkedElem.length){
+                    data.append(name, checkedElem[0].dataset.name)
+                }
+                else {
+                    data.append(name, null)
+                }
+            });
+            let inputQuestions = elem.querySelectorAll('.question-wrap[data-type="input"]');
+            inputQuestions.forEach(function (inputQuestion) {
+                let name =  inputQuestion.dataset.index;
+               let input =  inputQuestion.querySelector('input[type="text"]');
+               if(input.value){
+                   data.append(name, input.value)
+               }
+               else{
+                   data.append(name, null)
+               }
+            });
+
+            let checkboxQuestions = elem.querySelectorAll('.question-wrap[data-type="checkbox"]');
+            checkboxQuestions.forEach(function (check) {
+                let name =  check.dataset.index;
+                let checkedElems =  [...check.querySelectorAll('input[type="checkbox"]')].filter(cb => cb.checked);
+                if(checkedElems.length){
+                    let ckdArr = [];
+                    checkedElems.map(ckd => {
+                        ckdArr.push(ckd.dataset.name);
+                    });
+                    data.append(name, ckdArr)
+                }
+                else {
+                    data.append(name, null)
+                }
+            });
+
+
+            sendAJAX("https://httpbin.org/post", data);
+
+
+        }
+        btn.addEventListener('click', sendStepThree)
+    })();
 }
 
 ready(init);

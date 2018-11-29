@@ -1,0 +1,393 @@
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="css/main.css">
+    <title>Тесты</title>
+</head>
+<body>
+<div class="wrapper">
+    <header class="header">
+        <div class="start"><img src="img/start.svg" alt=""></div>
+        <a href="#" class="logo"><img src="img/logo.svg" alt=""></a>
+        <div class="finish"><img src="img/finish.svg" alt=""></div>
+        <div class="timer  timer_header" data-finish="30">
+            <div class="timer__time">
+                <div class="timer__minutes">00</div>
+                <span>:</span>
+                <div class="timer__seconds">00</div>
+            </div>
+        </div>
+    </header>
+    <main class="main">
+        <div class="progress">
+            <div class="progress-done__line"></div>
+            <div class="progress-step progress-step_start progress-step_done"></div>
+            <div class="progress-step progress-step_done">
+                <a href="#" class="progress-step__index">Этап 1</a>
+            </div>
+            <div class="progress-step progress-step_active">
+                <a href="#" class="progress-step__index">Этап 2</a>
+            </div>
+            <div class="progress-step">
+                <a href="#" class="progress-step__index">Этап 3</a>
+            </div>
+            <div class="progress-step">
+                <a href="#" class="progress-step__index">Этап 4</a>
+            </div>
+            <div class="progress-step">
+                <a href="#" class="progress-step__index">Этап 5</a>
+            </div>
+            <div class="progress-step progress-step_end"></div>
+        </div>
+        <div class="step step_three">
+            <a href="#" class="step__back">Назад</a>
+            <div class="time-finish">
+                Время закончилось. Дальнейшие ответы не будут учитываться. Пожалуйста, перейдите к следующему этапу.
+            </div>
+            <h1 class="step__title">3 этап</h1>
+            <div class="step-three-wrap">
+                <form action="#" class="step-three__form">
+                    <div class="question-wrap" data-type="radio" data-index="1">
+                        <div class="question__number">1.</div>
+                        <div class="question">
+                            <div class="question__text">Одиннадцатый месяц года – это:</div>
+                            <div class="answers">
+                                <div class="radio-group">
+                                    <label class="radio-label">
+                                        <input type="radio" data-name="1">
+                                        <span class="radio-text">октябрь</span>
+                                    </label>
+                                    <label class="radio-label">
+                                        <input type="radio" data-name="2">
+                                        <span class="radio-text">май</span>
+                                    </label>
+                                    <label class="radio-label">
+                                        <input type="radio" data-name="3">
+                                        <span class="radio-text">ноябрь</span>
+                                    </label>
+                                    <label class="radio-label">
+                                        <input type="radio" data-name="4">
+                                        <span class="radio-text">февраль</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="question-wrap" data-type="radio" data-index="2">
+                        <div class="question__number">2.</div>
+                        <div class="question">
+                            <div class="question__text">СУРОВЫЙ является противоположный по значению слову:</div>
+                            <div class="answers">
+                                <div class="radio-group">
+                                    <label class="radio-label">
+                                        <input type="radio" data-name="1">
+                                        <span class="radio-text">октябрь</span>
+                                    </label>
+                                    <label class="radio-label">
+                                        <input type="radio" data-name="2">
+                                        <span class="radio-text">май</span>
+                                    </label>
+                                    <label class="radio-label">
+                                        <input type="radio" data-name="3">
+                                        <span class="radio-text">ноябрь</span>
+                                    </label>
+                                    <label class="radio-label">
+                                        <input type="radio" data-name="4">
+                                        <span class="radio-text">февраль</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="question-wrap" data-type="input" data-index="3">
+                        <div class="question__number">3.</div>
+                        <div class="question">
+                            <div class="question__text">Сколько из приведенных пар слов являются полностью
+                                идентичными?
+                            </div>
+                            <div class="answers">
+                                <div class="cols">
+                                    <div class="answers-cols">
+                                        <div class="answer-col">
+                                            <div class="answer-col__el">Sharp, M.G.</div>
+                                            <div class="answer-col__el">Fielder, E.H.</div>
+                                            <div class="answer-col__el">Connor, M.G.</div>
+                                            <div class="answer-col__el">Woesner, O.W.</div>
+                                            <div class="answer-col__el">Soberquist, P.R.</div>
+                                        </div>
+                                        <div class="answer-col">
+                                            <div class="answer-col__el">Sharp, M.G.</div>
+                                            <div class="answer-col__el">Fielder, E.H.</div>
+                                            <div class="answer-col__el">Connor, M.G.</div>
+                                            <div class="answer-col__el">Woesner, O.W.</div>
+                                            <div class="answer-col__el">Soberquist, P.R.</div>
+                                        </div>
+                                    </div>
+                                    <div class="input-col">
+                                        <input type="text" class="small-input answer-input number-input">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="question-wrap" data-type="radio" data-index="4">
+                        <div class="question__number">4.</div>
+                        <div class="question">
+                            <div class="question__text">Какой из приведенных ниже рисунков наиболее отличен от других?
+                            </div>
+                            <div class="image-group">
+                                <div class="question-image-wrap">
+                                    <div class="question-image__number">1.</div>
+                                    <div class="question-image">
+                                        <img src="img/figure1.svg" alt="">
+                                    </div>
+                                </div>
+                                <div class="question-image-wrap">
+                                    <div class="question-image__number">2.</div>
+                                    <div class="question-image">
+                                        <img src="img/figure2.svg" alt="">
+                                    </div>
+                                </div>
+                                <div class="question-image-wrap">
+                                    <div class="question-image__number">3.</div>
+                                    <div class="question-image">
+                                        <img src="img/figure3.svg" alt="">
+                                    </div>
+                                </div>
+                                <div class="question-image-wrap">
+                                    <div class="question-image__number">4.</div>
+                                    <div class="question-image">
+                                        <img src="img/figure4.svg" alt="">
+                                    </div>
+                                </div>
+                                <div class="question-image-wrap">
+                                    <div class="question-image__number">5.</div>
+                                    <div class="question-image">
+                                        <img src="img/figure5.svg" alt="">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="answers">
+                                <div class="radio-group">
+                                    <label class="radio-label">
+                                        <input type="radio" data-name="1">
+                                        <span class="radio-text">1</span>
+                                    </label>
+                                    <label class="radio-label">
+                                        <input type="radio" data-name="2">
+                                        <span class="radio-text">2</span>
+                                    </label>
+                                    <label class="radio-label">
+                                        <input type="radio" data-name="3">
+                                        <span class="radio-text">3</span>
+                                    </label>
+                                    <label class="radio-label">
+                                        <input type="radio" data-name="4">
+                                        <span class="radio-text">4</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="question-wrap" data-type="input" data-index="5">
+                        <div class="question__number">5.</div>
+                        <div class="question">
+                            <div class="question__text">Два рыбака поймали 36 рыб. Первый поймал в 8 раз больше, чем
+                                второй.
+                                Сколько поймал второй?
+                            </div>
+                            <div class="answers">
+                                <label class="input-label input-label__big">
+                                    <span class="input-label__text">Напиши ответ</span>
+                                    <input type="text" class="full-input answer-input">
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="question-wrap" data-type="checkbox" data-index="6">
+                        <div class="question__number">6.</div>
+                        <div class="question">
+                            <div class="question__text">Две из приведенных ниже фраз имеют одинаковый смысл. Какие?
+                            </div>
+                            <div class="answers">
+                                <div class="answers-cols answers-cols_number">
+                                    <div class="answer-col">
+                                        <div class="answer-col__el"><span class="answer__number">1. </span> Держать нос
+                                            по ветру
+                                        </div>
+                                        <div class="answer-col__el"><span class="answer__number">2. </span> Пустой мешок
+                                            не стоит
+                                        </div>
+                                        <div class="answer-col__el"><span class="answer__number">3. </span> Трое
+                                            докторов не лучше одного
+                                        </div>
+                                    </div>
+                                    <div class="answer-col">
+                                        <div class="answer-col__el"><span class="answer__number">4. </span> Не все то
+                                            золото, что блестит
+                                        </div>
+                                        <div class="answer-col__el"><span class="answer__number">5. </span> У семи нянек
+                                            дитя без глаза
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="checkboxes-group">
+                                    <label class="checkbox-label">
+                                        <input type="checkbox" data-name="1">
+                                        <span class="radio-text">1</span>
+                                    </label>
+                                    <label class="checkbox-label">
+                                        <input type="checkbox" data-name="2">
+                                        <span class="radio-text">2</span>
+                                    </label>
+                                    <label class="checkbox-label">
+                                        <input type="checkbox" data-name="3">
+                                        <span class="radio-text">3</span>
+                                    </label>
+                                    <label class="checkbox-label">
+                                        <input type="checkbox" data-name="4">
+                                        <span class="radio-text">4</span>
+                                    </label>
+                                    <label class="checkbox-label">
+                                        <input type="checkbox" data-name="5">
+                                        <span class="radio-text">5</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="question-wrap" data-type="radio" data-index="7">
+                        <div class="question__number">7.</div>
+                        <div class="question">
+                            <div class="question__text">Предположим, что первые два утверждения верны. Тогда последнее
+                                будет:
+                            </div>
+                            <div class="answers">
+                                <div class="radio-group">
+                                    <label class="radio-label">
+                                        <input type="radio" data-name="1">
+                                        <span class="radio-text">верно</span>
+                                    </label>
+                                    <label class="radio-label">
+                                        <input type="radio" data-name="2">
+                                        <span class="radio-text">неверно</span>
+                                    </label>
+                                    <label class="radio-label">
+                                        <input type="radio" data-name="3">
+                                        <span class="radio-text">неопределенно</span>
+                                    </label>
+                                </div>
+                                <div class="answer-bottom">Саша поздоровался с Асей. Ася поздоровалась с Аней. Саша не
+                                    поздоровался с Аней.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="question-wrap" data-type="input" data-index="8">
+                        <div class="question__number">8.</div>
+                        <div class="question">
+                            <div class="question__text">Продолжи последовательность:</div>
+                            <div class="answers">
+                                <div class="answer-row">
+                                    <div class="answer-row-block">73</div>
+                                    <div class="answer-row-block">66</div>
+                                    <div class="answer-row-block">59</div>
+                                    <div class="answer-row-block">52</div>
+                                    <div class="answer-row-block">45</div>
+                                    <div class="answer-row-block">38</div>
+                                    <input type="text" class="small-input answer-input number-input">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="question-wrap" data-type="input" data-index="9">
+                        <div class="question__number">9.</div>
+                        <div class="question">
+                            <div class="question__text">Один из членов ряда не подходит к другим. Каким числом Вы бы его
+                                заменили?
+                            </div>
+                            <div class="answers">
+                                <div class="answer-row">
+                                    <div class="answer-row-block">1/4</div>
+                                    <div class="answer-row-block">1/8</div>
+                                    <div class="answer-row-block">1/8</div>
+                                    <div class="answer-row-block">1/4</div>
+                                    <div class="answer-row-block">1/8</div>
+                                    <div class="answer-row-block">1/8</div>
+                                    <div class="answer-row-block">1/4</div>
+                                    <div class="answer-row-block">1/6</div>
+                                    <input type="text" class="small-input answer-input">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="question-wrap" data-type="checkbox" data-index="10">
+                        <div class="question__number">10.</div>
+                        <div class="question">
+                            <div class="question__text">Три из 4 фигур нужно соединить таким образом, чтобы получилась
+                                равнобедренная трапеция. Отметьте нужные.
+                            </div>
+                            <div class="answers">
+                                <div class="image-group image-group_no-wrap">
+                                    <div class="question-image-wrap">
+                                        <div class="question-image__number">А.</div>
+                                        <div class="question-image">
+                                            <img src="img/trap1.svg" alt="">
+                                        </div>
+                                    </div>
+                                    <div class="question-image-wrap">
+                                        <div class="question-image__number">Б.</div>
+                                        <div class="question-image">
+                                            <img src="img/trap2.svg" alt="">
+                                        </div>
+                                    </div>
+                                    <div class="question-image-wrap">
+                                        <div class="question-image__number">В.</div>
+                                        <div class="question-image">
+                                            <img src="img/trap3.svg" alt="">
+                                        </div>
+                                    </div>
+                                    <div class="question-image-wrap">
+                                        <div class="question-image__number">Г.</div>
+                                        <div class="question-image">
+                                            <img src="img/trap4.svg" alt="">
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="checkboxes-group">
+                                    <label class="checkbox-label">
+                                        <input type="checkbox" data-name="1">
+                                        <span class="radio-text">А.</span>
+                                    </label>
+                                    <label class="checkbox-label">
+                                        <input type="checkbox" data-name="2">
+                                        <span class="radio-text">Б.</span>
+                                    </label>
+                                    <label class="checkbox-label">
+                                        <input type="checkbox" data-name="3">
+                                        <span class="radio-text">В.</span>
+                                    </label>
+                                    <label class="checkbox-label">
+                                        <input type="checkbox" data-name="4">
+                                        <span class="radio-text">Г.</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <button class="goTest-btn step_three__button" type="button">Далее</button>
+        </div>
+        <div class="hidden timer_settings" data-timer="1000"></div>
+    </main>
+</div>
+<script src="js/script.js"></script>
+</body>
+</html>

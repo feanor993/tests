@@ -1069,6 +1069,235 @@ a, a:hover {
     background: url(../img/warning.svg) no-repeat center center/contain;
     left: 20px; }
 
+.step-three-wrap {
+  width: 885px;
+  margin: 30px auto 60px auto; }
+
+.question-wrap {
+  width: 100%;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: start;
+  -webkit-align-items: flex-start;
+  -ms-flex-align: start;
+  align-items: flex-start;
+  margin-bottom: 32px; }
+  .question-wrap:last-of-type {
+    margin-bottom: 0; }
+
+.question__number {
+  font-size: 20px;
+  font-family: "Geometria-Bold", sans-serif;
+  color: #3c3c3c;
+  margin-right: 20px; }
+
+.question {
+  width: 840px;
+  min-width: 840px;
+  -webkit-border-radius: 4px;
+  border-radius: 4px;
+  border: solid 1px #ececec;
+  padding: 20px 40px 30px 40px; }
+
+.question__text {
+  font-size: 20px;
+  font-family: "Geometria-Medium", sans-serif;
+  line-height: 1.4;
+  color: #3c3c3c;
+  margin-bottom: 20px; }
+
+.cols {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex; }
+
+.answers-cols {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  margin-right: 100px; }
+
+.answer-col {
+  margin-right: 50px; }
+  .answer-col:last-of-type {
+    margin-right: 0; }
+
+.answer-col__el {
+  font-size: 16px;
+  line-height: 1.75;
+  color: #3c3c3c; }
+
+.image-group {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-wrap: wrap;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap; }
+
+.question-image-wrap {
+  margin-right: 80px;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: start;
+  -webkit-align-items: flex-start;
+  -ms-flex-align: start;
+  align-items: flex-start;
+  margin-bottom: 44px; }
+  .question-image-wrap:last-of-type {
+    margin-right: 0; }
+
+.question-image__number {
+  font-size: 20px;
+  font-family: "Geometria-Bold", sans-serif;
+  color: #3c3c3c;
+  margin-right: 15px; }
+
+.answer-row {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+  -ms-flex-align: center;
+  align-items: center; }
+
+.image-group.image-group_no-wrap {
+  -webkit-flex-wrap: nowrap;
+  -ms-flex-wrap: nowrap;
+  flex-wrap: nowrap; }
+  .image-group.image-group_no-wrap .question-image-wrap {
+    margin-right: 50px; }
+
+.radio-group, .checkboxes-group {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex; }
+
+.radio-label {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  margin-right: 80px;
+  cursor: pointer; }
+  .radio-label:last-of-type {
+    margin-right: 0; }
+  .radio-label input[type="radio"] {
+    display: none; }
+    .radio-label input[type="radio"]:checked + .radio-text:before {
+      background-color: #e6f6a5;
+      border-color: #b1cd43; }
+
+.radio-text {
+  display: block;
+  position: relative;
+  font-size: 16px;
+  color: #3c3c3c;
+  padding-left: 31px; }
+  .radio-text:before {
+    content: '';
+    display: block;
+    width: 21px;
+    height: 21px;
+    -webkit-border-radius: 2px;
+    border-radius: 2px;
+    background-color: #ececec;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    position: absolute;
+    left: 0;
+    top: 50%;
+    -webkit-transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+    border: 5px solid #ececec; }
+
+.answer-input {
+  -webkit-border-radius: 4px;
+  border-radius: 4px;
+  border: solid 1px #e6e6e6;
+  background-color: #fafafa;
+  display: block;
+  padding-left: 10px;
+  -webkit-transition: .4s ease;
+  -o-transition: .4s ease;
+  transition: .4s ease;
+  font-size: 16px;
+  font-family: "Geometria", sans-serif;
+  color: #3c3c3c; }
+  .answer-input:focus {
+    background-color: #fff;
+    border-color: #b1cd43; }
+  .answer-input.small-input {
+    width: 69px;
+    height: 50px; }
+  .answer-input.full-input {
+    width: 100%;
+    height: 50px; }
+
+.input-label__text {
+  font-size: 16px;
+  font-family: "Geometria-Medium", sans-serif;
+  color: #3c3c3c;
+  display: block;
+  margin-bottom: 15px; }
+
+.answer-bottom {
+  font-size: 16px;
+  font-family: "Geometria-Medium", sans-serif;
+  color: #333333;
+  margin-top: 33px; }
+
+.input-label {
+  display: block; }
+
+.answers-cols_number {
+  margin-bottom: 40px; }
+  .answers-cols_number .answer-col__el {
+    margin-bottom: 33px;
+    line-height: 1; }
+    .answers-cols_number .answer-col__el:last-of-type {
+      margin-bottom: 0; }
+
+.answer__number {
+  display: inline-block;
+  font-size: 20px;
+  font-family: "Geometria-Bold", sans-serif;
+  color: #3c3c3c;
+  margin-right: 10px; }
+
+.answer-row-block {
+  font-size: 20px;
+  font-family: "Geometria-Medium", sans-serif;
+  color: #3c3c3c;
+  margin-right: 18px; }
+
+.checkbox-label {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  margin-right: 80px;
+  cursor: pointer; }
+  .checkbox-label:last-of-type {
+    margin-right: 0; }
+  .checkbox-label input[type="checkbox"] {
+    display: none; }
+  .checkbox-label input[type="checkbox"]:checked + span.radio-text:before {
+    background: #b1cd43 url("../img/check.svg") no-repeat center center/100%;
+    border-color: #b1cd43; }
+
 @-webkit-keyframes pulse {
   0% {
     -webkit-transform: scale(1.1);
