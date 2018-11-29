@@ -709,10 +709,10 @@ function init() {
                 let name =  radio.dataset.index;
                 let checkedElem =  [...radio.querySelectorAll('input[type="radio"]')].filter(r => r.checked);
                 if(checkedElem.length){
-                    data.append(name, checkedElem[0].dataset.name)
+                    data.append(name, JSON.stringify([checkedElem[0].dataset.name]));
                 }
                 else {
-                    data.append(name, null)
+                    data.append(name, JSON.stringify([null]))
                 }
             });
             let inputQuestions = elem.querySelectorAll('.question-wrap[data-type="input"]');
@@ -720,10 +720,10 @@ function init() {
                 let name =  inputQuestion.dataset.index;
                 let input =  inputQuestion.querySelector('input[type="text"]');
                 if(input.value){
-                    data.append(name, input.value)
+                    data.append(name, JSON.stringify([input.value]));
                 }
                 else{
-                    data.append(name, null)
+                    data.append(name, JSON.stringify([null]))
                 }
             });
 
@@ -733,13 +733,11 @@ function init() {
                 let checkedElems =  [...check.querySelectorAll('input[type="checkbox"]')].filter(cb => cb.checked);
                 if(checkedElems.length){
                     let ckdArr = [];
-                    checkedElems.map(ckd => {
-                        ckdArr.push(ckd.dataset.name);
-                    });
+                    checkedElems.map(ckd => ckdArr.push(ckd.dataset.name));
                     data.append(name, JSON.stringify(ckdArr))
                 }
                 else {
-                    data.append(name, null)
+                    data.append(name, JSON.stringify([null]))
                 }
             });
 
