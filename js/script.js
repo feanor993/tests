@@ -680,9 +680,9 @@ function init() {
         let numberInputs =  elem.querySelectorAll('.number-input');
         const btn = elem.querySelector('.step_three__button');
         numberInputs.forEach(function (number) {
-           number.addEventListener('input', function () {
-               this.value =  this.value.replace(/\D/g, '').substr(0, 4);
-           })
+            number.addEventListener('input', function () {
+                this.value =  this.value.replace(/\D/g, '').substr(0, 4);
+            })
         });
         questions.forEach(function (question) {
             let radios =  question.querySelectorAll('input[type="radio"]');
@@ -718,13 +718,13 @@ function init() {
             let inputQuestions = elem.querySelectorAll('.question-wrap[data-type="input"]');
             inputQuestions.forEach(function (inputQuestion) {
                 let name =  inputQuestion.dataset.index;
-               let input =  inputQuestion.querySelector('input[type="text"]');
-               if(input.value){
-                   data.append(name, input.value)
-               }
-               else{
-                   data.append(name, null)
-               }
+                let input =  inputQuestion.querySelector('input[type="text"]');
+                if(input.value){
+                    data.append(name, input.value)
+                }
+                else{
+                    data.append(name, null)
+                }
             });
 
             let checkboxQuestions = elem.querySelectorAll('.question-wrap[data-type="checkbox"]');
@@ -736,7 +736,7 @@ function init() {
                     checkedElems.map(ckd => {
                         ckdArr.push(ckd.dataset.name);
                     });
-                    data.append(name, ckdArr)
+                    data.append(name, JSON.stringify(ckdArr))
                 }
                 else {
                     data.append(name, null)
