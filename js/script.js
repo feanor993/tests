@@ -17,19 +17,46 @@ function ready(fn) {
 }
 
 function sendAJAX(url, data) {
-    fetch(url, {
-        method: "POST",
-        body: data,
-        headers: {
-            "Query-Type": "ajax/fetch"
-        }
-    }).then(function (response) {
-        return response.json();
-    }).then(function (data) {
-        console.log(data);
-    }).catch(function (error) {
-        console.log(error);
-    });
+    // тут добавил полифилл для более старых браузеров
+    function ajaxActions(resp) {
+        console.log(resp);
+        let main = document.querySelector('.wrapper');
+        main.removeChild(document.querySelector('.main'));
+        main.innerHTML += resp;
+        let script = document.querySelector('.current_script');
+        eval(script.textContent);
+        eval(timer());
+        eval(setDoneWidth());
+        script = '';
+    }
+    if(window.fetch){
+        fetch(url, {
+            method: "POST",
+            body: data,
+            headers: {
+                "Query-Type": "ajax/fetch"
+            }
+        }).then(function (response) {
+            return response.text();
+        }).then(function (data) {
+            ajaxActions(data);
+        }).catch(function (error) {
+            console.log(error);
+        });
+    }
+    else{
+        let xhr = new XMLHttpRequest();
+        xhr.open("POST", url, true);
+        xhr.setRequestHeader("Query-Type", "ajax/fetch");
+        xhr.onload = function (e) {
+            ajaxActions(e.target.response);
+        };
+        xhr.onerror = error => {
+            console.log('произошла ошибка' + error.code)
+        };
+        xhr.send(data);
+    }
+
 }
 
 function getParents(elem, clName) {
@@ -63,6 +90,7 @@ function hideElems() {
     let step = document.querySelector('.step');
     let auth = document.querySelector('.authorize');
     if (timerBlockFunc) {
+        timerBlockFunc.removeAttribute('data-finally');
         if (!step) {
             timerBlockFunc.classList.add('displayNone');
         }
@@ -84,32 +112,92 @@ function hideElems() {
 
 function disableSend(elem) {
     elem.dataset.disabled = true;
-    let finallyWarning =  elem.querySelector('.time-finish');
-    if(finallyWarning){
+    let finallyWarning = elem.querySelector('.time-finish');
+    if (finallyWarning) {
         finallyWarning.classList.add('active')
     }
 }
 
+function check(func, elem) {
+    let send = false;
+
+    let checkInterval = setInterval(function () {
+        if (document.querySelector(".timer[data-finish]").dataset.finally) {
+            send = true;
+            clearInterval(checkInterval);
+            if (send) {
+                func(elem);
+            }
+        }
+    }, 1000);
+}
+
+function timer(elem = document.querySelector(".timer[data-finish]")) {
+    let timerCounterBlock = document.querySelector('.timer_settings.hidden');
+    if (!elem || !timerCounterBlock) {
+        return false;
+    }
+    let secEl = elem.querySelector(".timer__seconds");
+    let minEl = elem.querySelector(".timer__minutes");
+    let finish = parseInt(timerCounterBlock.dataset.timer);
+
+    let minutes = Math.floor(finish / 60);
+    let seconds = finish % 60;
+    let minutesText = String(minutes >= 10 ? minutes : '0' + minutes);
+    let secondsText = String(seconds >= 10 ? seconds : '0' + seconds);
+    minEl.textContent = minutesText;
+    secEl.textContent = secondsText;
+    let timerInterval = setInterval(function () {
+        seconds--;
+        if ((seconds === 0 || seconds < 0) && minutes > 0) {
+            seconds = 59;
+            minutes--;
+            secEl.innerText = seconds;
+            if (minutes < 10) {
+                minEl.innerText = `0${minutes}`;
+            }
+            else {
+                minEl.innerText = minutes;
+            }
+        }
+        else if (seconds < 10 && seconds !== 0) {
+            secEl.innerText = `0${seconds}`;
+        }
+        else {
+            secEl.innerText = seconds;
+        }
+        if (seconds <= 59 && minutes < 1) {
+            elem.classList.add("timer_bad");
+        }
+        if (seconds < 1 && minutes < 1) {
+            secEl.innerText = `0${seconds}`;
+            elem.dataset.finally = true;
+            clearInterval(timerInterval);
+        }
+    }, 1000);
+
+}
+
+timer();
+
+function setDoneWidth() {
+    let doneSteps = document.querySelectorAll(".progress-step_done");
+    let doneLine = document.querySelector(".progress-done__line");
+    if (doneSteps && doneLine) {
+        let width = 0;
+        doneSteps.forEach((ds) => width += ds.clientWidth);
+        doneLine.style.width = width + "px";
+    }
+};
+setDoneWidth();
+
 function init() {
-    const timerBlock = document.querySelector(".timer[data-finish]");
-    // window.onbeforeunload = function() {
+    // window.onbeforeunload = function () {
     //     return "Вы действительно хотите уйти с сайта?";
     // };
     hideElems();
-
-    function check(func, elem) {
-        let send = false;
-        let checkInterval = setInterval(function () {
-            if (timerBlock.dataset.finally) {
-                send = true;
-                clearInterval(checkInterval);
-                if (send) {
-                    func(elem);
-                }
-            }
-        }, 1000);
-    }
-
+    timer();
+    setDoneWidth();
     let authForm = document.querySelector(".form-authorize");
     if (authForm) {
         let schoolInput = authForm.querySelector("input[name='userSchool']");
@@ -196,80 +284,42 @@ function init() {
             }
             if (!empty.length && (email.value.match(regExpMail))) {
                 inputs.forEach((input) => formData.append(input.name, input.value));
-                sendAJAX("https://httpbin.org/post", formData);
+                sendAJAX("/diagnostika/index.php", formData);
             }
 
         });
     }
-
-    function setDoneWidth() {
-        let doneSteps = document.querySelectorAll(".progress-step_done");
-        let doneLine = document.querySelector(".progress-done__line");
-        if (doneSteps && doneLine) {
-            let width = 0;
-            doneSteps.forEach((ds) => width += ds.clientWidth);
-            doneLine.style.width = width + "px";
-        }
-    }
-
-    setDoneWidth();
     window.addEventListener("resize", setDoneWidth);
     let progressIndexes = document.querySelectorAll(".progress-step__index");
     if (progressIndexes) {
-        progressIndexes.forEach(function (p) {
-            let act = p.parentNode.className.includes("active");
-            let done = p.parentNode.className.includes("done");
+        progressIndexes.forEach(function (link) {
+            let act = link.parentNode.className.includes("active");
+            let done = link.parentNode.className.includes("done");
             let bool = act || done;
-            p.addEventListener("click", (e) => bool ? true : e.preventDefault());
+            link.addEventListener("click", (e) => {
+                if (!bool){
+                    e.preventDefault();
+                }
+                else {
+                    let timerBlockF = document.querySelector(".timer[data-finish]");
+                    if(timerBlockF){
+                        if(!timerBlockF.dataset.finally){
+                            let question = confirm( 'Если вы покините этот шаг сейчас, результаты обнулятся, Вы уверены?');
+                            if(!question){
+                                e.preventDefault();
+                            }
+                            else {
+                                /// тут нужно  вставить  код, который отвечает за переход по шагам(если пользователь утвердил переход)
+                            }
+                        }
+                    }
+
+
+                }
+            });
         });
     }
 
-
-    (function timer(elem = timerBlock) {
-        let timerCounterBlock = document.querySelector('.timer_settings.hidden');
-        if (!elem || !timerCounterBlock) {
-            return false;
-        }
-        let secEl = elem.querySelector(".timer__seconds");
-        let minEl = elem.querySelector(".timer__minutes");
-        let finish = parseInt(timerCounterBlock.dataset.timer);
-
-        let minutes = Math.floor(finish / 60);
-        let seconds = finish % 60;
-        let minutesText = String(minutes >= 10 ? minutes : '0' + minutes);
-        let secondsText = String(seconds >= 10 ? seconds : '0' + seconds);
-        minEl.textContent = minutesText;
-        secEl.textContent = secondsText;
-        let timerInterval = setInterval(function () {
-            seconds--;
-            if ((seconds === 0 || seconds < 0) && minutes > 0) {
-                seconds = 59;
-                minutes--;
-                secEl.innerText = seconds;
-                if (minutes < 10) {
-                    minEl.innerText = `0${minutes}`;
-                }
-                else {
-                    minEl.innerText = minutes;
-                }
-            }
-            else if (seconds < 10 && seconds !== 0) {
-                secEl.innerText = `0${seconds}`;
-            }
-            else {
-                secEl.innerText = seconds;
-            }
-            if (seconds <= 59 && minutes < 1) {
-                elem.classList.add("timer_bad");
-            }
-            if (seconds < 1 && minutes < 1) {
-                secEl.innerText = `0${seconds}`;
-                timerBlock.dataset.finally = true;
-                clearInterval(timerInterval);
-
-            }
-        }, 1000);
-    })();
 
     const stepOne = document.querySelector(".step_one");
 
@@ -530,6 +580,7 @@ function init() {
                 }
             });
         })();
+
         function sendStepFive() {
             let data = new FormData();
             if (userWords.dataset.find) {
@@ -542,8 +593,10 @@ function init() {
             sendAJAX("https://httpbin.org/post", data);
             return true;
         }
+
         btn.addEventListener('click', sendStepFive);
     })();
+
 
 
     let canvas = document.getElementById('canvas');
@@ -553,6 +606,13 @@ function init() {
         let coordsArray = [
             [360, 63], [308, 115], [360, 115], [412, 115], [464, 115], [256, 167], [308, 167], [360, 167], [412, 167]
         ];
+        let pointsArray = [];
+        coordsArray.forEach(coord => {
+            let x = coord[0] + 60;
+            let y = coord[1] + 60;
+            pointsArray.push(Array(x, y));
+        });
+        let resultArray = coordsArray.concat(pointsArray);
         coordsArray.map(coord => {
             ctx.beginPath();
             ctx.lineWidth = "10";
@@ -562,17 +622,68 @@ function init() {
             ctx.stroke();
             ctx.stroke();
         });
+        let obj = {
+            currentClick: [],
+            prevClick: []
+        };
+        let clickCount = 0;
+
         canvas.addEventListener('click', function (e) {
             const mousePos = {
                 x: e.layerX,
                 y: e.layerY
             };
-            coordsArray.map(coord => {
-                if ((coord[0] < mousePos.x + 10 && coord[0] > mousePos.x - 10) && (coord[1] < mousePos.y + 10 && coord[1] > mousePos.y - 10)) {
-                    console.log('совпадает')
+
+            resultArray.map(coord => {
+                let inX = coord[0] < mousePos.x + 20 && coord[0] > mousePos.x - 20;
+                let inY = coord[1] < mousePos.y + 20 && coord[1] > mousePos.y - 20;
+                if (inX && inY) {
+                    clickCount += 1;
+                    if (clickCount === 1) {
+                        obj.currentClick = [coord[0], coord[1]];
+                    } else {
+                        obj.prevClick = [...obj.currentClick];
+                        obj.currentClick = [coord[0], coord[1]];
+                    }
+
+                    if(obj.currentClick.length && obj.prevClick.length && (obj.currentClick !== obj.prevClick)){
+                        let rX = Math.abs((obj.prevClick[0] -13)  - (obj.currentClick[0] -6));
+                        let rY = Math.abs((obj.prevClick[1] -13) - (obj.currentClick[1] -6));
+                        if((rX < 20 && rY > 45) || (rY < 20 && rX > 45)){
+                            if (obj.currentClick[1] >  obj.prevClick[1] ) {
+                                if (obj.currentClick[0] >  obj.prevClick[0] ){
+                                    console.log(1)
+                                }
+                                else{
+                                    console.log(2)
+                                }
+                                ctx.beginPath();
+                                ctx.strokeStyle = "#FFD207";
+                                ctx.lineWidth = "3";
+                                ctx.moveTo(obj.prevClick[0] -6 ,obj.prevClick[1] -6);
+                                ctx.lineTo(obj.currentClick[0] -13, obj.currentClick[1] -13);
+                                ctx.stroke();
+                            }
+                            else if(obj.currentClick[1] <=  obj.prevClick[1]) {
+                                if (obj.currentClick[0] >  obj.prevClick[0] ){
+                                    console.log(1)
+                                }
+                                else{
+                                    console.log(2)
+                                }
+                                ctx.beginPath();
+                                ctx.strokeStyle = "#FFD207";
+                                ctx.lineWidth = "3";
+                                ctx.moveTo(obj.prevClick[0] -13 ,obj.prevClick[1] -13);
+                                ctx.lineTo(obj.currentClick[0] -6,obj.currentClick[1] -6);
+                                ctx.stroke();
+                            }
+                        }
+                        console.log(obj)
+                    }
                 }
                 else {
-                    console.log(e.layerX, e.layerY)
+                    return false
                 }
             });
         })

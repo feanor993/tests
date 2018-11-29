@@ -16,49 +16,29 @@ function ready(fn) {
     }
 }
 
-
-
 function sendAJAX(url, data) {
-    // тут добавил полифилл для более старых браузеров
-    function ajaxActions(resp) {
-        console.log(resp);
+    fetch(url, {
+        method: "POST",
+        body: data,
+        headers: {
+            "Query-Type": "ajax/fetch"
+        }
+    }).then(function (response) {
+        return response.text();
+    }).then(function (data) {
+        console.log(data);
+        setDoneWidth();
         let main = document.querySelector('.wrapper');
         main.removeChild(document.querySelector('.main'));
-        main.innerHTML += resp;
+        main.innerHTML += data;
         let script = document.querySelector('.current_script');
         eval(script.textContent);
-        eval(timer());
-        eval(setDoneWidth());
         script = '';
-    }
-    if(window.fetch){
-        fetch(url, {
-            method: "POST",
-            body: data,
-            headers: {
-                "Query-Type": "ajax/fetch"
-            }
-        }).then(function (response) {
-            return response.text();
-        }).then(function (data) {
-            ajaxActions(data);
-        }).catch(function (error) {
-            console.log(error);
-        });
-    }
-    else{
-        let xhr = new XMLHttpRequest();
-        xhr.open("POST", url, true);
-        xhr.setRequestHeader("Query-Type", "ajax/fetch");
-        xhr.onload = function (e) {
-            ajaxActions(e.target.response);
-        };
-        xhr.onerror = error => {
-            console.log('произошла ошибка' + error.code)
-        };
-        xhr.send(data);
-    }
 
+
+    }).catch(function (error) {
+        console.log(error);
+    });
 }
 
 function getParents(elem, clName) {
@@ -113,17 +93,17 @@ function hideElems() {
 
 function disableSend(elem) {
     elem.dataset.disabled = true;
-    let finallyWarning = elem.querySelector('.time-finish');
-    if (finallyWarning) {
+    let finallyWarning =  elem.querySelector('.time-finish');
+    if(finallyWarning){
         finallyWarning.classList.add('active')
     }
 }
 
 function check(func, elem) {
+    let timerBlockFunc = document.querySelector(".timer[data-finish]");
     let send = false;
-
     let checkInterval = setInterval(function () {
-        if (document.querySelector(".timer[data-finish]").dataset.finally) {
+        if (timerBlockFunc.dataset.finally) {
             send = true;
             clearInterval(checkInterval);
             if (send) {
@@ -133,72 +113,25 @@ function check(func, elem) {
     }, 1000);
 }
 
-function timer(elem = document.querySelector(".timer[data-finish]")) {
-    let timerCounterBlock = document.querySelector('.timer_settings.hidden');
-    if (!elem || !timerCounterBlock) {
-        return false;
-    }
-    let secEl = elem.querySelector(".timer__seconds");
-    let minEl = elem.querySelector(".timer__minutes");
-    let finish = parseInt(timerCounterBlock.dataset.timer);
-
-    let minutes = Math.floor(finish / 60);
-    let seconds = finish % 60;
-    let minutesText = String(minutes >= 10 ? minutes : '0' + minutes);
-    let secondsText = String(seconds >= 10 ? seconds : '0' + seconds);
-    minEl.textContent = minutesText;
-    secEl.textContent = secondsText;
-    let timerInterval = setInterval(function () {
-        seconds--;
-        if ((seconds === 0 || seconds < 0) && minutes > 0) {
-            seconds = 59;
-            minutes--;
-            secEl.innerText = seconds;
-            if (minutes < 10) {
-                minEl.innerText = `0${minutes}`;
-            }
-            else {
-                minEl.innerText = minutes;
-            }
-        }
-        else if (seconds < 10 && seconds !== 0) {
-            secEl.innerText = `0${seconds}`;
-        }
-        else {
-            secEl.innerText = seconds;
-        }
-        if (seconds <= 59 && minutes < 1) {
-            elem.classList.add("timer_bad");
-        }
-        if (seconds < 1 && minutes < 1) {
-            secEl.innerText = `0${seconds}`;
-            elem.dataset.finally = true;
-            clearInterval(timerInterval);
-        }
-    }, 1000);
-
-}
-
-timer();
-
 function setDoneWidth() {
     let doneSteps = document.querySelectorAll(".progress-step_done");
     let doneLine = document.querySelector(".progress-done__line");
+
     if (doneSteps && doneLine) {
         let width = 0;
         doneSteps.forEach((ds) => width += ds.clientWidth);
         doneLine.style.width = width + "px";
+        console.log(doneSteps,doneLine );
     }
-};
-setDoneWidth();
-
+}
 function init() {
-    window.onbeforeunload = function () {
-        return "Вы действительно хотите уйти с сайта?";
-    };
+    const timerBlock = document.querySelector(".timer[data-finish]");
+    // window.onbeforeunload = function() {
+    //     return "Вы действительно хотите уйти с сайта?";
+    // };
     hideElems();
-    timer();
-    setDoneWidth();
+
+
     let authForm = document.querySelector(".form-authorize");
     if (authForm) {
         let schoolInput = authForm.querySelector("input[name='userSchool']");
@@ -290,6 +223,10 @@ function init() {
 
         });
     }
+
+
+
+    setDoneWidth();
     window.addEventListener("resize", setDoneWidth);
     let progressIndexes = document.querySelectorAll(".progress-step__index");
     if (progressIndexes) {
@@ -301,6 +238,52 @@ function init() {
         });
     }
 
+
+    (function timer(elem = timerBlock) {
+        let timerCounterBlock = document.querySelector('.timer_settings.hidden');
+        if (!elem || !timerCounterBlock) {
+            return false;
+        }
+        let secEl = elem.querySelector(".timer__seconds");
+        let minEl = elem.querySelector(".timer__minutes");
+        let finish = parseInt(timerCounterBlock.dataset.timer);
+
+        let minutes = Math.floor(finish / 60);
+        let seconds = finish % 60;
+        let minutesText = String(minutes >= 10 ? minutes : '0' + minutes);
+        let secondsText = String(seconds >= 10 ? seconds : '0' + seconds);
+        minEl.textContent = minutesText;
+        secEl.textContent = secondsText;
+        let timerInterval = setInterval(function () {
+            seconds--;
+            if ((seconds === 0 || seconds < 0) && minutes > 0) {
+                seconds = 59;
+                minutes--;
+                secEl.innerText = seconds;
+                if (minutes < 10) {
+                    minEl.innerText = `0${minutes}`;
+                }
+                else {
+                    minEl.innerText = minutes;
+                }
+            }
+            else if (seconds < 10 && seconds !== 0) {
+                secEl.innerText = `0${seconds}`;
+            }
+            else {
+                secEl.innerText = seconds;
+            }
+            if (seconds <= 59 && minutes < 1) {
+                elem.classList.add("timer_bad");
+            }
+            if (seconds < 1 && minutes < 1) {
+                secEl.innerText = `0${seconds}`;
+                timerBlock.dataset.finally = true;
+                clearInterval(timerInterval);
+            }
+        }, 1000);
+
+    })();
 
     const stepOne = document.querySelector(".step_one");
 
@@ -561,7 +544,6 @@ function init() {
                 }
             });
         })();
-
         function sendStepFive() {
             let data = new FormData();
             if (userWords.dataset.find) {
@@ -574,7 +556,6 @@ function init() {
             sendAJAX("https://httpbin.org/post", data);
             return true;
         }
-
         btn.addEventListener('click', sendStepFive);
     })();
 

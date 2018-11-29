@@ -16,8 +16,6 @@ function ready(fn) {
     }
 }
 
-
-
 function sendAJAX(url, data) {
     // тут добавил полифилл для более старых браузеров
     function ajaxActions(resp) {
