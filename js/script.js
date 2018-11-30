@@ -670,11 +670,16 @@ function init() {
             return false;
         }
         let controls = elem.querySelectorAll('input');
-        controls.forEach(input => input.addEventListener('input', function (e) {
+        controls.forEach(function(input){
             if (elem.dataset.disabled) {
-                controls.forEach(input => input.disabled = true)
+                input.disabled =  true;
             }
-        }));
+            input.addEventListener('input', function () {
+                if (elem.dataset.disabled) {
+                    controls.forEach(inp => inp.disabled = true)
+                }
+            })
+        });
         check(disableSend, elem);
         let questions =  elem.querySelectorAll('.question-wrap');
         let numberInputs =  elem.querySelectorAll('.number-input');
@@ -704,15 +709,17 @@ function init() {
         });
         function sendStepThree(){
             let data =  new FormData();
+            let jsonData = {};
+
             let radiosQuestions = elem.querySelectorAll('.question-wrap[data-type="radio"]');
             radiosQuestions.forEach(function (radio) {
                 let name =  radio.dataset.index;
                 let checkedElem =  [...radio.querySelectorAll('input[type="radio"]')].filter(r => r.checked);
                 if(checkedElem.length){
-                    data.append(name, JSON.stringify([checkedElem[0].dataset.name]));
+                    jsonData[name] = [checkedElem[0].dataset.name];
                 }
                 else {
-                    data.append(name, JSON.stringify([null]))
+                    jsonData[name] = [null];
                 }
             });
             let inputQuestions = elem.querySelectorAll('.question-wrap[data-type="input"]');
@@ -720,10 +727,10 @@ function init() {
                 let name =  inputQuestion.dataset.index;
                 let input =  inputQuestion.querySelector('input[type="text"]');
                 if(input.value){
-                    data.append(name, JSON.stringify([input.value]));
+                    jsonData[name]  = [input.value];
                 }
                 else{
-                    data.append(name, JSON.stringify([null]))
+                    jsonData[name] = [null];
                 }
             });
 
@@ -734,14 +741,14 @@ function init() {
                 if(checkedElems.length){
                     let ckdArr = [];
                     checkedElems.map(ckd => ckdArr.push(ckd.dataset.name));
-                    data.append(name, JSON.stringify(ckdArr))
+                    jsonData[name] = ckdArr;
                 }
                 else {
-                    data.append(name, JSON.stringify([null]))
+                    jsonData[name] = [null];
                 }
             });
 
-
+            data.append('resultArr', JSON.stringify(jsonData));
             sendAJAX("https://httpbin.org/post", data);
 
 

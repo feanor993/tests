@@ -373,7 +373,7 @@ a, a:hover {
     color: #7bab20; }
 
 .progress-step.progress-step_start, .progress-step.progress-step_end {
-  width: 10vw;
+  width: 8.35vw;
   position: absolute;
   visibility: hidden; }
 
@@ -490,7 +490,10 @@ a, a:hover {
 .step {
   padding-top: 125px;
   padding-bottom: 100px;
-  position: relative; }
+  min-height: -webkit-calc(100vh - 92px);
+  min-height: calc(100vh - 92px);
+  position: relative;
+  background-color: #fff; }
 
 .step_one-list {
   width: 881px;
@@ -1181,7 +1184,10 @@ a, a:hover {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
-  display: flex; }
+  display: flex;
+  -webkit-flex-wrap: wrap;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap; }
 
 .radio-label {
   display: -webkit-box;
@@ -1189,7 +1195,8 @@ a, a:hover {
   display: -ms-flexbox;
   display: flex;
   margin-right: 80px;
-  cursor: pointer; }
+  cursor: pointer;
+  margin-bottom: 30px; }
   .radio-label:last-of-type {
     margin-right: 0; }
   .radio-label input[type="radio"] {
@@ -1289,7 +1296,8 @@ a, a:hover {
   display: -ms-flexbox;
   display: flex;
   margin-right: 80px;
-  cursor: pointer; }
+  cursor: pointer;
+  margin-bottom: 30px; }
   .checkbox-label:last-of-type {
     margin-right: 0; }
   .checkbox-label input[type="checkbox"] {
