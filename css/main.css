@@ -49,6 +49,10 @@ a, a:hover {
   padding: 0;
   vertical-align: baseline; }
 
+.wrapper {
+  max-width: 100vw;
+  overflow-x: hidden; }
+
 .header {
   height: 80px;
   position: fixed;
@@ -70,7 +74,13 @@ a, a:hover {
   -webkit-justify-content: space-between;
   -ms-flex-pack: justify;
   justify-content: space-between;
-  padding: 0 8vw 0 9vw; }
+  padding: 0; }
+
+.start {
+  margin-left: 8.15vw; }
+
+.finish {
+  margin-right: 7vw; }
 
 .logo {
   width: 207px;
@@ -259,7 +269,7 @@ a, a:hover {
   margin-bottom: 60px;
   margin-top: 27px; }
   .text-content p {
-    font-size: 20px;
+    font-size: 18px;
     line-height: 1.4;
     text-align: center;
     color: #333333;
@@ -437,6 +447,9 @@ a, a:hover {
   margin-right: auto;
   margin-top: -20px; }
 
+.timer[data-finish] .timer__time div {
+  width: 28px; }
+
 .timer__time {
   display: -webkit-box;
   display: -webkit-flex;
@@ -449,8 +462,6 @@ a, a:hover {
   padding-left: 45px; }
   .timer__time * {
     font-family: "Geometria-Bold", sans-serif; }
-  .timer__time div {
-    width: 28px; }
   .timer__time span {
     padding: 0 5px; }
 
@@ -570,7 +581,7 @@ a, a:hover {
   font-size: 16px;
   font-family: "Geometria-Medium", sans-serif;
   text-align: center;
-  color: #7bab20;
+  color: #b1cd43;
   cursor: pointer;
   -webkit-transition: .4s ease;
   -o-transition: .4s ease;
@@ -629,7 +640,8 @@ a, a:hover {
   color: #b1cd43;
   -webkit-transition: opacity .4s ease;
   -o-transition: opacity .4s ease;
-  transition: opacity .4s ease; }
+  transition: opacity .4s ease;
+  font-family: "Geometria-Medium", sans-serif; }
   .step__back span {
     display: block;
     padding-top: 3px;
@@ -640,7 +652,10 @@ a, a:hover {
     width: 8px;
     height: 14px;
     background: url("../img/backArrow.svg") no-repeat center center/contain;
-    margin-right: 10px; }
+    margin-right: 10px;
+    -webkit-transform: translateY(-1px);
+    -ms-transform: translateY(-1px);
+    transform: translateY(-1px); }
   .step__back:hover {
     opacity: .8; }
 
@@ -959,14 +974,19 @@ a, a:hover {
   .words-string::-moz-selection {
     background-color: transparent;
     color: #d0021b;
-    cursor: pointer; }
+    cursor: pointer;
+    font-family: "Geometria-Bold", sans-serif;
+    font-weight: 600; }
   .words-string::selection {
     background-color: transparent;
     color: #d0021b;
-    cursor: pointer; }
+    cursor: pointer;
+    font-family: "Geometria-Bold", sans-serif;
+    font-weight: 600; }
 
 .user-words {
-  padding-top: 40px; }
+  padding-top: 40px;
+  margin-bottom: 40px; }
 
 .user-words__count {
   font-size: 18px;
@@ -1028,10 +1048,12 @@ a, a:hover {
 
 .time-finish {
   font-size: 16px;
-  font-family: "Geometria-Bold", sans-serif;
+  font-family: "Geometria-Medium", sans-serif;
   color: #ffa42e;
-  width: 971px;
-  min-height: 56px;
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
+  min-height: 52px;
   padding: 3px;
   -webkit-border-radius: 4px;
   border-radius: 4px;
@@ -1043,7 +1065,7 @@ a, a:hover {
   -ms-transform: translateY(-65px);
   transform: translateY(-65px);
   margin: auto;
-  padding-left: 27px;
+  padding-left: 60px;
   max-width: 80%;
   -webkit-box-pack: center;
   -webkit-justify-content: center;
@@ -1053,7 +1075,8 @@ a, a:hover {
   -webkit-align-items: center;
   -ms-flex-align: center;
   align-items: center;
-  display: none; }
+  display: none;
+  padding-right: 20px; }
   .time-finish.active {
     display: -webkit-box;
     display: -webkit-flex;
@@ -1063,7 +1086,7 @@ a, a:hover {
     content: '';
     display: block;
     position: absolute;
-    top: 50%;
+    top: 48%;
     -webkit-transform: translateY(-50%);
     -ms-transform: translateY(-50%);
     transform: translateY(-50%);
@@ -1191,7 +1214,8 @@ a, a:hover {
   display: flex;
   -webkit-flex-wrap: wrap;
   -ms-flex-wrap: wrap;
-  flex-wrap: wrap; }
+  flex-wrap: wrap;
+  margin-bottom: -30px; }
 
 .radio-label {
   display: -webkit-box;
@@ -1266,9 +1290,13 @@ a, a:hover {
 
 .answer-bottom {
   font-size: 16px;
-  font-family: "Geometria-Medium", sans-serif;
+  font-family: "Geometria", sans-serif;
   color: #333333;
   margin-top: 33px; }
+  .answer-bottom * {
+    font-weight: 400;
+    line-height: 1.4;
+    font-family: "Geometria", sans-serif; }
 
 .input-label {
   display: block; }
@@ -1317,7 +1345,8 @@ a, a:hover {
   background-color: #ececec;
   margin-left: auto;
   margin-right: auto;
-  padding: 30px 40px; }
+  padding: 30px 40px;
+  margin-top: -10px; }
   .step-three__info p {
     font-size: 16px;
     line-height: 1.75;

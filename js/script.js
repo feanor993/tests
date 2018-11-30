@@ -57,12 +57,14 @@ function getCoords(elem) {
 function hideElems() {
     const start = document.querySelector('.start');
     const finish = document.querySelector('.finish');
+    const final = document.querySelector('.hello-test_final');
     let timerBlockFunc = document.querySelector(".timer[data-finish]");
     let elemControlsArray = [];
     elemControlsArray.push(finish, start);
     let step = document.querySelector('.step');
     let auth = document.querySelector('.authorize');
     let timerSettings = document.querySelector('.hidden.timer_settings');
+
     if (timerBlockFunc) {
         timerBlockFunc.removeAttribute('data-finally');
         if (!step || !timerSettings)  {
@@ -74,7 +76,7 @@ function hideElems() {
     }
     elemControlsArray.map(function (elem) {
         if (elem) {
-            if (auth) {
+            if (auth || final) {
                 elem.classList.add('displayNone');
             }
             else {
@@ -166,9 +168,9 @@ function setDoneWidth() {
 setDoneWidth();
 
 function init() {
-    // window.onbeforeunload = function () {
-    //     return "Вы действительно хотите уйти с сайта?";
-    // };
+    window.onbeforeunload = function () {
+        return "Вы действительно хотите уйти с сайта?";
+    };
     hideElems();
     timer();
     setDoneWidth();
@@ -262,6 +264,15 @@ function init() {
             }
 
         });
+
+        document.addEventListener('click', function (e) {
+            let closest = e.target.closest('.form-authorize__label') ===  schoolInput.parentNode;
+            let list = document.querySelector('.schools-list');
+            if(list && !closest){
+                list.innerHTML =  null;
+                list.hidden = true;
+            }
+        })
     }
     window.addEventListener("resize", setDoneWidth);
     let progressIndexes = document.querySelectorAll(".progress-step__index");
@@ -303,8 +314,6 @@ function init() {
         }
         let list = elem.querySelector(".step_one-list");
         let items = list.querySelectorAll(".step_one-item");
-
-
         check(disableSend, elem);
         items.forEach(function (item) {
             let btns = item.querySelectorAll(".step_one-item__button");
@@ -319,10 +328,9 @@ function init() {
                 });
             });
         });
+
         let stepOneBtn = elem.querySelector(".step_one__button");
-
         function sendStepOne() {
-
             items = Array.from(items);
             let data = new FormData();
             items.forEach(function (item) {
@@ -351,8 +359,6 @@ function init() {
         if (!step) {
             return false;
         }
-
-
         check(disableSend, step);
         const ranges = step.querySelector(".ranges");
         const rangeElems = step.querySelectorAll(".slider-range");
@@ -481,7 +487,6 @@ function init() {
             data.append("resultsArr", JSON.stringify(resultArr));
             data.append("FORMNAME", ranges.dataset.name);
             sendAJAX("https://httpbin.org/post", data);
-
         }
 
         stepTwoBtn.addEventListener('click', sendStepTwo);
@@ -746,11 +751,8 @@ function init() {
                     jsonData[name] = [null];
                 }
             });
-
             data.append('resultArr', JSON.stringify(jsonData));
             sendAJAX("https://httpbin.org/post", data);
-
-
         }
         btn.addEventListener('click', sendStepThree)
     })();
