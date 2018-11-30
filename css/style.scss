@@ -209,7 +209,7 @@
     line-height: 1.4;
     text-align: center;
     color: #333333;
-    margin-bottom: 35px;
+    margin-bottom: 32px;
   }
   strong {
     font-family: $bold;
@@ -984,7 +984,7 @@
 }
 
 .step-three-wrap {
-  width: 885px;
+  width: 882px;
   margin: 30px auto 60px auto;
 }
 
@@ -993,6 +993,7 @@
   display: flex;
   align-items: flex-start;
   margin-bottom: 32px;
+  justify-content: space-between;
   &:last-of-type{
     margin-bottom: 0;
   }
@@ -1204,6 +1205,24 @@
   input[type="checkbox"]:checked +span.radio-text:before{
     background: #b1cd43 url("../img/check.svg") no-repeat center center / 100%;
     border-color: #b1cd43;
+  }
+}
+
+.step-three__info{
+  width: 840px;
+  border-radius: 4px;
+  background-color: #ececec;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 30px 40px;
+  p{
+    font-size: 16px;
+    line-height: 1.75;
+    color: #333333;
+    margin-bottom: 22px;
+    &:last-of-type{
+      margin-bottom: 0;
+    }
   }
 }
 @keyframes pulse {

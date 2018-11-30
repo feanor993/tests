@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="css/main.css">
+    <title>Тесты</title>
+</head>
+<body>
+<div class="wrapper">
+    <header class="header">
+        <div class="start"><img src="img/start.svg" alt=""></div>
+        <a href="#" class="logo"><img src="img/logo.svg" alt=""></a>
+        <div class="finish"><img src="img/finish.svg" alt=""></div>
+        <div class="timer  timer_header" data-finish="30">
+            <div class="timer__time">
+                <div class="timer__minutes">00</div>
+                <span>:</span>
+                <div class="timer__seconds">00</div>
+            </div>
+        </div>
+    </header>
+    <main class="main main_gray">
+        <div class="progress">
+            <div class="progress-done__line"></div>
+            <div class="progress-step progress-step_start progress-step_done"></div>
+            <div class="progress-step  progress-step_done">
+                <a href="#" class="progress-step__index path" data-link-path="first_test">Этап 1</a>
+            </div>
+            <div class="progress-step  progress-step_active">
+                <a href="#" class="progress-step__index path" data-link-path="second_test">Этап 2</a>
+            </div>
+            <div class="progress-step">
+                <a href="#" class="progress-step__index path" data-link-path="third_test">Этап 3</a>
+            </div>
+            <div class="progress-step ">
+                <a href="#" class="progress-step__index path" data-link-path="fourth_test">Этап 4</a>
+            </div>
+            <div class="progress-step">
+                <a href="#" class="progress-step__index path" data-link-path="fifth_test">Этап 5</a>
+            </div>
+            <div class="progress-step">
+                <a href="#" class="progress-step__index path" data-link-path="sixth_test">Этап 6</a>
+            </div>
+            <div class="hidden current_stage" data-stage-available="7"></div>
+            <div class="progress-step progress-step_end"></div>
+        </div>
+        <div class="hello-test">
+            <div class="good-job">Переходим к следующему шагу!</div>
+            <h1 class="hello-test__title">4 этап</h1>
+            <div class="text-content">
+                <p>
+                    Тест состоит из 50 заданий, которые нужно выполнить в течение 15 минут. Не трать много времени на
+                    решение одного задания. Если у тебя не получается выполнить какое-либо из них, то переходи к
+                    следующему.
+                </p>
+                <p>
+                    <strong>
+                        Посмотри примеры заданий и правильные ответы на них.
+                    </strong>
+                </p>
+                <div class="step-three__info">
+                    <p>
+                        <strong> «Быстрый» </strong> является противоположным по смыслу слову: <strong> 1 </strong> -
+                        тяжелый, <strong> 2 </strong> - упругий,
+                        <strong> 3 </strong> - скорый, <strong> 4 </strong> - легкий, <strong> 5 </strong> - медленный.
+                        <strong> Правильный ответ: 5-й </strong>
+                    </p>
+                    <p>
+                        Бензин стоит <strong> 0,44 </strong> рубля за литр. Сколько (в копейках) стоят <strong> 2,5
+                        литра? </strong><strong> Правильный ответ: 110 </strong>
+                    </p>
+                    <p>
+                        Слова <strong>минер </strong> и <strong>минор </strong> по смыслу являются: <strong>1 </strong>
+                        - сходными, <strong>2 </strong> -
+                        противоположными, <strong> 3 </strong> - ни сходными, ни
+                        противоположными. <strong> Правильный ответ: 3-й </strong>
+                    </p>
+                    <p>
+                        Какие две из приведенных ниже пословиц имеют одинаковый смысл: <strong> 1 </strong> - первый
+                        блин комом, <strong> 2 </strong> - лиха
+                        беда начало, <strong> 3 </strong> - не красна изба углами, красна пирогами, <strong> 4 </strong>
+                        - не все коту
+                        масленица, <strong> 5 </strong> - старый
+                        друг лучше новых двух. <strong> Правильный ответ: 1-й и 2-й. </strong>
+                    </p>
+                </div>
+            </div>
+            <div class="timer  timer_centred">
+                <div class="timer__time">
+                    <div class="timer__minutes">11</div>
+                    <span>:</span>
+                    <div class="timer__seconds">03</div>
+                </div>
+            </div>
+            <a href="#" class="hello-test__btn">Начать</a>
+        </div>
+    </main>
+</div>
+<script src="js/script.js"></script>
+</body>
+</html>

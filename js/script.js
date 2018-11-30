@@ -162,7 +162,7 @@ function setDoneWidth() {
         doneSteps.forEach((ds) => width += ds.clientWidth);
         doneLine.style.width = width + "px";
     }
-};
+}
 setDoneWidth();
 
 function init() {
@@ -381,7 +381,7 @@ function init() {
             }
 
             thumbUser.addEventListener("mousedown", function (e) {
-                if (getParents(thumbUser, 'step_two').dataset.disabled) {
+                if (e.target.closest('.step_two').dataset.disabled) {
                     return false
                 }
                 else {
@@ -390,7 +390,7 @@ function init() {
 
             });
             thumbMax.addEventListener("mousedown", function (e) {
-                if (getParents(thumbUser, 'step_two').dataset.disabled) {
+                if (e.target.closest('.step_two').dataset.disabled) {
                     return false
                 }
                 else {
@@ -418,7 +418,7 @@ function init() {
                     .querySelector(`.thumb-before[data-thumb="${thumbData}"]`);
             document.onmousemove = function (e) {
                 document.documentElement.style.cursor = "grabbing";
-                let parentRange = getParents(elem, "slider-range__wrap");
+                let parentRange = e.target.closest('.slider-range__wrap');
                 let elemName = elem.dataset.thumb;
                 elem.style.cursor = "grabbing";
                 let maxThumb = elem.parentNode.querySelector(".thumb_max");
@@ -457,7 +457,6 @@ function init() {
                     return e.getAttribute("data-user") === null
                         || e.getAttribute("data-max") === null;
                 }
-
                 let noSelRan = parentsRanges.filter((r) => selectedIf(r));
                 if (noSelRan.length < 1) {
                     stepTwoBtn.disabled = false;
