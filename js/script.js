@@ -5,6 +5,49 @@ String.prototype.capitalize = function () {
     });
 };
 
+function which(click, buttons) {
+    for (let i in buttons) {
+        let button = buttons[i];
+        let bl = button[0];
+        let tr = button[1];
+
+        if ((click[0] >= bl[0] && click[0] <= tr[0]) &&
+            (click[1] >= bl[1] && click[1] <= tr[1])) {
+            return i;
+        }
+    }
+
+    let distances = Array();
+
+    for (let i in buttons) {
+        let button = buttons[i];
+        let bl = button[0];
+        let tr = button[1];
+        if ((click[0] >= bl[0] && click[0] <= tr[0])) {
+            distances[i] = Math.min(Math.abs(click[1] - bl[1]), Math.abs(click[1] - tr[1]));
+        }
+        else if ((click[1] >= bl[1] && click[1] <= tr[1])) {
+            distances[i] = Math.min(Math.abs(click[0] - bl[0]), Math.abs(click[0] - tr[0]));
+        }
+        else {
+            distances[i] = Math.sqrt(
+                (Math.pow(Math.min(Math.abs(click[0] - bl), Math.abs(click[0] - tr)), 2)) +
+                (Math.pow(Math.min(Math.abs(click[1] - bl), Math.abs(click[1] - tr)), 2))
+            );
+
+        }
+    }
+
+    let min_id = 0;
+    for (let j in distances) {
+        if (distances[j] < distances[min_id]) {
+            min_id = j;
+        }
+    }
+
+    return min_id;
+}
+
 function ready(fn) {
     let bool = (document.attachEvent
         ? document.readyState === "complete"
@@ -67,7 +110,7 @@ function hideElems() {
 
     if (timerBlockFunc) {
         timerBlockFunc.removeAttribute('data-finally');
-        if (!step || !timerSettings)  {
+        if (!step || !timerSettings) {
             timerBlockFunc.classList.add('displayNone');
         }
         else {
@@ -165,12 +208,13 @@ function setDoneWidth() {
         doneLine.style.width = width + "px";
     }
 }
+
 setDoneWidth();
 
 function init() {
-    window.onbeforeunload = function () {
-        return "Вы действительно хотите уйти с сайта?";
-    };
+    // window.onbeforeunload = function () {
+    //     return "Вы действительно хотите уйти с сайта?";
+    // };
     hideElems();
     timer();
     setDoneWidth();
@@ -266,10 +310,10 @@ function init() {
         });
 
         document.addEventListener('click', function (e) {
-            let closest = e.target.closest('.form-authorize__label') ===  schoolInput.parentNode;
+            let closest = e.target.closest('.form-authorize__label') === schoolInput.parentNode;
             let list = document.querySelector('.schools-list');
-            if(list && !closest){
-                list.innerHTML =  null;
+            if (list && !closest) {
+                list.innerHTML = null;
                 list.hidden = true;
             }
         })
@@ -282,15 +326,15 @@ function init() {
             let done = link.parentNode.className.includes("done");
             let bool = act || done;
             link.addEventListener("click", (e) => {
-                if (!bool){
+                if (!bool) {
                     e.preventDefault();
                 }
                 else {
                     let timerBlockF = document.querySelector(".timer[data-finish]");
-                    if(timerBlockF){
-                        if(!timerBlockF.dataset.finally){
-                            let question = confirm( 'Если вы покините этот шаг сейчас, результаты обнулятся, Вы уверены?');
-                            if(!question){
+                    if (timerBlockF) {
+                        if (!timerBlockF.dataset.finally) {
+                            let question = confirm('Если вы покините этот шаг сейчас, результаты обнулятся, Вы уверены?');
+                            if (!question) {
                                 e.preventDefault();
                             }
                             else {
@@ -330,6 +374,7 @@ function init() {
         });
 
         let stepOneBtn = elem.querySelector(".step_one__button");
+
         function sendStepOne() {
             items = Array.from(items);
             let data = new FormData();
@@ -463,6 +508,7 @@ function init() {
                     return e.getAttribute("data-user") === null
                         || e.getAttribute("data-max") === null;
                 }
+
                 let noSelRan = parentsRanges.filter((r) => selectedIf(r));
                 if (noSelRan.length < 1) {
                     stepTwoBtn.disabled = false;
@@ -576,107 +622,15 @@ function init() {
     })();
 
 
-
-    let canvas = document.getElementById('canvas');
-    if (canvas) {
-        let ctx = canvas.getContext('2d');
-
-        let coordsArray = [
-            [360, 63], [308, 115], [360, 115], [412, 115], [464, 115], [256, 167], [308, 167], [360, 167], [412, 167]
-        ];
-        let pointsArray = [];
-        coordsArray.forEach(coord => {
-            let x = coord[0] + 60;
-            let y = coord[1] + 60;
-            pointsArray.push(Array(x, y));
-        });
-        let resultArray = coordsArray.concat(pointsArray);
-        coordsArray.map(coord => {
-            ctx.beginPath();
-            ctx.lineWidth = "10";
-            ctx.strokeStyle = "#B1CD43";
-            ctx.rect(coord[0], coord[1], 40, 40);
-            ctx.fillStyle = "#F6F5F5";
-            ctx.stroke();
-            ctx.stroke();
-        });
-        let obj = {
-            currentClick: [],
-            prevClick: []
-        };
-        let clickCount = 0;
-
-        canvas.addEventListener('click', function (e) {
-            const mousePos = {
-                x: e.layerX,
-                y: e.layerY
-            };
-
-            resultArray.map(coord => {
-                let inX = coord[0] < mousePos.x + 20 && coord[0] > mousePos.x - 20;
-                let inY = coord[1] < mousePos.y + 20 && coord[1] > mousePos.y - 20;
-                if (inX && inY) {
-                    clickCount += 1;
-                    if (clickCount === 1) {
-                        obj.currentClick = [coord[0], coord[1]];
-                    } else {
-                        obj.prevClick = [...obj.currentClick];
-                        obj.currentClick = [coord[0], coord[1]];
-                    }
-
-                    if(obj.currentClick.length && obj.prevClick.length && (obj.currentClick !== obj.prevClick)){
-                        let rX = Math.abs((obj.prevClick[0] -13)  - (obj.currentClick[0] -6));
-                        let rY = Math.abs((obj.prevClick[1] -13) - (obj.currentClick[1] -6));
-                        if((rX < 20 && rY > 45) || (rY < 20 && rX > 45)){
-                            if (obj.currentClick[1] >  obj.prevClick[1] ) {
-                                if (obj.currentClick[0] >  obj.prevClick[0] ){
-                                    console.log(1)
-                                }
-                                else{
-                                    console.log(2)
-                                }
-                                ctx.beginPath();
-                                ctx.strokeStyle = "#FFD207";
-                                ctx.lineWidth = "3";
-                                ctx.moveTo(obj.prevClick[0] -6 ,obj.prevClick[1] -6);
-                                ctx.lineTo(obj.currentClick[0] -13, obj.currentClick[1] -13);
-                                ctx.stroke();
-                            }
-                            else if(obj.currentClick[1] <=  obj.prevClick[1]) {
-                                if (obj.currentClick[0] >  obj.prevClick[0] ){
-                                    console.log(1)
-                                }
-                                else{
-                                    console.log(2)
-                                }
-                                ctx.beginPath();
-                                ctx.strokeStyle = "#FFD207";
-                                ctx.lineWidth = "3";
-                                ctx.moveTo(obj.prevClick[0] -13 ,obj.prevClick[1] -13);
-                                ctx.lineTo(obj.currentClick[0] -6,obj.currentClick[1] -6);
-                                ctx.stroke();
-                            }
-                        }
-                        console.log(obj)
-                    }
-                }
-                else {
-                    return false
-                }
-            });
-        })
-    }
-
-
-    const stepThree =  document.querySelector('.step_three');
+    const stepThree = document.querySelector('.step_three');
     (function stepThreeActions(elem = stepThree) {
-        if(!elem){
+        if (!elem) {
             return false;
         }
         let controls = elem.querySelectorAll('input');
-        controls.forEach(function(input){
+        controls.forEach(function (input) {
             if (elem.dataset.disabled) {
-                input.disabled =  true;
+                input.disabled = true;
             }
             input.addEventListener('input', function () {
                 if (elem.dataset.disabled) {
@@ -685,41 +639,198 @@ function init() {
             })
         });
         check(disableSend, elem);
-        let questions =  elem.querySelectorAll('.question-wrap');
-        let numberInputs =  elem.querySelectorAll('.number-input');
+        let questions = elem.querySelectorAll('.question-wrap');
+        let numberInputs = elem.querySelectorAll('.number-input');
         const btn = elem.querySelector('.step_three__button');
         numberInputs.forEach(function (number) {
             number.addEventListener('input', function () {
-                this.value =  this.value.replace(/\D/g, '').substr(0, 4);
+                this.value = this.value.replace(/\D/g, '').substr(0, 4);
             })
         });
         questions.forEach(function (question) {
-            let radios =  question.querySelectorAll('input[type="radio"]');
+            let radios = question.querySelectorAll('input[type="radio"]');
             radios.forEach(function (radio) {
-                let label =  radio.parentNode;
+                let label = radio.parentNode;
                 label.addEventListener('click', function (e) {
-                    let self =  this;
-                    if(!self.querySelector('input[type="radio"]').disabled){
+                    let self = this;
+                    if (!self.querySelector('input[type="radio"]').disabled) {
                         e.preventDefault();
                         e.stopPropagation();
                         e.stopImmediatePropagation();
                         radios = [...radios];
                         let noThis = radios.filter(rd => rd.parentNode !== self);
-                        noThis.forEach((rad) => rad.checked =  false);
-                        self.querySelector('input[type="radio"]').checked = !self.querySelector('input[type="radio"]').checked ;
+                        noThis.forEach((rad) => rad.checked = false);
+                        self.querySelector('input[type="radio"]').checked = !self.querySelector('input[type="radio"]').checked;
                     }
                 })
             });
         });
-        function sendStepThree(){
-            let data =  new FormData();
+        /// canvas start
+        function checkLine(lnM, point, c = 0) {
+
+            if(c < 0  || localStorage.getItem('finishCanvas')){
+                return false
+            }
+            else {
+                lnM.classList.add('active');
+                if(point.dataset.outer === "outer"){
+                    c++;
+                    localStorage.setItem('finishCanvas', true)
+                }
+                return true;
+            }
+        }
+
+            let rects = elem.querySelectorAll('.canvas-block');
+            let points = elem.querySelectorAll('.canvas-point');
+            localStorage.removeItem('finishCanvas');
+            let coordsArray = [
+                [360, 63], [298, 125], [360, 125], [422, 125], [484, 125], [236, 187], [298, 187], [360, 187], [422, 187]
+            ];
+            let resT = [
+                {x: 360, y: 125, outer: true}, {x: 422, y: 125, outer: true}, {x: 298, y: 187, outer: true},
+                {x: 360, y: 187, outer: false}, {x: 422, y: 187, outer: false}, {x: 484, y: 187, outer: true},
+                {x: 298, y: 249, outer: true}, {x: 360, y: 249, outer: true}, {x: 422, y: 249, outer: true},
+                {x: 298, y: 125, outer: true}, {x: 484, y: 125, outer: true}, {x: 484, y: 249, outer: true}
+            ];
+
+            let horizontalArr = [
+                [360, 125], [298, 187], [360, 187], [422, 187], [298, 125], [422, 125]
+            ];
+            let verticalArr = [
+                [360, 125], [422, 125], [298, 187], [360, 187], [422, 187], [298, 125], [484, 125]
+            ];
+            rects.forEach((rect, index) => {
+                rect.style.left = coordsArray[index][0] + "px";
+                rect.style.top = coordsArray[index][1] + "px";
+            });
+            points.forEach((point, index) => {
+                point.style.left = resT[index].x + "px";
+                point.style.top = resT[index].y + "px";
+                point.dataset.index = index + 1;
+                if (resT[index].outer === true) {
+                    point.dataset.outer = "outer";
+                    point.dataset.hover = "true";
+                }
+                if (resT[index].outer === false) {
+                    point.dataset.outer = "inner"
+                }
+
+            });
+            let horizontals = elem.querySelectorAll('.horizont');
+            horizontals.forEach((horizont, index) => {
+                horizont.style.top = horizontalArr[index][1] + 'px';
+                horizont.style.left = horizontalArr[index][0] + 'px';
+            });
+
+
+            let verticals = elem.querySelectorAll('.vertical');
+            verticals.forEach((vertical, index) => {
+                vertical.style.top = verticalArr[index][1] + 'px';
+                vertical.style.left = verticalArr[index][0] + 'px';
+            });
+            let hovered = elem.querySelectorAll('.canvas-point[data-hover]');
+            let pointsElems = elem.querySelectorAll('.canvas-point');
+            let clickCounter = 0;
+            let finishCounter = 0;
+            let userObj = [];
+            let lines = elem.querySelectorAll('.canvas-row');
+            let objCoord = {
+                currentClick: [],
+                prevClick: []
+            };
+
+
+
+            pointsElems.forEach(point => {
+                if(localStorage.getItem('finishCanvas')){
+                    points.forEach(point => point.removeAttribute('data-hover'))
+                }
+                point.addEventListener('click', function (e) {
+                    clickCounter++;
+                    if(!localStorage.getItem('finishCanvas')){
+                        if (point.dataset.hover && clickCounter) {
+                            this.classList.add('active');
+                            pointsElems.forEach(pi => pi.classList.remove('selected'));
+                            this.classList.add('selected');
+                            let selected = elem.querySelector('.selected');
+                            hovered.forEach(h => h.removeAttribute('data-hover'));
+                            let self = this;
+                            let osPoints = [];
+                            let yPoint = [...pointsElems].filter(pi => (pi.style.left === self.style.left) && (Math.abs(parseInt(pi.style.top) - parseInt(self.style.top))) < 70).filter(pointN => pointN !== self);
+                            let xPoint = [...pointsElems].filter(pi => (pi.style.top === self.style.top) && ((Math.abs(parseInt(pi.style.left) - parseInt(self.style.left)) < 70))).filter(pointN => pointN !== self);
+                            osPoints = Array(...yPoint, ...xPoint);
+                            osPoints.map(op => op.dataset.hover = "true");
+                            let top = parseInt(elem.querySelector('.selected').style.top);
+                            let left = parseInt(elem.querySelector('.selected').style.left);
+                            if (clickCounter === 1) {
+                                objCoord.currentClick = [top, left];
+                            } else {
+                                objCoord.prevClick = [...objCoord.currentClick];
+                                objCoord.currentClick = [top, left];
+                            }
+
+                            if (objCoord.prevClick.length) {
+
+                                let draw = [...lines].forEach(line => {
+                                    if (Math.abs(objCoord.currentClick[0] - objCoord.prevClick[0]) > 1) {
+                                        if (objCoord.prevClick[0] - objCoord.currentClick[0] > 0) {
+                                            if (parseInt(line.style.top) === objCoord.currentClick[0] && (parseInt(line.style.left) === objCoord.currentClick[1]) && line.className.includes('vertical')) {
+                                                if(checkLine(line, point) ===  true){
+                                                    checkLine(line, point);
+                                                    userObj.push([parseInt(line.style.left), parseInt(line.style.top)]);
+                                                }
+                                            }
+                                        }
+                                        else {
+                                            if (parseInt(line.style.top) === objCoord.prevClick[0] && (parseInt(line.style.left) === objCoord.currentClick[1]) && line.className.includes('vertical')) {
+                                                if(checkLine(line, point) ===  true){
+                                                    checkLine(line, point);
+                                                    userObj.push([parseInt(line.style.left), parseInt(line.style.top)]);
+                                                }
+
+                                            }
+                                        }
+
+                                    }
+                                    else if (Math.abs(objCoord.currentClick[1] - objCoord.prevClick[1]) > 1) {
+                                        if (objCoord.prevClick[1] - objCoord.currentClick[1] < 0) {
+                                            if (parseInt(line.style.top) === objCoord.currentClick[0] && (parseInt(line.style.left) === objCoord.prevClick[1]) && line.className.includes('horizont')) {
+                                                if(checkLine(line, point) ===  true){
+                                                    checkLine(line, point);
+                                                    userObj.push([parseInt(line.style.left), parseInt(line.style.top)]);
+                                                }
+                                            }
+                                        }
+                                        else {
+                                            if (parseInt(line.style.top) === objCoord.currentClick[0] && (parseInt(line.style.left) === objCoord.currentClick[1]) && line.className.includes('horizont')) {
+                                                if(checkLine(line, point) ===  true){
+                                                    checkLine(line, point);
+                                                    userObj.push([parseInt(line.style.left), parseInt(line.style.top)]);
+                                                }
+                                            }
+                                        }
+
+                                    }
+                                });
+                            }
+
+                        }
+                    }
+
+                })
+            });
+
+        //// canvas end
+        function sendStepThree() {
+            let data = new FormData();
             let jsonData = {};
 
             let radiosQuestions = elem.querySelectorAll('.question-wrap[data-type="radio"]');
             radiosQuestions.forEach(function (radio) {
-                let name =  radio.dataset.index;
-                let checkedElem =  [...radio.querySelectorAll('input[type="radio"]')].filter(r => r.checked);
-                if(checkedElem.length){
+                let name = radio.dataset.index;
+                let checkedElem = [...radio.querySelectorAll('input[type="radio"]')].filter(r => r.checked);
+                if (checkedElem.length) {
                     jsonData[name] = [checkedElem[0].dataset.name];
                 }
                 else {
@@ -728,21 +839,21 @@ function init() {
             });
             let inputQuestions = elem.querySelectorAll('.question-wrap[data-type="input"]');
             inputQuestions.forEach(function (inputQuestion) {
-                let name =  inputQuestion.dataset.index;
-                let input =  inputQuestion.querySelector('input[type="text"]');
-                if(input.value){
-                    jsonData[name]  = [input.value];
+                let name = inputQuestion.dataset.index;
+                let input = inputQuestion.querySelector('input[type="text"]');
+                if (input.value) {
+                    jsonData[name] = [input.value];
                 }
-                else{
+                else {
                     jsonData[name] = [null];
                 }
             });
 
             let checkboxQuestions = elem.querySelectorAll('.question-wrap[data-type="checkbox"]');
             checkboxQuestions.forEach(function (check) {
-                let name =  check.dataset.index;
-                let checkedElems =  [...check.querySelectorAll('input[type="checkbox"]')].filter(cb => cb.checked);
-                if(checkedElems.length){
+                let name = check.dataset.index;
+                let checkedElems = [...check.querySelectorAll('input[type="checkbox"]')].filter(cb => cb.checked);
+                if (checkedElems.length) {
                     let ckdArr = [];
                     checkedElems.map(ckd => ckdArr.push(ckd.dataset.name));
                     jsonData[name] = ckdArr;
@@ -751,11 +862,29 @@ function init() {
                     jsonData[name] = [null];
                 }
             });
+            let canvasAnswer = elem.querySelector('.question-wrap[data-type="canvas"]');
+            let canvas = canvasAnswer.querySelector('.canvas-wrapper');
+            let dataTrue = canvas.dataset.true;
+            let canvasName = canvasAnswer.dataset.index;
+            dataTrue = dataTrue.split(',');
+            dataTrue = dataTrue.map(item => Number(item))
+            let uObj =  [].concat(...userObj);
+            uObj = uObj.sort();
+            dataTrue = dataTrue.sort();
+            if(String(dataTrue) === String(uObj)){
+                jsonData[canvasName] = [true];
+            }
+            else {
+                jsonData[canvasName] = [false];
+            }
+
             data.append('resultArr', JSON.stringify(jsonData));
             sendAJAX("https://httpbin.org/post", data);
         }
+
         btn.addEventListener('click', sendStepThree)
     })();
+    
 }
 
 ready(init);

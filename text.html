@@ -1,0 +1,564 @@
+
+<!DOCTYPE html>
+<html>
+<head prefix="og: http://ogp.me/ns#">
+    <meta charset="utf-8">
+    <script>window.NREUM||(NREUM={});NREUM.info={"beacon":"bam.nr-data.net","errorBeacon":"bam.nr-data.net","licenseKey":"2143b8dc87","applicationID":"4772177","transactionName":"cFlZEksOXg5UE00XEUZSUghNEh0FUAwHF0pAXlgR","queueTime":0,"applicationTime":91,"agent":""}</script>
+    <script>window.NREUM||(NREUM={}),__nr_require=function(e,n,t){function r(t){if(!n[t]){var o=n[t]={exports:{}};e[t][0].call(o.exports,function(n){var o=e[t][1][n];return r(o||n)},o,o.exports)}return n[t].exports}if("function"==typeof __nr_require)return __nr_require;for(var o=0;o<t.length;o++)r(t[o]);return r}({1:[function(e,n,t){function r(){}function o(e,n,t){return function(){return i(e,[c.now()].concat(u(arguments)),n?null:this,t),n?void 0:this}}var i=e("handle"),a=e(3),u=e(4),f=e("ee").get("tracer"),c=e("loader"),s=NREUM;"undefined"==typeof window.newrelic&&(newrelic=s);var p=["setPageViewName","setCustomAttribute","setErrorHandler","finished","addToTrace","inlineHit","addRelease"],d="api-",l=d+"ixn-";a(p,function(e,n){s[n]=o(d+n,!0,"api")}),s.addPageAction=o(d+"addPageAction",!0),s.setCurrentRouteName=o(d+"routeName",!0),n.exports=newrelic,s.interaction=function(){return(new r).get()};var m=r.prototype={createTracer:function(e,n){var t={},r=this,o="function"==typeof n;return i(l+"tracer",[c.now(),e,t],r),function(){if(f.emit((o?"":"no-")+"fn-start",[c.now(),r,o],t),o)try{return n.apply(this,arguments)}catch(e){throw f.emit("fn-err",[arguments,this,e],t),e}finally{f.emit("fn-end",[c.now()],t)}}}};a("actionText,setName,setAttribute,save,ignore,onEnd,getContext,end,get".split(","),function(e,n){m[n]=o(l+n)}),newrelic.noticeError=function(e){"string"==typeof e&&(e=new Error(e)),i("err",[e,c.now()])}},{}],2:[function(e,n,t){function r(e,n){if(!o)return!1;if(e!==o)return!1;if(!n)return!0;if(!i)return!1;for(var t=i.split("."),r=n.split("."),a=0;a<r.length;a++)if(r[a]!==t[a])return!1;return!0}var o=null,i=null,a=/Version\/(\S+)\s+Safari/;if(navigator.userAgent){var u=navigator.userAgent,f=u.match(a);f&&u.indexOf("Chrome")===-1&&u.indexOf("Chromium")===-1&&(o="Safari",i=f[1])}n.exports={agent:o,version:i,match:r}},{}],3:[function(e,n,t){function r(e,n){var t=[],r="",i=0;for(r in e)o.call(e,r)&&(t[i]=n(r,e[r]),i+=1);return t}var o=Object.prototype.hasOwnProperty;n.exports=r},{}],4:[function(e,n,t){function r(e,n,t){n||(n=0),"undefined"==typeof t&&(t=e?e.length:0);for(var r=-1,o=t-n||0,i=Array(o<0?0:o);++r<o;)i[r]=e[n+r];return i}n.exports=r},{}],5:[function(e,n,t){n.exports={exists:"undefined"!=typeof window.performance&&window.performance.timing&&"undefined"!=typeof window.performance.timing.navigationStart}},{}],ee:[function(e,n,t){function r(){}function o(e){function n(e){return e&&e instanceof r?e:e?f(e,u,i):i()}function t(t,r,o,i){if(!d.aborted||i){e&&e(t,r,o);for(var a=n(o),u=v(t),f=u.length,c=0;c<f;c++)u[c].apply(a,r);var p=s[y[t]];return p&&p.push([b,t,r,a]),a}}function l(e,n){h[e]=v(e).concat(n)}function m(e,n){var t=h[e];if(t)for(var r=0;r<t.length;r++)t[r]===n&&t.splice(r,1)}function v(e){return h[e]||[]}function g(e){return p[e]=p[e]||o(t)}function w(e,n){c(e,function(e,t){n=n||"feature",y[t]=n,n in s||(s[n]=[])})}var h={},y={},b={on:l,addEventListener:l,removeEventListener:m,emit:t,get:g,listeners:v,context:n,buffer:w,abort:a,aborted:!1};return b}function i(){return new r}function a(){(s.api||s.feature)&&(d.aborted=!0,s=d.backlog={})}var u="nr@context",f=e("gos"),c=e(3),s={},p={},d=n.exports=o();d.backlog=s},{}],gos:[function(e,n,t){function r(e,n,t){if(o.call(e,n))return e[n];var r=t();if(Object.defineProperty&&Object.keys)try{return Object.defineProperty(e,n,{value:r,writable:!0,enumerable:!1}),r}catch(i){}return e[n]=r,r}var o=Object.prototype.hasOwnProperty;n.exports=r},{}],handle:[function(e,n,t){function r(e,n,t,r){o.buffer([e],r),o.emit(e,n,t)}var o=e("ee").get("handle");n.exports=r,r.ee=o},{}],id:[function(e,n,t){function r(e){var n=typeof e;return!e||"object"!==n&&"function"!==n?-1:e===window?0:a(e,i,function(){return o++})}var o=1,i="nr@id",a=e("gos");n.exports=r},{}],loader:[function(e,n,t){function r(){if(!E++){var e=x.info=NREUM.info,n=l.getElementsByTagName("script")[0];if(setTimeout(s.abort,3e4),!(e&&e.licenseKey&&e.applicationID&&n))return s.abort();c(y,function(n,t){e[n]||(e[n]=t)}),f("mark",["onload",a()+x.offset],null,"api");var t=l.createElement("script");t.src="https://"+e.agent,n.parentNode.insertBefore(t,n)}}function o(){"complete"===l.readyState&&i()}function i(){f("mark",["domContent",a()+x.offset],null,"api")}function a(){return O.exists&&performance.now?Math.round(performance.now()):(u=Math.max((new Date).getTime(),u))-x.offset}var u=(new Date).getTime(),f=e("handle"),c=e(3),s=e("ee"),p=e(2),d=window,l=d.document,m="addEventListener",v="attachEvent",g=d.XMLHttpRequest,w=g&&g.prototype;NREUM.o={ST:setTimeout,SI:d.setImmediate,CT:clearTimeout,XHR:g,REQ:d.Request,EV:d.Event,PR:d.Promise,MO:d.MutationObserver};var h=""+location,y={beacon:"bam.nr-data.net",errorBeacon:"bam.nr-data.net",agent:"js-agent.newrelic.com/nr-1099.min.js"},b=g&&w&&w[m]&&!/CriOS/.test(navigator.userAgent),x=n.exports={offset:u,now:a,origin:h,features:{},xhrWrappable:b,userAgent:p};e(1),l[m]?(l[m]("DOMContentLoaded",i,!1),d[m]("load",r,!1)):(l[v]("onreadystatechange",o),d[v]("onload",r)),f("mark",["firstbyte",u],null,"api");var E=0,O=e(5)},{}]},{},["loader"]);</script>
+    <meta name="viewport" content="width=1024, user-scalable=0" />
+    <meta name="google-site-verification" content="VLpVTu9qe8UpJv-pMvigm2z4dfuTJZ_ubdTe5InyYwc" />
+    <meta content="https://uchi.ru/countries/russia/preview_image.png" property="og:image" /><meta content="Образовательный портал на базе интерактивной платформы для обучения детей" property="og:title" /><meta content="Детский образовательный портал для интерактивного обучения детей при помощи интересных игровых заданий и задач" property="og:description" />
+    <title>Uchi.ru</title>
+
+    <meta name="description" content="Детский образовательный портал для интерактивного обучения детей при помощи интересных игровых заданий и задач.">
+
+    <!-- minimal content settings -->
+    <link rel="stylesheet" media="all" href="https://fp-service.uchi.ru/assets/fat_player/super_lib/super_lib-7a457a19bab09821c23430f716215b384ca6afa981467c475ea2758754541880.css" />
+    <script src="https://fp-service.uchi.ru/assets/fat_player/super_lib/super_lib-5aeb6b0362c9624acc7cd0c71e6ea8b6c7adc03cd012b7d8728bf4c4bde86216.js"></script>
+    <link rel="stylesheet" media="screen" href="https://fp-service.uchi.ru/assets/fat_player/fonts/all-c37353c0ad470648559b53ad636e477e05dfd9f471f874094bb2ca6a4438aa31.css" />
+    <style>
+        html, body, * {
+            font-family: 'PT Sans' !important;
+        }
+        #board.ptf *, #board.ptf *,       #answer.ptf *, #answer.ptf * {
+            font-family: 'PT Serif' !important;
+        }
+        #board.ptf .cr, #board.ptf .cr *, #answer.ptf .cr, #answer.ptf .cr * {
+            font-family: 'CirceRounded' !important;
+        }
+        #board.cr *,                      #answer.cr * {
+            font-family: 'CirceRounded' !important;
+        }
+
+        #board.cr .ab,             #answer.cr .ab,
+        #board.cr .ab > br,        #answer.cr .ab > br,
+        #board.cr .ab > span,      #answer.cr .ab > span,
+        #board.cr .ab > i,         #answer.cr .ab > i,
+        #board.cr .ab > b,         #answer.cr .ab > b,
+        #board.cr .ab > em,        #answer.cr .ab > em,
+        #board.cr .ab > strong,    #answer.cr .ab > strong {
+            font-family: 'CirceRounded-Alt-Bold' !important;
+        }
+
+        #board.cr .ci,             #answer.cr .ci,
+        #board.cr .ci > br,        #answer.cr .ci > br,
+        #board.cr .ci > span,      #answer.cr .ci > span,
+        #board.cr .ci > i,         #answer.cr .ci > i,
+        #board.cr .ci > b,         #answer.cr .ci > b,
+        #board.cr .ci > em,        #answer.cr .ci > em,
+        #board.cr .ci > strong,    #answer.cr .ci > strong {
+            font-family: 'Circe' !important;
+        }
+
+        #board.cr .ci.bo,          #answer.cr .ci.bo,
+        #board.cr .ci.bo > br,     #answer.cr .ci.bo > br,
+        #board.cr .ci.bo > span,   #answer.cr .ci.bo > span,
+        #board.cr .ci.bo > i,      #answer.cr .ci.bo > i,
+        #board.cr .ci.bo > b,      #answer.cr .ci.bo > b,
+        #board.cr .ci.bo > em,     #answer.cr .ci.bo > em,
+        #board.cr .ci.bo > strong, #answer.cr .ci.bo > strong {
+            font-family: 'Circe' !important;
+            font-weight: bold !important;
+        }
+    </style>
+
+    <style>.closedhand { cursor: url("https://fp-service.uchi.ru/assets/fat_player/cursors/closedhand-d367ee0a4c16c7cebfdbf92c97a72ff63878e7f8be176ac8c5ede75a2265ec52.cur"), pointer !important; }</style>
+    <style>.openhand { cursor: url("https://fp-service.uchi.ru/assets/fat_player/cursors/openhand-080627fa359156339e79f118fa66a6937f09ff679fe87e8afa473b95c8168d35.cur"), pointer; }</style>
+    <style>.pointerhand { cursor: pointer; }</style>
+    <!--[if gte IE 9]><style type="text/css">.gradient{filter: none !important;}</style><![endif]-->
+
+    <!-- Full screen only -->
+    <style>html, body{ height: 100%; }</style>
+    <style>body{ padding: 0; margin: 0; }</style>
+
+    <link rel="stylesheet" media="all" href="https://fp-service.uchi.ru/assets/fat_player/card_fullscreen-84957c13b6d0e655bda12e1b5c9ac8bb04bf1d8dab9ca0e22ee851f48cdb221d.css" />
+    <script src="https://fp-service.uchi.ru/assets/fat_player/card_fullscreen-15a7fe123cbf98fe66dcc9b50c835dfa54775773d52dc653822795fd4f10f9a0.js"></script>
+    <meta name="csrf-param" content="authenticity_token" />
+    <meta name="csrf-token" content="s6yn7dOAM9nfPbo9dugHN8gh1Wg55DkrrEgKdP547+w=" />
+    <script type="text/javascript">
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-34399610-1', 'auto');
+
+        ga("set", "&uid", "student-7913958");
+        ga('set', 'dimension1', "student-7913958");
+
+        ga('set', 'dimension2', "464439");
+        ga('set', 'dimension3', "569287");
+
+        ga('set', 'dimension4', "3500");
+
+
+        ga('send', 'pageview');
+    </script>
+
+    <!-- Special counter from mos stats -->
+    <script type="text/javascript" id="statsmosru" src="https://stats.mos.ru/counter.js" onLoad="statsMosRuCounter()" defer="defer" async="true"></script>
+
+
+
+
+        <script type="text/javascript">
+//<![CDATA[
+    window.gon={};gon.mobileapp_browser=false;gon.allow_mindbox=true;gon.autologout_off=false;
+    //]]>
+    </script>
+
+    <script>        var UCHI_CARDS_ASSET_HOST = "https://content.uchi.ru";
+    </script>
+    <script src="https://content.uchi.ru/48919/3500/card.js"></script>
+    <link rel="stylesheet" media="screen" href="https://content.uchi.ru/48919/3500/card.css" />
+    <script>
+        (this.Card && this.Card.play) || (this.Card = Card3500_v48919);
+    </script>
+
+    <script>
+        var ipc = null;
+        if (Card.Player) {
+            ipc = Card.Player.Ipc;
+        } else if (Card.Player1) {
+            ipc = Card.Player1.Ipc;
+        } else if (Card.Ipc) {
+            ipc = Card.Ipc;
+        }
+        if (ipc) {
+            // Отключить хартбиты, чтобы не ддосили
+            ipc.prototype.heartbeat = function() {};
+            // Отключить всякие левые события
+            if (ipc.prototype.on_event) {
+                ipc.prototype.on_event__orig = ipc.prototype.on_event;
+                ipc.prototype.on_event = function(kind, params) {
+                    // white list разрешенных событий
+                    if (
+                        kind == "$lesson_finish" ||
+                        kind == "$store" ||
+                        kind == "__beads_exercise_finish_succ" ||
+                        kind == "__missed_audio_constant" ||
+                        kind == "__speaker_manager_say_log" ||
+                        kind == "__grade_test_status" ||
+                        kind == "__grade_test_v2_status" ||
+                        kind == "__grade_test_v3_status" ||
+                        kind == "__grade_test_hn_status" ||
+                        kind == "__grade_test_exercise_finish" ||
+                        kind == "__adaptive_start_script" ||
+                        kind == "__adaptive_exercise_finish_succ" ||
+                        kind == "__adaptive_exercise_finish_failed" ||
+                        kind == "__lamps_exercise_finish_succ" ||
+                        kind == "__lamps_exercise_finish_failed" ||
+                        kind == "beads_exercise_finish_failed" ||
+                        kind == "beads_exercise_finish_succ" ||
+                        kind == "beads_start_script" ||
+                        kind == "lamps_fail" ||
+                        kind == "test_exercise_finish_succ" ||
+                        kind == "test_exercise_finish_failed" ||
+                        kind == "test_start_script" ||
+                        kind == "__grade_test_v2_exercise_finish_succ" ||
+                        kind == "__grade_test_v2_exercise_finish_failed" ||
+                        kind == "__grade_test_v2_start_script" ||
+                        kind == "__grade_test_v3_exercise_finish_succ" ||
+                        kind == "__grade_test_v3_exercise_finish_failed" ||
+                        kind == "__grade_test_v3_start_script" ||
+                        kind == "__grade_test_hn_exercise_finish_succ" ||
+                        kind == "__grade_test_hn_exercise_finish_failed" ||
+                        kind == "__grade_test_hn_start_script" ||
+                        kind == "exercise_start" ||
+                        (([]).indexOf(kind) != -1)
+                    ) {
+                        this.on_event__orig(kind, params);
+                    }
+                }
+            }
+
+            if (Card.Player) {
+                // Исправляем отправку события для карточек с плеером внутри
+                ipc.prototype.__try_send = function() {
+                    var self = this,
+                        events,
+                        current_hook;
+                    if (self.terminated || self.send_now) {
+                        return;
+                    }
+                    if (self.events.length === 0) {
+                        if (self.after_send_callback) {
+                            self.after_send_callback();
+                        }
+                        self.after_send_callback = null;
+                    } else {
+                        self.send_now = true;
+                        events = self.events;
+                        self.events = [];
+                        console.log("AJAX send: " + JSON.stringify(_(events).map(function(e) { return e.seq_num; })));
+                        // AJAX оказывается использует setTimeout, поэтому снимаем хук на время
+                        current_hook = $.__long_action_hook;
+                        $.__long_action_hook = null;
+                        $.ajax({
+                            url: self.stats_host + "/sessions/" + self.session_id + "/events",
+                            type: "POST",
+                            contentType: "application/json; charset=utf-8",
+                            timeout: 5000,
+                            data: JSON.stringify({ events: events, access_token: self.access_token }),
+                            dataType: "json",
+                            error: function(e) {
+                                console.log("AJAX error");
+                                self.send_now = false;
+                                self.events = events.concat(self.events);
+                                $.delay(5000, function() {
+                                    self.__try_send();
+                                });
+                            },
+                            success: function(data) {
+                                self.send_now = false;
+                                if (data.status === "ok") {
+                                    self.__try_send();
+                                } else if (data.status === "no_free_beads_left" && data.redirect_to !== null) {
+                                    if (self.cardFinish) {
+                                        self.__try_send();
+                                        return;
+                                    }
+                                    self.terminated = true;
+                                    window.location = data.redirect_to;
+                                } else if (data.status === "session_completed") {
+                                    if (self.cardFinish) {
+                                        self.__try_send();
+                                        return;
+                                    }
+                                    self.terminated = false;
+                                } else {
+                                    self.terminated = true;
+                                    self.on_access_denied();
+                                }
+                            }
+                        });
+                        $.__long_action_hook = current_hook;
+                    }
+                }
+            }
+        }
+    </script>
+
+    <script>
+        (function () {
+            try {
+                var SPEAKER_MANAGER_SAY_LOG_SIGNAL = "__speaker_manager_say_log";
+                var content_card_id = 3500;
+                var version = 48919;
+                var card = window.Card;
+
+                var SignalListener = null;
+                if (card && card.Player1) {
+                    SignalListener = card.Player1.SignalListener;
+                }
+                (function () {
+                    if (SignalListener) {
+                        if (SignalListener.prototype.on_event == null) return;
+                        SignalListener.prototype.__HACK__speaker_manager__HACK__on_event__orig = SignalListener.prototype.on_event;
+                        SignalListener.prototype.on_event = function (signal_name, options) {
+                            // ignore some signals
+                            if (signal_name === SPEAKER_MANAGER_SAY_LOG_SIGNAL) return;
+
+                            this.__HACK__speaker_manager__HACK__on_event__orig.apply(this, arguments);
+                        };
+                    }
+                }());
+
+                var SpeakerManager = null;
+                if (card && card.Player1) {
+                    SpeakerManager = card.Player1.SpeakerManager;
+                }
+                if (SpeakerManager) {
+                    if (SpeakerManager.prototype.say == null) return;
+                    SpeakerManager.prototype.__HACK__speaker_manager__HACK__say__orig = SpeakerManager.prototype.say;
+                    SpeakerManager.prototype.say = function (_label, _opt, _cb) {
+                        // dont mutate arguments
+                        var label = _label;
+                        var opt = _opt;
+                        var cb = _cb;
+                        // do hack
+                        try {
+                            if (opt == null) opt = {};
+                            if (cb == null && typeof opt === "function") {
+                                cb = opt; opt = {};
+                            }
+
+                            var sound = null;
+                            if (this.audio_manager) {
+                                sound = this.audio_manager.sound(label, {option:opt.option});
+                            }
+                            var text = (function() {
+                                try {
+                                    return card.Player1.__i18n_t(this.script_name, label, opt.args, this.locale);
+                                } catch (e) {}
+                            }).call(this);
+                            var speech = (function() {
+                                try {
+                                    return card.Player1.__i18n_s(this.script_name, label, opt.args, this.locale);
+                                } catch (e) {}
+                            }).call(this);
+
+                            var data = {
+                                locale: this.locale,
+                                content_card_id: content_card_id,
+                                version: version,
+                                script_name: this.script_name,
+                                label: label, option: opt.option,
+                                args: opt.args,
+                                text: text,
+                                speech: speech,
+                                audio_present: !!sound
+                            };
+                            console.log(data);
+
+
+                            var tutor = null;
+                            if (card && card.Player1 && card.Player1.__score) {
+                                tutor = card.Player1.__score.tutor;
+                            }
+                            if (tutor && tutor._sys_event) {
+                                tutor._sys_event(SPEAKER_MANAGER_SAY_LOG_SIGNAL, data);
+                            }
+                        }
+                        catch (e) {
+                            console.log("[speaker_manager_binary_hack] hack crashed");
+                            console.log(e);
+                            console.log(e && e.name);
+                            console.log(e && e.message);
+                            console.log(e && e.stack);
+                        }
+
+                        // call original method
+                        this.__HACK__speaker_manager__HACK__say__orig.apply(this, arguments);
+                    }
+                }
+            }
+            catch (e) {
+                console.log("[speaker_manager_binary_hack] hack crashed");
+                console.log(e);
+                console.log(e && e.name);
+                console.log(e && e.message);
+                console.log(e && e.stack);
+            }
+        }());
+    </script>
+
+
+
+</head>
+<body>
+<div style="width:0;height:0;overflow:hidden">
+    <span style="font-family:'Noto Sans' !important">.</span>
+    <span style="font-family:'Noto Sans' !important;font-weight: bold !important">.</span>
+    <span style="font-family:'Noto Sans' !important;font-style: italic !important">.</span>
+    <span style="font-family:'Noto Sans' !important;font-style: italic !important;font-weight: bold !important">.</span>
+    <span style="font-family:'PT Sans' !important">.</span>
+    <span style="font-family:'PT Serif' !important">.</span>
+    <span style="font-family:'CirceRounded' !important">.</span>
+    <span style="font-family:'CirceRounded' !important;font-weight: bold !important">.</span>
+    <span style="font-family:'CirceRounded-Regular' !important">.</span>
+    <span style="font-family:'CirceRounded-Alt-Bold' !important">.</span>
+    <span style="font-family:'Circe' !important">.</span>
+    <span style="font-family:'Circe' !important;font-weight: bold !important">.</span>
+    <span style="font-family:'Circe-Regular' !important">.</span>
+    <span style="font-family:'Circe-Bold' !important">.</span>
+    <span style="font-family:'DejaVu Sans' !important">.</span>
+</div>
+
+
+
+
+<script>
+    $(function () {
+        window.__olymp = {
+            key: "user7913958_3500_card3500_v48919_chocolate",
+            answer: null,
+            cb: function(kind, options) {
+                console.log(options)
+                if (kind == '__answer') {
+                    $.ajax({
+                        url: '/students/games/chocolate/receive_event/3500?game_name=chocolate',
+                        type: 'POST',
+                        data: 'answer=' + encodeURIComponent(JSON.stringify(options))
+                    });
+                }
+                else {
+                    console.log("USER EVENT: ", kind, options);
+                }
+            }
+        };
+    });
+</script>
+
+
+
+<script>
+    $(function(){
+        try {
+
+            var KeypadManager = UchiruKeypad3.KeypadManager
+
+            var Series = ((function() {
+                var module = {};
+                (function(module) {var Series = (function() {
+                    function Series() {
+                        this._middleware = [];
+                        this._i = 0;
+                    }
+                    Series.prototype.use = function(fn) {
+                        this._middleware.push(fn)
+                    };
+                    Series.prototype.run = function() {
+                        this._i = 0;
+                        var func = null;
+                        var args = Array.prototype.slice.call(arguments)
+                            .concat(function() {
+                                this._i += 1;
+                                return func();
+                            }.bind(this));
+                        func = (function () {
+                            if (!(this._i < this._middleware.length)) {
+                                return;
+                            }
+                            var fn = this._middleware[this._i];
+                            fn.apply(null, args);
+                        }).bind(this);
+                        return func();
+                    }
+                    return Series;
+                })();
+
+                    module.exports = Series;
+                })(module);
+                return module.exports;
+            })());
+
+            var place = $("#board");
+            var uchiruKeypad3Manager = new KeypadManager(place, {
+                locale: "ru",
+                show_keypad_on_desktop: !!''
+            });
+
+            var uchiruKeypad3ManagerOnEvents = function(event, options, next){
+                uchiruKeypad3Manager.onEvents(event, options);
+                next();
+            };
+            var cardOnEvents = function(event, options, next){
+                if (event == '__back') {
+                    window.location = '/students/games/chocolate?card_id=3500';
+                    return;
+                }
+                next();
+            };
+            var fullscreenOnEvents = function(event, options, next){
+                if (event == 'exercise_finish_failed') {
+                } else if (event == 'lesson_finish') {
+                    window.location = '/students/games/chocolate?card_id=3500';
+                } else if (event == 'back') {
+                    window.location = '/students/games/chocolate?card_id=3500';
+                }
+                next();
+            };
+
+            var eventSeries = new Series();
+
+            var main = function(){
+                eventSeries.use(uchiruKeypad3ManagerOnEvents);
+                eventSeries.use(cardOnEvents);
+                eventSeries.use(fullscreenOnEvents);
+            };
+            var middleware = (((function() {
+                var module = {};
+                (function(module) {var gameOnEvents = function(event, options, next) {
+                    if (event == 'back') {
+                        window.location = "/students/games/chocolate?card_id=3500";
+                    } else if (event == 'lesson_finish') {
+                        $.ajax({ url: '/students/games/chocolate/receive_event/3500?game_name=chocolate',
+                            type: 'POST',
+                            beforeSend: function(xhr) {
+                                xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'));
+                            },
+                            data: 'result=' + encodeURIComponent(window.__game.result),
+                            success: function(result) {
+                                console.log(result);
+                            }
+                        });
+                    } else {
+                        console.log("on_beads", event, options);
+                        next();
+                    }
+                };
+
+                    module.exports = function(eventSeries, next) {
+                        eventSeries.use(gameOnEvents);
+                        next();
+                    };
+
+                })(module);
+                return module.exports;
+            })())) || function (eventSeries, next) { next(); };
+            middleware(eventSeries, main);
+
+            var Player = ((function() {
+                var module = {};
+                (function(module) {var Player;
+
+// Card.__meta нет в олимпиадных карточках 2015 года
+                    if (!Card.__meta || !Card.__meta["player"] || Card.__meta["player"] === "/players/player_1") {
+                        Player = Card.Player1;
+                    } else if (Card.__meta["player"] === "/players/player-iframe-dynamic") {
+                        Player = Card.PlayerIFrameDynamic;
+                    } else if (Card.__meta["player"] === "/players/player-iframe") {
+                        Player = Card.PlayerIFrame;
+                    } else if (Card.__meta["player"] === "/players/player-1") {
+                        Player = Card.Player1;
+                    }
+
+                    module.exports = Player;
+                })(module);
+                return module.exports;
+            })());
+            if (!Card.Player) Card.Player = Player;
+
+            Card.Messaging && Card.Messaging.run();
+            var playCard = function (opt) {
+                if (opt == null) { opt = {} };
+                Card.play(place, "https://content.uchi.ru", $.extend({"student_name":"Анастасия Харитонова","websolver":{"request_url":"https://websolver.uchi.ru"},"content_card_id":3500,"version":48919,"script_versions":null}, {
+                    on_beads: function(event, options) {
+                        eventSeries.run(event, options);
+                    },
+                    locale: "ru",
+                    fullscreen: true,
+                    card_name: ""
+                }, opt.playOptions));
+            };
+            if (!window.FatPlayer) { window.FatPlayer = {} };
+            FatPlayer.playCard = playCard;
+            FatPlayer.playCard();
+        }
+        catch (err) {
+            (function () {
+                var main = function(){ throw err; };
+                var middleware = (((function() {
+                    var module = {};
+                    (function(module) {})(module);
+                    return module.exports;
+                })())) || function (err, next) { next(); };
+                middleware(err, main);
+            }());
+        }
+    });
+</script>
+<div id="board"></div>
+
+
+<script src="https://assets.uchi.ru/assets/_browser-stat-b30cf4f2df3379ed04129deebcc6333b.js"></script>
+<script src="https://assets.uchi.ru/assets/students_new/autologout-helper-5a8a445da3e11c1269f5a77508edeaed.js"></script>
+<script src="https://assets.uchi.ru/assets/students_new/beads_error_counter-5562f623c7426eacd9de3b81ccf2187d.js"></script>
+
+<script id="IntercomSettingsScriptTag">
+    window.intercomSettings = {"app_id":"byr05ei0"};
+</script>
+<script>(function(){var w=window;var ic=w.Intercom;if(typeof ic==="function"){ic('reattach_activator');ic('update',intercomSettings);}else{var d=document;var i=function(){i.c(arguments)};i.q=[];i.c=function(args){i.q.push(args)};w.Intercom=i;function l(){var s=d.createElement('script');s.type='text/javascript';s.async=true;s.src='https://widget.intercom.io/widget/byr05ei0';var x=d.getElementsByTagName('script')[0];x.parentNode.insertBefore(s,x);}if(w.attachEvent){w.attachEvent('onload',l);}else{w.addEventListener('load',l,false);}};})()</script>
+</body>
+</html>
