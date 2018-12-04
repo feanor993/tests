@@ -4,6 +4,9 @@ String.prototype.capitalize = function () {
         return a.toUpperCase();
     });
 };
+function activateCanvas() {
+    localStorage.removeItem('canvasHTML');
+}
 function which(click, buttons) {
     for (let i in buttons) {
         let button = buttons[i];
@@ -74,19 +77,72 @@ function ready(fn) {
 }
 
 function sendAJAX(url, data) {
-    fetch(url, {
-        method: "POST",
-        body: data,
-        headers: {
-            "Query-Type": "ajax/fetch"
+    // тут добавил полифилл для более старых браузеров
+
+    function ajaxActions(resp) {
+        console.log(resp);
+        if(resp.indexOf('<main class="main') > -1){
+            console.log(resp);
+            let main = document.querySelector('.wrapper');
+            main.removeChild(document.querySelector('.main'));
+            main.innerHTML += resp;
+            let script = document.querySelector('.current_script');
+            eval(script.textContent);
+            eval(timer());
+            eval(setDoneWidth());
+            script = '';
         }
-    }).then(function (response) {
-        return response.json();
-    }).then(function (data) {
-        console.log(data);
-    }).catch(function (error) {
-        console.log(error);
-    });
+        else{
+            let objResp = JSON.parse(resp);
+            let formErrorsArray = ['userName', 'userSchool', 'userSchoolClass', 'userEmail'];
+            let errorsArray = {};
+            formErrorsArray.forEach(err => {
+                if(objResp[err]){
+                    errorsArray[err] = objResp[err];
+                }
+            });
+            for(let item in errorsArray){
+                let input = document.querySelector(`input[name=${item}]`);
+                if(input){
+                    input.classList.add('error');
+                    let span = input.parentNode.querySelector('.label-warning');
+                    if(span){
+                        span.textContent = errorsArray[item];
+                        span.classList.add('active');
+                    }
+                }
+            }
+        }
+
+    }
+    if(window.fetch){
+        fetch(url, {
+            method: "POST",
+            body: data,
+            headers: {
+                "Query-Type": "ajax/fetch"
+            }
+        }).then(function (response) {
+            return response.text();
+        }).then(function (data) {
+            ajaxActions(data);
+        }).catch(function (error) {
+            console.log(error);
+        });
+    }
+    else{
+        let xhr = new XMLHttpRequest();
+        xhr.open("POST", url, true);
+        xhr.setRequestHeader("Query-Type", "ajax/fetch");
+        xhr.onload = function (e) {
+            ajaxActions(e.target.response);
+        };
+        xhr.onerror = error => {
+            console.log('произошла ошибка' + error.code)
+        };
+        xhr.send(data);
+    }
+
 }
 
 function getParents(elem, clName) {
@@ -225,9 +281,6 @@ function setDoneWidth() {
 setDoneWidth();
 
 function init() {
-    // window.onbeforeunload = function () {
-    //     return "Вы действительно хотите уйти с сайта?";
-    // };
     hideElems();
     timer();
     setDoneWidth();
@@ -286,11 +339,7 @@ function init() {
             .catch(function (error) {
                 console.log(error);
             });
-        let schoolsTest = JSON.parse(localStorage.getItem('schoolsTest'));
-        let schoolsTestArray = [];
-        for (let school in schoolsTest) {
-            schoolsTestArray.push(schoolsTest[school]);
-        }
+
 
         let inputs = authForm.querySelectorAll("input");
         inputs.forEach(function (input) {
@@ -319,9 +368,12 @@ function init() {
             e.preventDefault();
             let formData = new FormData();
             inputs = Array.from(inputs);
+            let schoolsTest = JSON.parse(localStorage.getItem('schoolsTest'));
+            let schoolsTestArray = [];
+            for (let school in schoolsTest) {
+                schoolsTestArray.push(schoolsTest[school]);
+            }
             let emailCheck = email.value.match(regExpMail);
-            let schoolCheck = schoolsTestArray.includes(schoolInput.value);
-            let fioCheck = isCorrectFIO(fioInput.value);
             let empty = inputs.filter((input) => input.value.length < 1);
             if (empty.length) {
                 formWarning.classList.add('active');
@@ -329,20 +381,23 @@ function init() {
             }
             if (!emailCheck) {
                 email.classList.add('error');
-                emailWarning.classList.add('active')
+                emailWarning.classList.add('active');
             }
-            if (!fioCheck) {
-                schoolInput.classList.add('error');
-                schoolWarning.classList.add('active')
-            }
-            if (!schoolCheck) {
+            if (!isCorrectFIO(fioInput.value)) {
                 fioInput.classList.add('error');
                 fioWarning.classList.add('active');
             }
-            if (!empty.length && (emailCheck && fioCheck && schoolCheck)) {
-                inputs.forEach((input) => formData.append(input.name, input.value));
-                sendAJAX("https://httpbin.org/post", formData);
+            if (!schoolsTestArray.includes(schoolInput.value)) {
+                schoolInput.classList.add('error');
+                schoolWarning.classList.add('active');
+
             }
+            if (!empty.length && (emailCheck && isCorrectFIO(fioInput.value) && schoolsTestArray.includes(schoolInput.value))) {
+                inputs.forEach((input) => formData.append(input.name, input.value));
+                formData.append('action', 'welcome');
+                sendAJAX("/diagnostika/index.php", formData);
+            }
+
         });
 
         document.addEventListener('click', function (e) {
@@ -357,31 +412,11 @@ function init() {
     window.addEventListener("resize", setDoneWidth);
     let progressIndexes = document.querySelectorAll(".progress-step__index");
     if (progressIndexes) {
-        progressIndexes.forEach(function (link) {
-            let act = link.parentNode.className.includes("active");
-            let done = link.parentNode.className.includes("done");
+        progressIndexes.forEach(function (p) {
+            let act = p.parentNode.className.includes("active");
+            let done = p.parentNode.className.includes("done");
             let bool = act || done;
-            link.addEventListener("click", (e) => {
-                if (!bool) {
-                    e.preventDefault();
-                }
-                else {
-                    let timerBlockF = document.querySelector(".timer[data-finish]");
-                    if (timerBlockF) {
-                        if (!timerBlockF.dataset.finally) {
-                            let question = confirm('Если вы покините этот шаг сейчас, результаты обнулятся, Вы уверены?');
-                            if (!question) {
-                                e.preventDefault();
-                            }
-                            else {
-                                /// тут нужно  вставить  код, который отвечает за переход по шагам(если пользователь утвердил переход)
-                            }
-                        }
-                    }
-
-
-                }
-            });
+            p.addEventListener("click", (e) => bool ? true : e.preventDefault());
         });
     }
 
@@ -440,6 +475,8 @@ function init() {
         if (!step) {
             return false;
         }
+
+
         check(disableSend, step);
         const ranges = step.querySelector(".ranges");
         const rangeElems = step.querySelectorAll(".slider-range");
@@ -569,6 +606,7 @@ function init() {
             data.append("resultsArr", JSON.stringify(resultArr));
             data.append("FORMNAME", ranges.dataset.name);
             sendAJAX("https://httpbin.org/post", data);
+
         }
 
         stepTwoBtn.addEventListener('click', sendStepTwo);
@@ -718,6 +756,8 @@ function init() {
             }
         }
 
+        let canvasAnswer = elem.querySelector('.question-wrap[data-type="canvas"]');
+        let userObj = [];
         let rects = elem.querySelectorAll('.canvas-block');
         let points = elem.querySelectorAll('.canvas-point');
         localStorage.removeItem('finishCanvas');
@@ -770,92 +810,98 @@ function init() {
         let pointsElems = elem.querySelectorAll('.canvas-point');
         let clickCounter = 0;
         let finishCounter = 0;
-        let userObj = [];
+
         let lines = elem.querySelectorAll('.canvas-row');
         let objCoord = {
             currentClick: [],
             prevClick: []
         };
-
-
-        pointsElems.forEach(point => {
-            if (localStorage.getItem('finishCanvas')) {
-                points.forEach(point => point.removeAttribute('data-hover'))
-            }
-            point.addEventListener('click', function (e) {
-                clickCounter++;
-                if (!localStorage.getItem('finishCanvas')) {
-                    if (point.dataset.hover && clickCounter) {
-                        this.classList.add('active');
-                        pointsElems.forEach(pi => pi.classList.remove('selected'));
-                        this.classList.add('selected');
-                        let selected = elem.querySelector('.selected');
-                        hovered.forEach(h => h.removeAttribute('data-hover'));
-                        let self = this;
-                        let osPoints = [];
-                        let yPoint = [...pointsElems].filter(pi => (pi.style.left === self.style.left) && (Math.abs(parseInt(pi.style.top) - parseInt(self.style.top))) < 70).filter(pointN => pointN !== self);
-                        let xPoint = [...pointsElems].filter(pi => (pi.style.top === self.style.top) && ((Math.abs(parseInt(pi.style.left) - parseInt(self.style.left)) < 70))).filter(pointN => pointN !== self);
-                        osPoints = Array(...yPoint, ...xPoint);
-                        osPoints.map(op => op.dataset.hover = "true");
-                        let top = parseInt(elem.querySelector('.selected').style.top);
-                        let left = parseInt(elem.querySelector('.selected').style.left);
-                        if (clickCounter === 1) {
-                            objCoord.currentClick = [top, left];
-                        } else {
-                            objCoord.prevClick = [...objCoord.currentClick];
-                            objCoord.currentClick = [top, left];
-                        }
-
-                        if (objCoord.prevClick.length) {
-
-                            let draw = [...lines].forEach(line => {
-                                if (Math.abs(objCoord.currentClick[0] - objCoord.prevClick[0]) > 1) {
-                                    if (objCoord.prevClick[0] - objCoord.currentClick[0] > 0) {
-                                        if (parseInt(line.style.top) === objCoord.currentClick[0] && (parseInt(line.style.left) === objCoord.currentClick[1]) && line.className.includes('vertical')) {
-                                            if (checkLine(line, point) === true) {
-                                                checkLine(line, point);
-                                                userObj.push([parseInt(line.style.left), parseInt(line.style.top)]);
-                                            }
-                                        }
-                                    }
-                                    else {
-                                        if (parseInt(line.style.top) === objCoord.prevClick[0] && (parseInt(line.style.left) === objCoord.currentClick[1]) && line.className.includes('vertical')) {
-                                            if (checkLine(line, point) === true) {
-                                                checkLine(line, point);
-                                                userObj.push([parseInt(line.style.left), parseInt(line.style.top)]);
-                                            }
-
-                                        }
-                                    }
-
-                                }
-                                else if (Math.abs(objCoord.currentClick[1] - objCoord.prevClick[1]) > 1) {
-                                    if (objCoord.prevClick[1] - objCoord.currentClick[1] < 0) {
-                                        if (parseInt(line.style.top) === objCoord.currentClick[0] && (parseInt(line.style.left) === objCoord.prevClick[1]) && line.className.includes('horizont')) {
-                                            if (checkLine(line, point) === true) {
-                                                checkLine(line, point);
-                                                userObj.push([parseInt(line.style.left), parseInt(line.style.top)]);
-                                            }
-                                        }
-                                    }
-                                    else {
-                                        if (parseInt(line.style.top) === objCoord.currentClick[0] && (parseInt(line.style.left) === objCoord.currentClick[1]) && line.className.includes('horizont')) {
-                                            if (checkLine(line, point) === true) {
-                                                checkLine(line, point);
-                                                userObj.push([parseInt(line.style.left), parseInt(line.style.top)]);
-                                            }
-                                        }
-                                    }
-
-                                }
-                            });
-                        }
-
-                    }
+        if(localStorage.getItem('canvasHTML')){
+            let question  = canvasAnswer.querySelector('.question');
+            console.log(question);
+            question.removeChild(question.querySelector('.answers'));
+            question.innerHTML +=  localStorage.getItem('canvasHTML');
+        }
+        else {
+            pointsElems.forEach(point => {
+                if (localStorage.getItem('finishCanvas')) {
+                    points.forEach(point => point.removeAttribute('data-hover'))
                 }
+                point.addEventListener('click', function (e) {
+                    clickCounter++;
+                    if (!localStorage.getItem('finishCanvas')) {
+                        if (point.dataset.hover && clickCounter) {
+                            this.classList.add('active');
+                            pointsElems.forEach(pi => pi.classList.remove('selected'));
+                            this.classList.add('selected');
+                            let selected = elem.querySelector('.selected');
+                            hovered.forEach(h => h.removeAttribute('data-hover'));
+                            let self = this;
+                            let osPoints = [];
+                            let yPoint = [...pointsElems].filter(pi => (pi.style.left === self.style.left) && (Math.abs(parseInt(pi.style.top) - parseInt(self.style.top))) < 70).filter(pointN => pointN !== self);
+                            let xPoint = [...pointsElems].filter(pi => (pi.style.top === self.style.top) && ((Math.abs(parseInt(pi.style.left) - parseInt(self.style.left)) < 70))).filter(pointN => pointN !== self);
+                            osPoints = Array(...yPoint, ...xPoint);
+                            osPoints.map(op => op.dataset.hover = "true");
+                            let top = parseInt(elem.querySelector('.selected').style.top);
+                            let left = parseInt(elem.querySelector('.selected').style.left);
+                            if (clickCounter === 1) {
+                                objCoord.currentClick = [top, left];
+                            } else {
+                                objCoord.prevClick = [...objCoord.currentClick];
+                                objCoord.currentClick = [top, left];
+                            }
 
-            })
-        });
+                            if (objCoord.prevClick.length) {
+
+                                let draw = [...lines].forEach(line => {
+                                    if (Math.abs(objCoord.currentClick[0] - objCoord.prevClick[0]) > 1) {
+                                        if (objCoord.prevClick[0] - objCoord.currentClick[0] > 0) {
+                                            if (parseInt(line.style.top) === objCoord.currentClick[0] && (parseInt(line.style.left) === objCoord.currentClick[1]) && line.className.includes('vertical')) {
+                                                if (checkLine(line, point) === true) {
+                                                    checkLine(line, point);
+                                                    userObj.push([parseInt(line.style.left), parseInt(line.style.top)]);
+                                                }
+                                            }
+                                        }
+                                        else {
+                                            if (parseInt(line.style.top) === objCoord.prevClick[0] && (parseInt(line.style.left) === objCoord.currentClick[1]) && line.className.includes('vertical')) {
+                                                if (checkLine(line, point) === true) {
+                                                    checkLine(line, point);
+                                                    userObj.push([parseInt(line.style.left), parseInt(line.style.top)]);
+                                                }
+
+                                            }
+                                        }
+
+                                    }
+                                    else if (Math.abs(objCoord.currentClick[1] - objCoord.prevClick[1]) > 1) {
+                                        if (objCoord.prevClick[1] - objCoord.currentClick[1] < 0) {
+                                            if (parseInt(line.style.top) === objCoord.currentClick[0] && (parseInt(line.style.left) === objCoord.prevClick[1]) && line.className.includes('horizont')) {
+                                                if (checkLine(line, point) === true) {
+                                                    checkLine(line, point);
+                                                    userObj.push([parseInt(line.style.left), parseInt(line.style.top)]);
+                                                }
+                                            }
+                                        }
+                                        else {
+                                            if (parseInt(line.style.top) === objCoord.currentClick[0] && (parseInt(line.style.left) === objCoord.currentClick[1]) && line.className.includes('horizont')) {
+                                                if (checkLine(line, point) === true) {
+                                                    checkLine(line, point);
+                                                    userObj.push([parseInt(line.style.left), parseInt(line.style.top)]);
+                                                }
+                                            }
+                                        }
+
+                                    }
+                                });
+                            }
+
+                        }
+                    }
+
+                })
+            });
+        }
 
         //// canvas end
         function sendStepThree() {
@@ -898,7 +944,7 @@ function init() {
                     jsonData[name] = [null];
                 }
             });
-            let canvasAnswer = elem.querySelector('.question-wrap[data-type="canvas"]');
+
             let canvas = canvasAnswer.querySelector('.canvas-wrapper');
             let dataTrue = canvas.dataset.true;
             let canvasName = canvasAnswer.dataset.index;
@@ -913,8 +959,12 @@ function init() {
             else {
                 jsonData[canvasName] = [false];
             }
+            let canvasHTML = canvasAnswer.querySelector('.answers').innerHTML;
+            localStorage.setItem('canvasHTML', canvasHTML);
+
             data.append('resultArr', JSON.stringify(jsonData));
             sendAJAX("https://httpbin.org/post", data);
+            console.log(jsonData)
         }
 
         btn.addEventListener('click', sendStepThree)
