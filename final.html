@@ -1,5 +1,5 @@
 <!doctype html >
-<html lang="ru" class="final">
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
@@ -15,23 +15,441 @@
         <a href="#" class="logo"><img src="img/logo.svg" alt=""></a>
         <div class="finish"><img src="img/finish.svg" alt=""></div>
         <div class="timer  timer_header" data-finish="30">
-            <div class="timer__time" >
+            <div class="timer__time">
                 <div class="timer__minutes">00</div>
                 <span>:</span>
                 <div class="timer__seconds">00</div>
             </div>
         </div>
     </header>
-    <main class="main main_gray">
+    <main class="main main_gray main-final">
         <div class="hello-test hello-test_final">
-            <img src="img/finalImg.svg" alt="" class="final-img">
-            <div class="good-job">Поздравляем!</div>
-            <h1 class="hello-test__title">Тест пройден</h1>
-            <div class="text-content text-content_final">
-                <p>Теперь осталось проверить свою почту и узнать результаты. 
-                    </p>
-                <p>Надеемся, наш тест был интересен для тебя! <br> До новых встреч! <img src="img/smile.svg" alt="смайл" class="smile"></p>
+            <div class="final-top">
+                <img src="img/finalImg.svg" alt="" class="final-img">
+                <div class="good-job">Поздравляем! Тест пройден.</div>
+                <h1 class="hello-test__title">Самое время узнать результаты.</h1>
             </div>
+            <div class="final-items">
+                <div class="final-item diagram-item">
+                    <h2 class="final-item__title">Карта твоих интересов</h2>
+                    <div class="final-item__text">
+                        <p>
+                            Проанализировав степень сформированности твоего интереса ккаждой из 10 сфер деятельности,
+                            которые заложены в методике, мы видим, что наиболее интересными для тебя являются <strong>химия
+                            и
+                            биология. </strong>
+                        </p>
+                    </div>
+                    <div class="diagram final-item__block">
+                        <div class="diagram__item" data-questions="10" data-result="8">
+                            <div class="diagram__item-name">физика и математика</div>
+                            <div class="diagram__item-line">
+                                <div class="diagram__item-result"></div>
+                            </div>
+                            <div class="diagram__item__count">4</div>
+                        </div>
+                        <div class="diagram__item" data-questions="10" data-result="9">
+                            <div class="diagram__item-name">химия и биология</div>
+                            <div class="diagram__item-line">
+                                <div class="diagram__item-result"></div>
+                            </div>
+                            <div class="diagram__item__count">5</div>
+                        </div>
+                        <div class="diagram__item" data-questions="11" data-result="7">
+                            <div class="diagram__item-name">радиотехника и электроника</div>
+                            <div class="diagram__item-line">
+                                <div class="diagram__item-result"></div>
+                            </div>
+                            <div class="diagram__item__count">4</div>
+                        </div>
+                        <div class="diagram__item" data-questions="11" data-result="4">
+                            <div class="diagram__item-name">механика и конструирование</div>
+                            <div class="diagram__item-line">
+                                <div class="diagram__item-result"></div>
+                            </div>
+                            <div class="diagram__item__count">3</div>
+                        </div>
+                        <div class="diagram__item" data-questions="110" data-result="80">
+                            <div class="diagram__item-name">география и геология</div>
+                            <div class="diagram__item-line">
+                                <div class="diagram__item-result"></div>
+                            </div>
+                            <div class="diagram__item__count">4</div>
+                        </div>
+                        <div class="diagram__item" data-questions="11" data-result="7">
+                            <div class="diagram__item-name">литература и искусство</div>
+                            <div class="diagram__item-line">
+                                <div class="diagram__item-result"></div>
+                            </div>
+                            <div class="diagram__item__count">4</div>
+                        </div>
+                        <div class="diagram__item" data-questions="10" data-result="0">
+                            <div class="diagram__item-name">история и политика</div>
+                            <div class="diagram__item-line">
+                                <div class="diagram__item-result"></div>
+                            </div>
+                            <div class="diagram__item__count">1</div>
+                        </div>
+                        <div class="diagram__item" data-questions="11" data-result="3">
+                            <div class="diagram__item-name">педагогика и медицина</div>
+                            <div class="diagram__item-line">
+                                <div class="diagram__item-result"></div>
+                            </div>
+                            <div class="diagram__item__count">2</div>
+                        </div>
+                        <div class="diagram__item" data-questions="11" data-result="7">
+                            <div class="diagram__item-name">предпринимательство и домоводство</div>
+                            <div class="diagram__item-line">
+                                <div class="diagram__item-result"></div>
+                            </div>
+                            <div class="diagram__item__count">4</div>
+                        </div>
+                        <div class="diagram__item" data-questions="11" data-result="7">
+                            <div class="diagram__item-name">спорт и военное дело</div>
+                            <div class="diagram__item-line">
+                                <div class="diagram__item-result"></div>
+                            </div>
+                            <div class="diagram__item__count">4</div>
+                        </div>
+                    </div>
+                    <div class="final-item__text">
+                        <p>
+                            Эта область действительно интересна и важна в современном мире. В учебе сделай
+                            наибольший
+                            упор на предметы, которые помогут тебе стать успешным в интересной для тебя области.
+                            Именно
+                            эта область является направлением, в котором ты сможешь реализоваться и быть довольным
+                            своей
+                            профессией, если выберешь ее в качестве своего профессионального пути.
+                        </p>
+                        <p>
+                            Изучай как можно больше, углубляй и расширяй свои знания в данной области. При
+                            поступлении в
+                            ВУЗ важным факторов осуществления цели является набор 100 баллов по ЕГЭ, что возможно
+                            при
+                            участии в олимпиаде. Рассмотри с учетом выделенной области профессии и ВУЗы, в которых
+                            ты
+                            сможешь овладеть интересующей тебя специальностью и выпиши предметы, которыми ты должен
+                            овладеть и, возможно, принять участие в олимпиадах.
+                        </p>
+                    </div>
+                </div>
+                <div class="final-item target-item">
+                    <div class="target-top">
+                        <h2 class="final-item__title">Достигаем цели</h2>
+                        <div class="target-top__row">
+                            <div class="target-top__img">
+                                <img src="img/target.svg" alt="target">
+                            </div>
+                            <div class="target-top__text">
+                                <p>
+                                    <strong>Хорошо! </strong> Ты не очень любишь и готов браться за сложные дела, для
+                                    тебя
+                                    непросто брать на
+                                    себя ответственность. Однако, если ты постараешься, тебе все по плечу при проявлении
+                                    должного упорства.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <h2 class="final-item__title">Твоя самооценка</h2>
+                    <div class="final-item__block target">
+                        <div class="target-row">
+                            <div class="target-row__img">
+                                <img src="img/tragetIcon1.svg" alt="target">
+                            </div>
+                            <div class="target-row__text">
+                                <div class="target-row__title">
+                                    Показатель твоей самооценки равен: <span> 27 баллов</span>
+                                </div>
+                                <p>
+                                    Это означает, что ты недооцениваешь себя. Твои способности гораздо выше, чем они
+                                    тебе
+                                    представляются. Они откроются тебе в проблемной ситуации, например, в соревновании
+                                    или
+                                    проектной работе. Не бойся принимать в них участии, быть активным.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="target-row">
+                            <div class="target-row__img">
+                                <img src="img/tragetIcon2.svg" alt="target">
+                            </div>
+                            <div class="target-row__text">
+                                <div class="target-row__title">
+                                    Твой уровень притязаний равен: <span> 95 баллов</span>
+                                </div>
+                                <p>
+                                    Это означает, что ты часто ставишь перед собой слишком сложные и нереальные цели.
+                                    Попробуй использовать схему SMART для постановки и достижения своих целей.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="target-row">
+                            <div class="target-row__img">
+                                <img src="img/tragetIcon3.svg" alt="target">
+                            </div>
+                            <div class="target-row__text">
+                                <div class="target-row__title">
+                                    Разница между уровнем притязаний и самооценкой <br>равна: <span> 37 баллов</span>
+                                </div>
+                                <p>
+                                    Ты ставишь нереалистичные цели, оцени свои возможности, собери информацию о желаемой
+                                    цели и воспользуйся схемой SMART.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="final-item intelligence-item">
+                    <h2 class="final-item__title">Интеллект</h2>
+                    <div class="final-item__block intelligence-block">
+                        <div class="intelligence-block__top">
+                            <div class="intelligence-block__result">
+                                Твой интегральный показатель равен: <span> 27 баллов</span>
+                            </div>
+                            <p>
+                                Установленный уровень является показателем общих способностей. Чем выше у тебя балл по
+                                этому
+                                тесту, тем лучше на сегодняшний день твои способности к дальнейшему обучению и
+                                познавательной деятельности.
+                            </p>
+                        </div>
+                        <div class="intelligence-block__bottom">
+                            <p>
+                                Твой показатель выше среднего. Это говорит о том, что большая часть заданий не вызывала
+                                у
+                                тебя серьёзных трудностей, а твои способности к обучению на хорошем уровне.
+                            </p>
+                            <p>
+                                Из 50 заданий за 15 минут ты выполнил 43 задания, сделав 5 ошибок.
+                                Ты полностью выполнил задания на <strong> Внимательность, </strong> <strong> Числовые
+                                закономерности </strong> и <strong> Пространственные операции. </strong> Больше всего
+                                было
+                                пропущено заданий на Технический интеллект/Числовые операции и
+                                Вербальный интеллект/Смысловые обобщения.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="final-item__block intelligence-table-wrap">
+                        <table class="intelligence-table">
+                            <thead class="intelligence-table__head">
+                            <tr>
+                                <th>Критерий</th>
+                                <th>Верно</th>
+                                <th>Пропущено</th>
+                                <th>Ошибки</th>
+                            </tr>
+                            </thead>
+                            <tbody class="intelligence-table__body">
+                            <tr>
+                                <td>Внимательность</td>
+                                <td>8, 13, 18</td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>Информированность</td>
+                                <td>25</td>
+                                <td></td>
+                                <td>20, 21, 35, 38, 43</td>
+                            </tr>
+                            <tr>
+                                <td>Вербальный интеллект</td>
+                                <td>2, 3, 6, 7, 9, 11, 14,
+                                    16, 19, 26, 28, 30,
+                                    34, 41, 48
+                                </td>
+                                <td>20, 21, 35, 38, 43,
+                                    47
+                                </td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>Умозаключения</td>
+                                <td></td>
+                                <td></td>
+                                <td>20, 21, 35, 38, 43, 47</td>
+                            </tr>
+                            <tr>
+                                <td>Чувство языка</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>Смысловые обобщения</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>Технический интеллект</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>Числовые операции</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>Числовые закономерности</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>Пространственные операции</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <a href="#" class="intelligence__link">Сравнить со своими ответами</a>
+                    <div class="final-item__text">
+                        <div class="intelligence-res">
+                            <p>
+                                <strong>Пространственное воображение </strong>характеризуется по решению четырех задач,
+                                предполагающих операции в двумерном пространстве.
+                            </p>
+                            <div class="intelligence-res__result">
+                                <div class="intelligence__points">
+                                    <div class="intelligence__point intelligence__point_good"></div>
+                                    <div class="intelligence__point intelligence__point_good"></div>
+                                    <div class="intelligence__point intelligence__point_good"></div>
+                                    <div class="intelligence__point intelligence__point_good"></div>
+                                    <div class="intelligence__point intelligence__point_bad"></div>
+                                    <div class="intelligence__point intelligence__point_empty"></div>
+                                </div>
+                                <div class="intelligence-res__text">3 верно, 1 ошибка</div>
+                            </div>
+                        </div>
+                        <div class="intelligence-res">
+                            <p>
+                                <strong>Способности обобщения и анализа материала </strong> устанавливаются на основе
+                                выполнения заданий на
+                                пословицы. Эти задания требуют абстрагирования от конкретной фразы и перехода в область
+                                интерпретации смыслов, установления их пересечений и новоговозврата к конкретным фразам.
+                            </p>
+                            <div class="intelligence-res__result">
+                                <div class="intelligence__points">
+                                    <div class="intelligence__point intelligence__point_empty"></div>
+                                    <div class="intelligence__point intelligence__point_empty"></div>
+                                    <div class="intelligence__point intelligence__point_empty"></div>
+                                </div>
+                                <div class="intelligence-res__text">3 пропущено</div>
+                            </div>
+                        </div>
+                        <div class="intelligence-res">
+                            <p>
+                                <strong> Гибкость мышления </strong> как компонент общих способностей также определяется
+                                повыполнению заданий на пословицы.
+                            </p>
+                            <div class="intelligence-res__result">
+                                <div class="intelligence__points">
+                                    <div class="intelligence__point intelligence__point_good"></div>
+                                    <div class="intelligence__point intelligence__point_good"></div>
+                                    <div class="intelligence__point intelligence__point_good"></div>
+                                    <div class="intelligence__point intelligence__point_good"></div>
+                                    <div class="intelligence__point intelligence__point_bad"></div>
+                                    <div class="intelligence__point intelligence__point_empty"></div>
+                                </div>
+                                <div class="intelligence-res__text">5 верно, 1 ошибка, 1 пропущено</div>
+                            </div>
+                        </div>
+                        <div class="intelligence-res">
+                            <p>
+                                <strong>Скорость и точность восприятия</strong>, <strong> распределение </strong> и
+                                <strong>концентрация внимания </strong> определяются заданиями
+                                8 и 13. Они выявляют способность в сжатые сроки работать с самым разнообразным
+                                материалом,
+                                выделять основные содержания, сопоставлять цифры, знаки и т.п.
+                            </p>
+                            <div class="intelligence-res__result">
+                                <div class="intelligence__points">
+                                    <div class="intelligence__point intelligence__point_good"></div>
+                                    <div class="intelligence__point intelligence__point_good"></div>
+                                    <div class="intelligence__point intelligence__point_good"></div>
+                                    <div class="intelligence__point intelligence__point_good"></div>
+                                    <div class="intelligence__point intelligence__point_bad"></div>
+                                    <div class="intelligence__point intelligence__point_empty"></div>
+                                </div>
+                                <div class="intelligence-res__text">3 верно, 1 ошибка</div>
+                            </div>
+                        </div>
+                        <div class="intelligence-res">
+                            <p>
+                                <strong> Ориентировка </strong> устанавливается благодаря анализу стратегии выбора задач
+                                длярешения, как правило тех, которые даются легче.
+                            </p>
+                            <div class="intelligence-res__result">
+                                <div class="intelligence__points">
+                                    <div class="intelligence__point intelligence__point_good"></div>
+                                    <div class="intelligence__point intelligence__point_good"></div>
+                                    <div class="intelligence__point intelligence__point_good"></div>
+                                    <div class="intelligence__point intelligence__point_good"></div>
+                                    <div class="intelligence__point intelligence__point_bad"></div>
+                                    <div class="intelligence__point intelligence__point_empty"></div>
+                                </div>
+                                <div class="intelligence-res__text">3 верно, 1 ошибка</div>
+                            </div>
+                        </div>
+                        <div class="intelligence-res">
+                            <p>
+                                <strong>Употребление языка, грамотность </strong> может быть проанализирована на
+                                основании
+                                выполнения заданий на умение пользоваться языком.
+                            </p>
+                            <div class="intelligence-res__result">
+                                <div class="intelligence__points">
+                                    <div class="intelligence__point intelligence__point_good"></div>
+                                    <div class="intelligence__point intelligence__point_good"></div>
+                                    <div class="intelligence__point intelligence__point_good"></div>
+                                    <div class="intelligence__point intelligence__point_good"></div>
+                                    <div class="intelligence__point intelligence__point_bad"></div>
+                                    <div class="intelligence__point intelligence__point_empty"></div>
+                                </div>
+                                <div class="intelligence-res__text">3 верно, 1 ошибка</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="final-item final-item_final">
+                    <h2 class="final-item__title">Внимание</h2>
+                    <div class="final-item__block intelligence-block">
+                        <div class="intelligence-block__top">
+                            <div class="intelligence-block__result">
+                                Твой интегральный показатель равен: <span> 27 баллов</span>
+                            </div>
+                        </div>
+                        <div class="intelligence-block__bottom">
+                            <p>
+                                Тебе следует уделять больше времени развитию своего внимания. Читай, записывай
+                                интересные
+                                мысли в записную книжку, время от времени перечитывай свои записи.Выбери курсы, тренинги
+                                или
+                                мастер-классы по развитию внимания. Тогда совсем скоро это позволит тебе лучше и быстрее
+                                запомнить и воспроизвести информацию и повысить твою успеваемость.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="final-bottom">
+                <div class="text-content text-content_final">
+                    <p>Результаты теста мы также отправили тебе на почту. <br> Надеемся, наш тест был интересен для
+                        тебя!
+                    </p>
+                    <p>До новых встреч! <img src="img/smile.svg" alt="смайл" class="smile"></p>
+                </div>
+            </div>
+
         </div>
     </main>
 </div>
