@@ -33,19 +33,22 @@
                     <label class="form-authorize__label">
                         <span class="form-authorize__label-name">ФИО</span>
                         <input type="text" class="form-authorize__input" autocomplete="off" name="userName" placeholder="Иванов Иван">
+                        <span class="label-warning fio-warning">Введите ФИО полностью на кириллице</span>
                     </label>
                     <label class="form-authorize__label">
                         <span class="form-authorize__label-name">Школа</span>
                         <input type="text" class="form-authorize__input" autocomplete="off" name="userSchool" placeholder="Школа №537" data-json="/json/schools.json">
+                        <span class="school-warning label-warning">Выберите школу из списка</span>
                     </label>
                     <label class="form-authorize__label">
                         <span class="form-authorize__label-name">Класс</span>
                         <input type="text" class="form-authorize__input" autocomplete="off" name="userSchoolClass" placeholder="5 класс">
+                        <span class="class-warning label-warning"></span>
                     </label>
                     <label class="form-authorize__label">
                         <span class="form-authorize__label-name">E-mail</span>
                         <input type="text" class="form-authorize__input" autocomplete="off" name="userEmail" placeholder="ivanov@gmail.com">
-                        <span class="email-warning">Введите корректный e-mail</span>
+                        <span class="email-warning label-warning">Введите корректный e-mail</span>
                     </label>
                     <button class="form-authorize__submit" type="submit">Приступить</button>
                 </form>
