@@ -989,24 +989,26 @@ function init() {
         diagramsItem.forEach(function (item) {
             let questions = Number(item.dataset.questions);
             let result = Number(item.dataset.result);
-            let percent = result / questions;
             let subLine = item.querySelector('.diagram__item-result');
 
-            switch (true) {
-                case (percent >= 0.9):
+            switch (result) {
+                case 5:
                     setCssDiagram(subLine, 100, '#69A000');
                     break;
-                case ((percent < 0.9) && (percent > 0.7)):
+                case 4:
                     setCssDiagram(subLine, 80, '#B1CD43');
                     break;
-                case ((percent <= 0.7) && (percent >= 0.5)):
+                case 3:
                     setCssDiagram(subLine, 60, '#8FA36A');
                     break;
-                case ((percent < 0.5) && (percent > 0)):
+                case 2:
                     setCssDiagram(subLine, 40, '#8FA36A');
                     break;
-                default:
+                case 1:
                     setCssDiagram(subLine, 20, '#8FA36A');
+                    break;
+                default:
+                    setCssDiagram(subLine, 0, '#8FA36A');
             }
         });
     })();

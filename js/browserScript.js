@@ -1,54 +1,17 @@
 "use strict";
 
-function _asyncToGenerator(fn) {
-    return function () {
-        var gen = fn.apply(this, arguments);
-        return new Promise(function (resolve, reject) {
-            function step(key, arg) {
-                try {
-                    var info = gen[key](arg);
-                    var value = info.value;
-                } catch (error) {
-                    reject(error);
-                    return;
-                }
-                if (info.done) {
-                    resolve(value);
-                } else {
-                    return Promise.resolve(value).then(function (value) {
-                        step("next", value);
-                    }, function (err) {
-                        step("throw", err);
-                    });
-                }
-            }
+function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
 
-            return step("next");
-        });
-    };
-}
-
-function _toConsumableArray(arr) {
-    if (Array.isArray(arr)) {
-        for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) {
-            arr2[i] = arr[i];
-        }
-        return arr2;
-    } else {
-        return Array.from(arr);
-    }
-}
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
 
 String.prototype.capitalize = function () {
     return this.replace(/(?:^|\s)\S/g, function (a) {
         return a.toUpperCase();
     });
 };
-
 function activateCanvas() {
     localStorage.removeItem('canvasHTML');
 }
-
 function which(click, buttons) {
     for (var i in buttons) {
         var button = buttons[i];
@@ -84,7 +47,6 @@ function which(click, buttons) {
 
     return min_id;
 }
-
 function isCorrectFIO(fio) {
     if (!fio) {
         return false;
@@ -147,7 +109,6 @@ function sendAJAX(url, data) {
             }
         }
     }
-
     if (window.fetch) {
         fetch(url, {
             method: "POST",
@@ -702,7 +663,7 @@ function init() {
         var btn = elem.querySelector('.step_five__button');
         check(disableSend, elem);
         (function () {
-            var _ref = _asyncToGenerator(/*#__PURE__*/regeneratorRuntime.mark(function _callee() {
+            var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
                 var response, data, words, wordsArr, resultArray, HTMLarray, parser;
                 return regeneratorRuntime.wrap(function _callee$(_context) {
                     while (1) {
@@ -847,19 +808,7 @@ function init() {
         var points = elem.querySelectorAll('.canvas-point');
         localStorage.removeItem('finishCanvas');
         var coordsArray = [[360, 63], [298, 125], [360, 125], [422, 125], [484, 125], [236, 187], [298, 187], [360, 187], [422, 187]];
-        var resT = [{x: 360, y: 125, outer: true}, {x: 422, y: 125, outer: true}, {
-            x: 298,
-            y: 187,
-            outer: true
-        }, {x: 360, y: 187, outer: false}, {x: 422, y: 187, outer: false}, {x: 484, y: 187, outer: true}, {
-            x: 298,
-            y: 249,
-            outer: true
-        }, {x: 360, y: 249, outer: true}, {x: 422, y: 249, outer: true}, {x: 298, y: 125, outer: true}, {
-            x: 484,
-            y: 125,
-            outer: true
-        }, {x: 484, y: 249, outer: true}];
+        var resT = [{ x: 360, y: 125, outer: true }, { x: 422, y: 125, outer: true }, { x: 298, y: 187, outer: true }, { x: 360, y: 187, outer: false }, { x: 422, y: 187, outer: false }, { x: 484, y: 187, outer: true }, { x: 298, y: 249, outer: true }, { x: 360, y: 249, outer: true }, { x: 422, y: 249, outer: true }, { x: 298, y: 125, outer: true }, { x: 484, y: 125, outer: true }, { x: 484, y: 249, outer: true }];
 
         var horizontalArr = [[360, 125], [298, 187], [360, 187], [422, 187], [298, 125], [422, 125]];
         var verticalArr = [[360, 125], [422, 125], [298, 187], [360, 187], [422, 187], [298, 125], [484, 125]];
@@ -1074,34 +1023,34 @@ function init() {
         if (!elem) {
             return false;
         }
-
         function setCssDiagram(line, percent, color) {
             line.style.width = percent + '%';
             line.style.backgroundColor = color;
         }
-
         var diagramsItem = elem.querySelectorAll('.diagram__item');
         diagramsItem.forEach(function (item) {
             var questions = Number(item.dataset.questions);
             var result = Number(item.dataset.result);
-            var percent = result / questions;
             var subLine = item.querySelector('.diagram__item-result');
 
-            switch (true) {
-                case percent >= 0.9:
+            switch (result) {
+                case 5:
                     setCssDiagram(subLine, 100, '#69A000');
                     break;
-                case percent < 0.9 && percent > 0.7:
+                case 4:
                     setCssDiagram(subLine, 80, '#B1CD43');
                     break;
-                case percent <= 0.7 && percent >= 0.5:
+                case 3:
                     setCssDiagram(subLine, 60, '#8FA36A');
                     break;
-                case percent < 0.5 && percent > 0:
+                case 2:
                     setCssDiagram(subLine, 40, '#8FA36A');
                     break;
-                default:
+                case 1:
                     setCssDiagram(subLine, 20, '#8FA36A');
+                    break;
+                default:
+                    setCssDiagram(subLine, 0, '#8FA36A');
             }
         });
     })();
