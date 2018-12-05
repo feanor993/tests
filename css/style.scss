@@ -1655,7 +1655,7 @@
 .step__result{
   display: flex;
   position: absolute;
-  padding: 0 20px;
+  padding: 0 35px 0 20px;
   height: 48px;
   border-radius: 4px;
   border: solid 1px #b1cd43;
@@ -1666,6 +1666,21 @@
   color: #b1cd43;
   transition: opacity .4s ease;
   font-family: "Geometria-Medium", sans-serif;
+  &:after{
+    content: '';
+    display: block;
+    width: 8px;
+    height: 14px;
+    background: url(../img/arrowRight.svg) no-repeat center center/contain;
+    margin-right: 10px;
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+  &:hover{
+    opacity: .8;
+  }
 }
 @keyframes pulse {
   0% {

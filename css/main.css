@@ -1792,7 +1792,7 @@ a, a:hover {
   display: -ms-flexbox;
   display: flex;
   position: absolute;
-  padding: 0 20px;
+  padding: 0 35px 0 20px;
   height: 48px;
   -webkit-border-radius: 4px;
   border-radius: 4px;
@@ -1809,6 +1809,21 @@ a, a:hover {
   -o-transition: opacity .4s ease;
   transition: opacity .4s ease;
   font-family: "Geometria-Medium", sans-serif; }
+  .step__result:after {
+    content: '';
+    display: block;
+    width: 8px;
+    height: 14px;
+    background: url(../img/arrowRight.svg) no-repeat center center/contain;
+    margin-right: 10px;
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    -webkit-transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%); }
+  .step__result:hover {
+    opacity: .8; }
 
 @-webkit-keyframes pulse {
   0% {
