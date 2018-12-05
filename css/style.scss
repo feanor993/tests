@@ -32,13 +32,15 @@
   margin-left: 8.15vw;
 }
 .finish{
-  margin-right: 7vw;
+  margin-right: 6vw;
 }
 
 .logo {
   width: 207px;
-  margin-left: auto;
-  margin-right: auto;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
   display: block;
   transition: opacity .3s ease;
   &:hover {
@@ -255,7 +257,7 @@
 }
 
 .progress-step {
-  width: 20%;
+  width: 16.7%;
   height: 12px;
   position: relative;
   background-color: rgba(223, 224, 224, 0.6);
@@ -289,7 +291,8 @@
 
 .progress-done__line {
   position: absolute;
-  width: 40%;
+  width: 0;
+  transition: width .15s ease;
   left: 0;
   height: 12px;
   background-image: linear-gradient(to left, #d2e97a, #b1cd43);
@@ -311,6 +314,9 @@
 }
 
 .progress-step_active {
+  &:after {
+    background-color: #91ac25;
+  }
   .progress-step__index {
     color: #a2be33;
     font-family: $bold;
@@ -1304,8 +1310,19 @@
   width: 760px;
   margin-left: auto;
   margin-right: auto;
-  padding-bottom: 65px;
-  border-bottom: 1px solid #dfe0e0;
+  padding-bottom: 35px;
+  position: relative;
+  &:after{
+    content: '';
+    display: block;
+    position: absolute;
+    width: 1000px;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    height: 1px;
+    background-color: #dfe0e0;
+  }
 }
 .final-item{
   padding: 55px 0 60px 0;
@@ -1314,7 +1331,7 @@
     content: '';
     display: block;
     position: absolute;
-    width: 760px;
+    width: 1000px;
     height: 1px;
     background-color: #dfe0e0;
     left: 50%;
@@ -1379,7 +1396,6 @@
   border-radius: 9px;
   margin-right: 20px;
   position: relative;
-  overflow: hidden;
 }
 .diagram__item-result{
   position: absolute;
@@ -1387,6 +1403,8 @@
   top: 0;
   height: 100%;
   border-radius: 9px;
+  width: 5%;
+  transition: width 1s ease-in-out;
 }
 .diagram__item__count{
   font-size: 15px;
@@ -1398,8 +1416,19 @@
   width: 760px;
   margin-left: auto;
   margin-right: auto;
-  border-bottom: 1px solid #dfe0e0;
   margin-bottom: 55px;
+  position: relative;
+  &:after{
+    content: '';
+    display: block;
+    position: absolute;
+    width: 1000px;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    height: 1px;
+    background-color: #dfe0e0;
+  }
 }
 .target-top__img{
   min-width: 120px;
@@ -1425,7 +1454,7 @@
 }
 .target-row{
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   margin-bottom: 50px;
   &:last-of-type{
     margin-bottom: 0;
@@ -1453,7 +1482,7 @@
   margin-bottom: 60px;
 }
 .intelligence-block__top{
-  padding: 30px 40px 35px 40px;
+  padding: 30px 40px;
   background-color: #83878c;
   border-radius: 4px 4px 0 0 ;
   p{
@@ -1485,7 +1514,7 @@
   }
 }
 .intelligence-block__bottom{
-  padding: 20px 40px 50px 40px;
+  padding: 20px 40px 40px 40px;
   border-radius: 0 0 4px 4px;
   p{
     font-size: 18px;
@@ -1533,7 +1562,7 @@
     color: #3c3c3c;
     padding: 10px 20px;
     text-align: left;
-    vertical-align: middle;
+    vertical-align: top;
     width: 177px;
     min-height: 56px;
     border: none;
@@ -1566,7 +1595,7 @@
   font-size: 16px;
   font-family: $bold;
   color: #ffffff;
-  margin-bottom: 80px;
+  margin-bottom: 75px;
   transition: background-color .3s ease;
   &:hover{
     background-color: #7bab20;
@@ -1591,7 +1620,7 @@
   width: 12px;
   height: 12px;
   border-radius: 50%;
-  margin-right: 10px;
+  margin-right: 7px;
   &:last-of-type{
     margin-right: 0;
   }
@@ -1614,8 +1643,8 @@
   .intelligence-block{
     margin-bottom: 0;
   }
-
 }
+
 .final-bottom{
   padding-bottom: 115px;
   .text-content{

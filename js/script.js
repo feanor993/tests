@@ -145,20 +145,6 @@ function sendAJAX(url, data) {
 
 }
 
-function getParents(elem, clName) {
-    let parents = [];
-    while (elem && elem !== document) {
-        elem = elem.parentNode;
-        let bool = (elem.className && elem.className.includes(clName));
-        if (bool) {
-            parents.push(elem);
-        }
-    }
-    return (parents.length
-        ? parents[0]
-        : false);
-}
-
 function getCoords(elem) {
     let box = elem.getBoundingClientRect();
     return {
@@ -271,9 +257,13 @@ timer();
 function setDoneWidth() {
     let doneSteps = document.querySelectorAll(".progress-step_done");
     let doneLine = document.querySelector(".progress-done__line");
+    let slicedDone = [...doneSteps].splice(0, doneSteps.length - 1);
     if (doneSteps && doneLine) {
         let width = 0;
+        let minWidth = 0;
+        slicedDone.map((ds) => minWidth += ds.clientWidth);
         doneSteps.forEach((ds) => width += ds.clientWidth);
+        doneLine.style.minWidth = minWidth + "px";
         doneLine.style.width = width + "px";
     }
 }
@@ -296,12 +286,9 @@ function init() {
         let schoolWarning = authForm.querySelector('.school-warning');
         let fioInput = authForm.querySelector('input[name="userName"]');
         let fioWarning = authForm.querySelector('.fio-warning');
-        fetch(schoolsURL)
-            .then(function (response) {
-                return response.json();
-            }).then(function (data) {
-            schools = data;
-            localStorage.setItem('schoolsTest', JSON.stringify(data));
+        function schoolsListFunc(datas) {
+            schools = datas;
+            localStorage.setItem('schoolsTest', JSON.stringify(datas));
             let schoolsList = document.createElement("ul");
             schoolsList.classList.add("schools-list");
             schoolsList.hidden = true;
@@ -323,7 +310,6 @@ function init() {
                                 li.textContent = schools[item];
                                 schoolsList.appendChild(li);
                                 li.addEventListener("click", function (ev) {
-                                    ev.stopPropagation();
                                     ev.stopImmediatePropagation();
                                     schoolWarning.classList.remove('active');
                                     e.target.value = ev.target.textContent;
@@ -335,10 +321,29 @@ function init() {
                     }
                 }
             });
-        })
-            .catch(function (error) {
-                console.log(error);
-            });
+        }
+        if (window.fetch) {
+            fetch(schoolsURL)
+                .then(function (response) {
+                    return response.json();
+                })
+                .then(function (data) {
+                    schoolsListFunc(data);
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
+        }
+        else{
+            var request = new XMLHttpRequest();
+            request.open('POST', schoolsURL);
+            request.responseType = 'json';
+            request.onload = function() {
+                schoolsListFunc(request.response);
+            };
+            request.send();
+        }
+
 
 
         let inputs = authForm.querySelectorAll("input");
@@ -970,6 +975,7 @@ function init() {
         btn.addEventListener('click', sendStepThree)
     })();
 
+
     const final =  document.querySelector('.hello-test_final');
     (function finalActions(elem = final){
         if (!elem) {
@@ -1004,7 +1010,6 @@ function init() {
             }
         });
     })();
-
 }
 
 ready(init);
