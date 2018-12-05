@@ -1651,6 +1651,22 @@
     margin-top: 60px;
   }
 }
+
+.step__result{
+  display: flex;
+  position: absolute;
+  padding: 0 20px;
+  height: 48px;
+  border-radius: 4px;
+  border: solid 1px #b1cd43;
+  font-size: 16px;
+  align-items: center;
+  right: 8vw;
+  top: 65px;
+  color: #b1cd43;
+  transition: opacity .4s ease;
+  font-family: "Geometria-Medium", sans-serif;
+}
 @keyframes pulse {
   0% {
     transform: scale(1.1);
