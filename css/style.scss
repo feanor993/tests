@@ -543,13 +543,13 @@
   width: 129px;
   height: 48px;
   border-radius: 4px;
-  border: solid 1px #b1cd43;
+  border: solid 1px #a2be33;
   font-size: 16px;
   align-items: center;
   justify-content: center;
   left: 8vw;
   top: 65px;
-  color: #b1cd43;
+  color: #a2be33;
   transition: opacity .4s ease;
   font-family: $medium;
   span {
@@ -1658,12 +1658,12 @@
   padding: 0 35px 0 20px;
   height: 48px;
   border-radius: 4px;
-  border: solid 1px #b1cd43;
+  border: solid 1px #a2be33;
   font-size: 16px;
   align-items: center;
   right: 8vw;
   top: 65px;
-  color: #b1cd43;
+  color: #a2be33;
   transition: opacity .4s ease;
   font-family: "Geometria-Medium", sans-serif;
   &:after{
@@ -1680,6 +1680,38 @@
   }
   &:hover{
     opacity: .8;
+  }
+}
+.clear-canvas{
+  width: max-content;
+  max-width: 250px;
+  margin: 25px auto -10px auto;
+  text-align: center;
+  font-size: 20px;
+  font-family: "Geometria-Medium", sans-serif;
+  line-height: 1.4;
+  color: #b1cd43;
+  cursor: pointer;
+  transition: .3s ease-in-out;
+  padding: 10px;
+  position: relative;
+  display: none;
+  &.active{
+    display: block;
+  }
+  &:after{
+    content: '';
+    display: block;
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    left: -20px;
+    top: 45%;
+    transform: translateY(-50%);
+    background: url("../img/reload.svg") no-repeat center center / contain;
+  }
+  &:hover{
+    opacity: .6;
   }
 }
 @keyframes pulse {

@@ -1,17 +1,55 @@
-"use strict";
+'use strict';
 
-function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
+function _asyncToGenerator(fn) {
+    return function () {
+        var gen = fn.apply(this, arguments);
+        return new Promise(function (resolve, reject) {
+            function step(key, arg) {
+                try {
+                    var info = gen[key](arg);
+                    var value = info.value;
+                } catch (error) {
+                    reject(error);
+                    return;
+                }
+                if (info.done) {
+                    resolve(value);
+                } else {
+                    return Promise.resolve(value).then(function (value) {
+                        step("next", value);
+                    }, function (err) {
+                        step("throw", err);
+                    });
+                }
+            }
 
-function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+            return step("next");
+        });
+    };
+}
+
+function _toConsumableArray(arr) {
+    if (Array.isArray(arr)) {
+        for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) {
+            arr2[i] = arr[i];
+        }
+        return arr2;
+    } else {
+        return Array.from(arr);
+    }
+}
 
 String.prototype.capitalize = function () {
     return this.replace(/(?:^|\s)\S/g, function (a) {
         return a.toUpperCase();
     });
 };
+
 function activateCanvas() {
     localStorage.removeItem('canvasHTML');
+    localStorage.removeItem('finishCanvas');
 }
+
 function which(click, buttons) {
     for (var i in buttons) {
         var button = buttons[i];
@@ -47,6 +85,7 @@ function which(click, buttons) {
 
     return min_id;
 }
+
 function isCorrectFIO(fio) {
     if (!fio) {
         return false;
@@ -109,6 +148,7 @@ function sendAJAX(url, data) {
             }
         }
     }
+
     if (window.fetch) {
         fetch(url, {
             method: "POST",
@@ -662,23 +702,94 @@ function init() {
         var wordsCount = elem.querySelector('.user-words__count span');
         var btn = elem.querySelector('.step_five__button');
         check(disableSend, elem);
+
+        function wordsFunc(datas) {
+            var words = datas.words;
+            var wordsArr = words.split(', ');
+            var resultArray = [];
+            var HTMLarray = [];
+            var parser = new DOMParser();
+            wordsString.addEventListener('mouseup', function (e) {
+                if (!elem.dataset.disabled) {
+                    var selection = window.getSelection().toString();
+                    if (wordsArr.includes(selection) && !resultArray.includes(selection)) {
+                        resultArray.push(selection);
+                        HTMLarray = resultArray.map(function (elem) {
+                            return '<span> ' + elem + '</span>';
+                        });
+                    }
+                    userWords.setAttribute('data-find', String(resultArray));
+                    userWords.innerHTML = parser.parseFromString(HTMLarray, "text/html").body.innerHTML;
+                    wordsCount.textContent = resultArray.length;
+                    if (wordsArr.length === resultArray.length) {
+                        console.log("Ура, все слова найдены!");
+                    }
+                }
+            });
+        }
+
+        if (window.fetch) {
+            (function () {
+                var _ref = _asyncToGenerator(/*#__PURE__*/regeneratorRuntime.mark(function _callee() {
+                    var response, data;
+                    return regeneratorRuntime.wrap(function _callee$(_context) {
+                        while (1) {
+                            switch (_context.prev = _context.next) {
+                                case 0:
+                                    _context.next = 2;
+                                    return fetch(jsonURL);
+
+                                case 2:
+                                    response = _context.sent;
+                                    _context.next = 5;
+                                    return response.json();
+
+                                case 5:
+                                    data = _context.sent;
+
+                                    wordsFunc(data);
+
+                                case 7:
+                                case 'end':
+                                    return _context.stop();
+                            }
+                        }
+                    }, _callee, this);
+                }));
+
+                function getArray() {
+                    return _ref.apply(this, arguments);
+                }
+
+                return getArray;
+            })()();
+        } else {
+            var request = new XMLHttpRequest();
+            request.open('GET', jsonURL);
+            request.responseType = 'json';
+            request.onload = function () {
+                wordsFunc(request.response);
+            };
+            request.send();
+        }
+
         (function () {
-            var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
+            var _ref2 = _asyncToGenerator(/*#__PURE__*/regeneratorRuntime.mark(function _callee2() {
                 var response, data, words, wordsArr, resultArray, HTMLarray, parser;
-                return regeneratorRuntime.wrap(function _callee$(_context) {
+                return regeneratorRuntime.wrap(function _callee2$(_context2) {
                     while (1) {
-                        switch (_context.prev = _context.next) {
+                        switch (_context2.prev = _context2.next) {
                             case 0:
-                                _context.next = 2;
+                                _context2.next = 2;
                                 return fetch(jsonURL);
 
                             case 2:
-                                response = _context.sent;
-                                _context.next = 5;
+                                response = _context2.sent;
+                                _context2.next = 5;
                                 return response.json();
 
                             case 5:
-                                data = _context.sent;
+                                data = _context2.sent;
                                 words = data.words;
                                 wordsArr = words.split(', ');
                                 resultArray = [];
@@ -705,14 +816,14 @@ function init() {
 
                             case 12:
                             case 'end':
-                                return _context.stop();
+                                return _context2.stop();
                         }
                     }
-                }, _callee, this);
+                }, _callee2, this);
             }));
 
             function getArray() {
-                return _ref.apply(this, arguments);
+                return _ref2.apply(this, arguments);
             }
 
             return getArray;
@@ -803,15 +914,29 @@ function init() {
         }
 
         var canvasAnswer = elem.querySelector('.question-wrap[data-type="canvas"]');
+        var clearBtn = elem.querySelector('.clear-canvas');
         var userObj = [];
         var rects = elem.querySelectorAll('.canvas-block');
         var points = elem.querySelectorAll('.canvas-point');
         localStorage.removeItem('finishCanvas');
         var coordsArray = [[360, 63], [298, 125], [360, 125], [422, 125], [484, 125], [236, 187], [298, 187], [360, 187], [422, 187]];
-        var resT = [{ x: 360, y: 125, outer: true }, { x: 422, y: 125, outer: true }, { x: 298, y: 187, outer: true }, { x: 360, y: 187, outer: false }, { x: 422, y: 187, outer: false }, { x: 484, y: 187, outer: true }, { x: 298, y: 249, outer: true }, { x: 360, y: 249, outer: true }, { x: 422, y: 249, outer: true }, { x: 298, y: 125, outer: true }, { x: 484, y: 125, outer: true }, { x: 484, y: 249, outer: true }];
+        var resT = [{x: 360, y: 125, outer: true}, {x: 422, y: 125, outer: true}, {
+            x: 298,
+            y: 187,
+            outer: true
+        }, {x: 360, y: 187, outer: false}, {x: 422, y: 187, outer: false}, {x: 484, y: 187, outer: true}, {
+            x: 298,
+            y: 249,
+            outer: true
+        }, {x: 360, y: 249, outer: true}, {x: 422, y: 249, outer: true}, {x: 298, y: 125, outer: true}, {
+            x: 484,
+            y: 125,
+            outer: true
+        }, {x: 484, y: 249, outer: true}];
 
         var horizontalArr = [[360, 125], [298, 187], [360, 187], [422, 187], [298, 125], [422, 125]];
         var verticalArr = [[360, 125], [422, 125], [298, 187], [360, 187], [422, 187], [298, 125], [484, 125]];
+
         rects.forEach(function (rect, index) {
             rect.style.left = coordsArray[index][0] + "px";
             rect.style.top = coordsArray[index][1] + "px";
@@ -851,9 +976,9 @@ function init() {
         };
         if (localStorage.getItem('canvasHTML')) {
             var question = canvasAnswer.querySelector('.question');
-            console.log(question);
             question.removeChild(question.querySelector('.answers'));
             question.innerHTML += localStorage.getItem('canvasHTML');
+            question.querySelector('.clear-canvas').classList.remove('active');
         } else {
             pointsElems.forEach(function (point) {
                 if (localStorage.getItem('finishCanvas')) {
@@ -862,6 +987,10 @@ function init() {
                     });
                 }
                 point.addEventListener('click', function (e) {
+                    if (elem.dataset.disabled) {
+                        return false;
+                    }
+                    clearBtn.classList.add('active');
                     clickCounter++;
                     if (!localStorage.getItem('finishCanvas')) {
                         if (point.dataset.hover && clickCounter) {
@@ -942,10 +1071,40 @@ function init() {
                 });
             });
         }
+        /// clear canvas
 
+        clearBtn.addEventListener('click', function () {
+            this.classList.remove('active');
+            userObj = [];
+            this.classList.remove('active');
+            var lines = [].concat(_toConsumableArray(horizontals), _toConsumableArray(verticals));
+            lines.map(function (line) {
+                return line.classList.remove('active');
+            });
+            localStorage.removeItem('finishCanvas');
+            clickCounter = 0;
+            objCoord = {
+                currentClick: [],
+                prevClick: []
+            };
+            points.forEach(function (point, index) {
+                points.forEach(function (p) {
+                    return p.classList.remove("active");
+                });
+                if (resT[index].outer === true) {
+                    point.setAttribute('data-hover', true);
+                }
+                if (resT[index].outer === false) {
+                    point.removeAttribute('data-hover');
+                    point.dataset.outer = "inner";
+                }
+            });
+        });
+
+        // end clear canvas
         //// canvas end
         function sendStepThree() {
-            var _ref2;
+            var _ref3;
 
             var data = new FormData();
             var jsonData = {};
@@ -997,7 +1156,7 @@ function init() {
             dataTrue = dataTrue.map(function (item) {
                 return Number(item);
             });
-            var uObj = (_ref2 = []).concat.apply(_ref2, userObj);
+            var uObj = (_ref3 = []).concat.apply(_ref3, _toConsumableArray(userObj));
             uObj = uObj.sort();
             dataTrue = dataTrue.sort();
             if (String(dataTrue) === String(uObj)) {
@@ -1023,10 +1182,12 @@ function init() {
         if (!elem) {
             return false;
         }
+
         function setCssDiagram(line, percent, color) {
             line.style.width = percent + '%';
             line.style.backgroundColor = color;
         }
+
         var diagramsItem = elem.querySelectorAll('.diagram__item');
         diagramsItem.forEach(function (item) {
             var questions = Number(item.dataset.questions);

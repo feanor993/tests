@@ -1,4 +1,3 @@
-"use strict";
 String.prototype.capitalize = function () {
     return this.replace(/(?:^|\s)\S/g, function (a) {
         return a.toUpperCase();
@@ -6,6 +5,7 @@ String.prototype.capitalize = function () {
 };
 function activateCanvas() {
     localStorage.removeItem('canvasHTML');
+    localStorage.removeItem('finishCanvas');
 }
 function which(click, buttons) {
     for (let i in buttons) {
@@ -659,6 +659,46 @@ function init() {
         let wordsCount = elem.querySelector('.user-words__count span');
         let btn = elem.querySelector('.step_five__button');
         check(disableSend, elem);
+        function wordsFunc(datas) {
+            let words = datas.words;
+            let wordsArr = words.split(', ');
+            let resultArray = [];
+            let HTMLarray = [];
+            let parser = new DOMParser();
+            wordsString.addEventListener('mouseup', function (e) {
+                if (!elem.dataset.disabled) {
+                    let selection = window.getSelection().toString();
+                    if (wordsArr.includes(selection) && !resultArray.includes(selection)) {
+                        resultArray.push(selection);
+                        HTMLarray = resultArray.map(elem => `<span> ${ elem}</span>`);
+                    }
+                    userWords.setAttribute('data-find', String(resultArray));
+                    userWords.innerHTML = parser.parseFromString(HTMLarray, "text/html").body.innerHTML;
+                    wordsCount.textContent = resultArray.length;
+                    if (wordsArr.length === resultArray.length) {
+                        console.log("Ура, все слова найдены!");
+                    }
+                }
+            });
+        }
+        if (window.fetch) {
+            (async function getArray() {
+                let response = await fetch(jsonURL);
+                let data = await response.json();
+                wordsFunc(data);
+
+            })();
+        }
+        else{
+            var request = new XMLHttpRequest();
+            request.open('GET', jsonURL);
+            request.responseType = 'json';
+            request.onload = function() {
+                wordsFunc(request.response)
+            };
+            request.send();
+        }
+
         (async function getArray() {
             let response = await fetch(jsonURL);
             let data = await response.json();
@@ -762,6 +802,7 @@ function init() {
         }
 
         let canvasAnswer = elem.querySelector('.question-wrap[data-type="canvas"]');
+        let clearBtn  = elem.querySelector('.clear-canvas');
         let userObj = [];
         let rects = elem.querySelectorAll('.canvas-block');
         let points = elem.querySelectorAll('.canvas-point');
@@ -782,6 +823,7 @@ function init() {
         let verticalArr = [
             [360, 125], [422, 125], [298, 187], [360, 187], [422, 187], [298, 125], [484, 125]
         ];
+
         rects.forEach((rect, index) => {
             rect.style.left = coordsArray[index][0] + "px";
             rect.style.top = coordsArray[index][1] + "px";
@@ -823,16 +865,21 @@ function init() {
         };
         if(localStorage.getItem('canvasHTML')){
             let question  = canvasAnswer.querySelector('.question');
-            console.log(question);
             question.removeChild(question.querySelector('.answers'));
             question.innerHTML +=  localStorage.getItem('canvasHTML');
+            question.querySelector('.clear-canvas').classList.remove('active');
+
         }
         else {
             pointsElems.forEach(point => {
                 if (localStorage.getItem('finishCanvas')) {
-                    points.forEach(point => point.removeAttribute('data-hover'))
+                    points.forEach(point => point.removeAttribute('data-hover'));
                 }
                 point.addEventListener('click', function (e) {
+                    if(elem.dataset.disabled){
+                        return false;
+                    }
+                    clearBtn.classList.add('active');
                     clickCounter++;
                     if (!localStorage.getItem('finishCanvas')) {
                         if (point.dataset.hover && clickCounter) {
@@ -907,7 +954,33 @@ function init() {
                 })
             });
         }
+        /// clear canvas
 
+        clearBtn.addEventListener('click', function () {
+            this.classList.remove('active');
+            userObj = [];
+            this.classList.remove('active');
+            let lines =  [...horizontals, ...verticals];
+            lines.map((line) => line.classList.remove('active'));
+            localStorage.removeItem('finishCanvas');
+            clickCounter = 0;
+            objCoord = {
+                currentClick: [],
+                prevClick: []
+            };
+            points.forEach((point, index) => {
+                points.forEach((p) => p.classList.remove("active"));
+                if (resT[index].outer === true) {
+                    point.setAttribute('data-hover', true);
+                }
+                if (resT[index].outer === false) {
+                    point.removeAttribute('data-hover');
+                    point.dataset.outer = "inner"
+                }
+            });
+        });
+
+        // end clear canvas
         //// canvas end
         function sendStepThree() {
             let data = new FormData();
