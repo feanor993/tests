@@ -1736,3 +1736,222 @@
 .form-authorize__input[disabled]{
   background-color: #f6f6f6;
 }
+.edit-table-wrap{
+  width: 908px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-top: 50px;
+}
+.edit-table__title{
+  font-size: 32px;
+  font-weight: bold;
+  line-height: 0.84;
+  text-align: center;
+  color: rgba(51, 51, 51, 0.9);
+  margin-bottom: 50px;
+}
+.edit-table__controls{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+.add-group{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 199px;
+  height: 48px;
+  border-radius: 4px;
+  background-color: #b1cd43;
+  font-size: 16px;
+  font-weight: bold;
+  color: #ffffff;
+  font-family: $bold;
+  transition: .4s ease;
+  &:hover{
+    background-color: #7bab20;
+  }
+}
+.delete-btn{
+  width: 127px;
+  height: 48px;
+  border-radius: 4px;
+  background-color: #ffa42e;
+  border: none;
+  box-shadow: none;
+  -webkit-appearance: none;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: bold;
+  text-align: center;
+  color: #ffffff;
+  font-family: $bold;
+  transition: .4s ease;
+  &:hover{
+    opacity: .8;
+  }
+  &[disabled] {
+    cursor: unset;
+    background-color: #ececec;
+    &:hover{
+      opacity: 1;
+    }
+  }
+}
+.edit-table{
+  border-radius: 4px;
+  border: solid 1px #ececec;
+  width: 100%;
+}
+.edit-table__head{
+  border-radius: 4px 4px  0 0 ;
+}
+.edit-table__head th{
+  padding: 15px;
+  border-right: 1px solid #ececec;
+  text-align: left;
+  vertical-align: middle;
+  .radio-label{
+    margin-bottom: 0;
+  }
+  &:last-of-type{
+    border-right: none;
+  }
+}
+.edit-table{
+  tr{
+    border-bottom: 1px solid #ececec;
+    .radio-text:before{
+      transform: none;
+      position: static;
+    }
+    .radio-text{
+      padding-left: 0;
+    }
+    .radio-label{
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 0;
+
+    }
+  }
+  td {
+    vertical-align: middle;
+    padding: 15px;
+    border-right: 1px solid #ececec;
+  }
+}
+.delete-popup{
+  position: fixed;
+  z-index: 9999;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  display: none;
+  opacity: 0;
+  transition: .4s ease;
+  &.active{
+    opacity: 1;
+    display: block;
+  }
+}
+.overlay{
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  background-color: rgba(194, 194, 195, 0.49);
+  z-index: 1;
+}
+.delete-popup__content{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+  width: 405px;
+  height: 258px;
+  box-shadow: 0 2px 8px 0 #e8e9ec;
+  border: solid 1px #e8e9ec;
+  background-color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.delete-popup__title{
+  font-size: 17px;
+  font-weight: bold;
+  line-height: 1.35;
+  text-align: center;
+  color: #3c3c3c;
+  font-family: $bold;
+  margin-bottom: 20px;
+}
+.delete-popup__text{
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.43;
+  text-align: center;
+  color: #646464;
+  font-family: $medium;
+  margin-bottom: 20px;
+}
+.delete-popup__buttons{
+  display: flex;
+  justify-content: center;
+}
+.delete-popup__undo{
+  cursor: pointer;
+  -webkit-appearance: none;
+  width: 115px;
+  height: 44px;
+  border-radius: 3px;
+  background-color: #b1cd43;
+  border: none;
+  box-shadow: none;
+  transition: .4s ease;
+  font-size: 15px;
+  font-weight: bold;
+  font-family: $bold;
+  color: #ffffff;
+  margin-right: 20px;
+  &:hover{
+    background-color: #7bab20;
+  }
+}
+.delete-popup__delete{
+  cursor: pointer;
+  -webkit-appearance: none;
+  box-shadow: none;
+  transition: .4s ease;
+  width: 103px;
+  height: 44px;
+  border-radius: 3px;
+  border: solid 1px #bdbdbd;
+  font-size: 15px;
+  font-weight: bold;
+  color: rgba(100, 100, 100, 0.8);
+  font-family: $bold;
+  &:hover{
+    opacity: .8;
+  }
+}
+.delete-popup__close{
+  cursor: pointer;
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: url("../img/shape.svg") no-repeat center center / contain;
+  width: 12px;
+  height: 12px;
+  transition: .4s ease;
+  &:hover{
+    opacity: .8;
+  }
+
+}

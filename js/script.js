@@ -1178,8 +1178,74 @@ function init() {
             }
         });
 
-    })()
+    })();
 
+    const editTable = document.querySelector('.edit-table-wrap');
+
+    (function editTableActions (elem = editTable) {
+        if(!elem){
+            return false
+        }
+        let selectedArray = [];
+        let controls = elem.querySelectorAll('.radio-label');
+        let conrolsLen = controls.length;
+        let deleteDtn = elem.querySelector('.delete-btn');
+        let deletePopup = elem.querySelector('.delete-popup');
+        let closePopup = elem.querySelectorAll('.delete-popup__undo, .overlay, .delete-popup__close');
+        let deleteSubmit = elem.querySelector('.delete-popup__delete');
+        controls.forEach(control => {
+            control.addEventListener('click', function (e) {
+                e.stopPropagation();
+                e.preventDefault();
+                this.querySelector('input').checked = !this.querySelector('input').checked;
+                if(this.parentNode.tagName === "TD"){
+                    let id = e.target.closest('tr').dataset.id;
+                    if (selectedArray.includes(id)) {
+                        selectedArray.splice(selectedArray.indexOf(id), 1)
+                    } else {
+                        selectedArray.push(id)
+                    }
+                    if(conrolsLen  === selectedArray.length + 1){
+                        elem.querySelector('th input').checked = true;
+                    } else {
+                        elem.querySelector('th input').checked = false;
+                    }
+                } else if (this.parentNode.tagName === "TH") {
+                    if(this.querySelector('input').checked) {
+                        selectedArray = [];
+                        controls.forEach(item => {
+                            item.querySelector('input').checked = true;
+                            let id = item.parentNode.parentNode.dataset.id;
+                            if(id){
+                                selectedArray.push(id)
+                            }
+                        });
+                    } else {
+                        selectedArray = [];
+                        controls.forEach(item => item.querySelector('input').checked = false);
+                    }
+                }
+                selectedArray.length ? deleteDtn.disabled = false :  deleteDtn.disabled = true;
+            })
+        });
+        deleteDtn.addEventListener('click',  () => {
+            deletePopup.classList.add('active');
+            document.documentElement.style.overflow = "hidden"
+        });
+        closePopup.forEach(el => {
+            el.addEventListener('click', function () {
+                deletePopup.classList.remove('active');
+                document.documentElement.style.overflow = "auto"
+            })
+        });
+        deleteSubmit.addEventListener('click', function () {
+           let data = new FormData();
+           data.append('delete-lines', JSON.stringify(selectedArray));
+           sendAJAX("https://httpbin.org/post", data);
+        });
+
+
+    })();
 
 }
 
