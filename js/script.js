@@ -3,9 +3,56 @@ String.prototype.capitalize = function () {
         return a.toUpperCase();
     });
 };
+let regExpMail = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 function activateCanvas() {
     localStorage.removeItem('canvasHTML');
     localStorage.removeItem('finishCanvas');
+}
+function sendForm(form, url) {
+    let controls = form.querySelectorAll('input');
+    let data = new FormData();
+    controls.forEach((cont) => data.append(cont.name, cont.value));
+    sendAJAX(url, data);
+    return true;
+}
+function removeEmptyWarnings(form) {
+    let inputs = Array.from(form.querySelectorAll("input")).filter(i => !i.disabled);
+    let formWarning = form.querySelector('.form-warning');
+    inputs.forEach(function (input) {
+        input.addEventListener('input', function () {
+            let empty = Array.from(inputs).filter((input) => input.value.length < 1);
+            this.classList.remove('error');
+            if (!empty.length) {
+                formWarning.classList.remove('active');
+            }
+        })
+    });
+}
+function validateEmpty(form) {
+    let inputs = form.querySelectorAll("input");
+    inputs = Array.from(inputs).filter(item => !item.disabled);
+    let formWarning = form.querySelector('.form-warning');
+    let empty = inputs.filter((input) => input.value.length < 1);
+    if (empty.length) {
+        formWarning.classList.add('active');
+        empty.map((empt) => empt.classList.add('error'));
+        return false;
+    } else {
+        return true
+    }
+}
+function validateEmail(email, emailWarning) {
+    email.addEventListener('input', function () {
+        if (!(email.value.match(regExpMail))) {
+            this.classList.add('error');
+            emailWarning.classList.add('active')
+        }
+        else {
+            this.classList.remove('error');
+            emailWarning.classList.remove('active')
+        }
+    });
+    return email.value.match(regExpMail);
 }
 function which(click, buttons) {
     for (let i in buttons) {
@@ -274,6 +321,7 @@ function init() {
     hideElems();
     timer();
     setDoneWidth();
+    window.addEventListener("resize", setDoneWidth);
     let authForm = document.querySelector(".form-authorize");
     if (authForm) {
         let schoolInput = authForm.querySelector("input[name='userSchool']");
@@ -286,6 +334,7 @@ function init() {
         let schoolWarning = authForm.querySelector('.school-warning');
         let fioInput = authForm.querySelector('input[name="userName"]');
         let fioWarning = authForm.querySelector('.fio-warning');
+
         function schoolsListFunc(datas) {
             schools = datas;
             localStorage.setItem('schoolsTest', JSON.stringify(datas));
@@ -322,6 +371,7 @@ function init() {
                 }
             });
         }
+
         if (window.fetch) {
             fetch(schoolsURL)
                 .then(function (response) {
@@ -334,16 +384,15 @@ function init() {
                     console.log(error);
                 });
         }
-        else{
+        else {
             var request = new XMLHttpRequest();
             request.open('POST', schoolsURL);
             request.responseType = 'json';
-            request.onload = function() {
+            request.onload = function () {
                 schoolsListFunc(request.response);
             };
             request.send();
         }
-
 
 
         let inputs = authForm.querySelectorAll("input");
@@ -400,21 +449,13 @@ function init() {
             if (!empty.length && (emailCheck && isCorrectFIO(fioInput.value) && schoolsTestArray.includes(schoolInput.value))) {
                 inputs.forEach((input) => formData.append(input.name, input.value));
                 formData.append('action', 'welcome');
-                sendAJAX("/diagnostika/index.php", formData);
+                sendAJAX("https://httpbin.org/post", formData);
             }
 
         });
-
-        document.addEventListener('click', function (e) {
-            let closest = e.target.closest('.form-authorize__label') === schoolInput.parentNode;
-            let list = document.querySelector('.schools-list');
-            if (list && !closest) {
-                list.innerHTML = null;
-                list.hidden = true;
-            }
-        })
     }
-    window.addEventListener("resize", setDoneWidth);
+
+
     let progressIndexes = document.querySelectorAll(".progress-step__index");
     if (progressIndexes) {
         progressIndexes.forEach(function (p) {
@@ -632,18 +673,12 @@ function init() {
         }));
         check(disableSend, elem);
 
-        function sendStepFour() {
-            let controls = form.querySelectorAll('input');
-            let data = new FormData();
-            controls.forEach((cont) => data.append(cont.name, cont.value));
-            sendAJAX("https://httpbin.org/post", data);
-            return true;
-        }
+
 
         form.addEventListener('submit', function (e) {
             e.preventDefault();
             e.stopImmediatePropagation();
-            sendStepFour();
+            sendForm(form, "https://httpbin.org/post");
         });
     })();
 
@@ -1085,6 +1120,67 @@ function init() {
             }
         });
     })();
+
+    const enterForm = document.querySelector('.enter-form');
+    (function enterActions(elem = enterForm) {
+        if(!elem) {
+            return false;
+        }
+        removeEmptyWarnings(elem);
+        elem.addEventListener('submit', function (e) {
+            e.preventDefault();
+            validateEmpty(this);
+            if(validateEmpty(this)){
+                sendForm(this, "https://httpbin.org/post")
+            }
+        })
+
+    })();
+
+    const createUser = document.querySelector('.create-user');
+    (function createUserActions(elem = createUser) {
+        if(!elem) {
+            return false;
+        }
+        let email  = elem.querySelector('input[name="e-mail"]');
+        let emailWarning = elem.querySelector('.email-warning')
+        validateEmail(email, emailWarning);
+        removeEmptyWarnings(elem);
+        elem.addEventListener('submit', function (e) {
+            e.preventDefault();
+            validateEmpty(this);
+            if(validateEmpty(this) && validateEmail(email, emailWarning)){
+                sendForm(this, "https://httpbin.org/post")
+            }
+        })
+
+    })();
+
+    const editUser = document.querySelector('.edit-user');
+    (function editUserActions (elem = editUser) {
+        if(!elem) {
+            return false;
+        }
+        let email  = elem.querySelector('input[name="e-mail"]');
+        let emailWarning = elem.querySelector('.email-warning');
+        validateEmail(email, emailWarning);
+        removeEmptyWarnings(elem);
+        elem.addEventListener('submit', function (e) {
+            e.preventDefault();
+            validateEmpty(this);
+            if(validateEmail(email, emailWarning) && validateEmpty(this)){
+                let inputs = Array.from(this.querySelectorAll('input')).filter(i => !i.disabled);
+                let id = this.querySelector('input[name="id"]');
+                let data =  new FormData();
+                inputs.map(input => data.append(input.name, input.value));
+                data.append('id', id.value);
+                sendAJAX("https://httpbin.org/post", data);
+            }
+        });
+
+    })()
+
+
 }
 
 ready(init);

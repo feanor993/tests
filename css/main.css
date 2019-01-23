@@ -132,14 +132,19 @@ a, a:hover {
 
 .form-authorize-wrap {
   margin-top: 60px; }
+  .form-authorize-wrap.lm {
+    margin-top: 5px; }
 
 .form-warning {
   font-size: 13px;
   color: #bb0032;
-  text-align: right;
   margin-bottom: 17px;
   margin-top: -35px;
-  display: none; }
+  display: none;
+  width: 360px;
+  text-align: center;
+  margin-left: auto;
+  margin-right: 0; }
   .form-warning.active {
     display: block; }
 
@@ -152,8 +157,8 @@ a, a:hover {
   margin-bottom: 50px;
   padding-left: 72px; }
 
-.form-authorize {
-  width: 432px;
+.tests-form {
+  width: 465px;
   margin-left: auto;
   margin-right: auto; }
 
@@ -181,7 +186,7 @@ a, a:hover {
   color: #333333;
   display: block;
   width: 52px;
-  min-width: 52px;
+  min-width: 77px;
   margin-right: 20px; }
 
 .form-authorize__input {
@@ -196,8 +201,6 @@ a, a:hover {
   border: solid 1px #dfe0e0;
   background-color: #ffffff;
   min-width: 360px;
-  margin-right: 0;
-  margin-left: 0;
   padding-left: 20px;
   font-size: 16px;
   color: #333333;
@@ -228,13 +231,12 @@ a, a:hover {
   color: #646464;
   display: none;
   margin-top: 10px;
-  margin-left: 73px; }
+  margin-left: 95px; }
   .label-warning.active {
     display: block; }
 
 .form-authorize__submit {
   display: block;
-  margin-left: 72px;
   width: 360px;
   height: 60px;
   -webkit-border-radius: 4px;
@@ -251,7 +253,9 @@ a, a:hover {
   cursor: pointer;
   -webkit-transition: background-color .3s ease;
   -o-transition: background-color .3s ease;
-  transition: background-color .3s ease; }
+  transition: background-color .3s ease;
+  margin-right: 0;
+  margin-left: auto; }
   .form-authorize__submit:hover {
     background-color: #7bab20; }
 
@@ -670,6 +674,8 @@ a, a:hover {
     transform: translateY(-1px); }
   .step__back:hover {
     opacity: .8; }
+  .step__back.step__back_admin {
+    top: 130px; }
 
 .strong-block {
   display: block;
@@ -1881,4 +1887,7 @@ a, a:hover {
   100% {
     -webkit-transform: scale(1);
     transform: scale(1); } }
+
+.form-authorize__input[disabled] {
+  background-color: #f6f6f6; }
 

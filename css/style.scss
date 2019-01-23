@@ -81,15 +81,21 @@
 
 .form-authorize-wrap {
   margin-top: 60px;
+  &.lm{
+    margin-top: 5px;
+  }
 }
 
 .form-warning {
   font-size: 13px;
   color: #bb0032;
-  text-align: right;
   margin-bottom: 17px;
   margin-top: -35px;
   display: none;
+  width: 360px;
+  text-align: center;
+  margin-left: auto;
+  margin-right: 0;
   &.active {
     display: block;
   }
@@ -105,8 +111,8 @@
   padding-left: 72px;
 }
 
-.form-authorize {
-  width: 432px;
+.tests-form {
+  width: 465px;
   margin-left: auto;
   margin-right: auto;
 }
@@ -130,7 +136,7 @@
   color: #333333;
   display: block;
   width: 52px;
-  min-width: 52px;
+  min-width: 77px;
   margin-right: 20px;
 }
 
@@ -143,8 +149,6 @@
   border: solid 1px #dfe0e0;
   background-color: #ffffff;
   min-width: 360px;
-  margin-right: 0;
-  margin-left: 0;
   padding-left: 20px;
   font-size: 16px;
   color: #333333;
@@ -167,7 +171,7 @@
   color: #646464;
   display: none;
   margin-top: 10px;
-  margin-left: 73px;
+  margin-left: 95px;
   &.active {
     display: block;
   }
@@ -175,7 +179,6 @@
 
 .form-authorize__submit {
   display: block;
-  margin-left: 72px;
   width: 360px;
   height: 60px;
   border-radius: 4px;
@@ -189,6 +192,8 @@
   margin-top: 40px;
   cursor: pointer;
   transition: background-color .3s ease;
+  margin-right: 0;
+  margin-left: auto;
   &:hover {
     background-color: #7bab20;
   }
@@ -568,6 +573,9 @@
   }
   &:hover {
     opacity: .8;
+  }
+  &.step__back_admin{
+    top: 130px;
   }
 }
 
@@ -1724,4 +1732,7 @@
   100% {
     transform: scale(1);
   }
+}
+.form-authorize__input[disabled]{
+  background-color: #f6f6f6;
 }
