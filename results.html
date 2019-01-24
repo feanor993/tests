@@ -1,0 +1,625 @@
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="css/main.css">
+    <title>Тесты</title>
+</head>
+<body>
+<div class="wrapper">
+    <header class="header">
+        <div class="start displayNone"><img src="img/start.svg" alt=""></div>
+        <a href="#" class="logo"><img src="img/logo.svg" alt=""></a>
+        <div class="finish displayNone"><img src="img/finish.svg" alt=""></div>
+        <div class="timer timer_header displayNone" data-finish="30">
+            <div class="timer__time">
+                <div class="timer__minutes">00</div>
+                <span>:</span>
+                <div class="timer__seconds">00</div>
+            </div>
+        </div>
+    </header>
+    <main class="main">
+    <div class="result">
+        <h2 class="step__title">Результаты</h2>
+        <a href="#" class="step__back">Назад</a>
+        <div class="result-items">
+            <div class="result-item">
+                <div class="step-result">
+                    <h2 class="step__title">1 этап</h2>
+                    <div class="result-count"><span>Да - 48 </span> <span>Нет - 12</span></div>
+                </div>
+            </div>
+            <div class="result-item">
+                <div class="step-result">
+                    <h2 class="step__title">2 этап</h2>
+                    <div class="result-count"><span>Да - 48 </span> <span>Нет - 12</span></div>
+                </div>
+            </div>
+            <div class="result-item">
+                <div class="step-result step_two" data-disabled="true">
+                    <h2 class="step__title">3 этап</h2>
+                    <div class="ranges" data-name="ranges" >
+                        <div class="slider-range__wrap" data-name="health" data-user="31" data-max="85">
+                            <div class="slider-range__content">
+                                <div class="slider-range__num slider-range__num_max">100</div>
+                                <div class="slider-range">
+                                    <div class="thumb thumb_user" data-thumb="user">
+                                        <div class="thumb-count">0</div>
+                                    </div>
+                                    <div class="thumb-before thumb-before_user" data-thumb="user"></div>
+                                    <div class="thumb thumb_max" data-thumb="max">
+                                        <div class="thumb-count">0</div>
+                                    </div>
+                                    <div class="thumb-before thumb-before_max" data-thumb="max"></div>
+                                </div>
+                                <div class="slider-range__num slider-range__num_min">0</div>
+                            </div>
+                            <div class="slider-range__description">
+                                Здоровье
+                            </div>
+                        </div>
+                        <div class="slider-range__wrap" data-name="smart" data-user="45" data-max="12" >
+                            <div class="slider-range__content">
+                                <div class="slider-range__num slider-range__num_max">100</div>
+                                <div class="slider-range">
+                                    <div class="thumb thumb_user" data-thumb="user">
+                                        <div class="thumb-count">0</div>
+                                    </div>
+                                    <div class="thumb-before thumb-before_user" data-thumb="user"></div>
+                                    <div class="thumb thumb_max" data-thumb="max">
+                                        <div class="thumb-count">0</div>
+                                    </div>
+                                    <div class="thumb-before thumb-before_max" data-thumb="max"></div>
+                                </div>
+                                <div class="slider-range__num slider-range__num_min">0</div>
+                            </div>
+
+                            <div class="slider-range__description">
+                                ум <br>
+                                способности
+                            </div>
+                        </div>
+                        <div class="slider-range__wrap" data-name="character" data-user="77" data-max="85">
+                            <div class="slider-range__content">
+                                <div class="slider-range__num slider-range__num_max">100</div>
+                                <div class="slider-range">
+                                    <div class="thumb thumb_user" data-thumb="user">
+                                        <div class="thumb-count">0</div>
+                                    </div>
+                                    <div class="thumb-before thumb-before_user" data-thumb="user"></div>
+                                    <div class="thumb thumb_max" data-thumb="max">
+                                        <div class="thumb-count">0</div>
+                                    </div>
+                                    <div class="thumb-before thumb-before_max" data-thumb="max"></div>
+                                </div>
+                                <div class="slider-range__num slider-range__num_min">0</div>
+                            </div>
+                            <div class="slider-range__description">
+                                характер
+                            </div>
+                        </div>
+                        <div class="slider-range__wrap" data-name="authority" data-user="31" data-max="10">
+                            <div class="slider-range__content">
+                                <div class="slider-range__num slider-range__num_max">100</div>
+                                <div class="slider-range">
+                                    <div class="thumb thumb_user" data-thumb="user">
+                                        <div class="thumb-count">0</div>
+                                    </div>
+                                    <div class="thumb-before thumb-before_user" data-thumb="user"></div>
+                                    <div class="thumb thumb_max" data-thumb="max">
+                                        <div class="thumb-count">0</div>
+                                    </div>
+                                    <div class="thumb-before thumb-before_max" data-thumb="max"></div>
+                                </div>
+                                <div class="slider-range__num slider-range__num_min">0</div>
+                            </div>
+
+                            <div class="slider-range__description">
+                                авторитет
+                                у&nbsp;сверстников
+                            </div>
+                        </div>
+                        <div class="slider-range__wrap" data-name="arms" data-user="77" data-max="99">
+                            <div class="slider-range__content">
+                                <div class="slider-range__num slider-range__num_max">100</div>
+                                <div class="slider-range">
+                                    <div class="thumb thumb_user" data-thumb="user">
+                                        <div class="thumb-count">0</div>
+                                    </div>
+                                    <div class="thumb-before thumb-before_user" data-thumb="user"></div>
+                                    <div class="thumb thumb_max" data-thumb="max">
+                                        <div class="thumb-count">0</div>
+                                    </div>
+                                    <div class="thumb-before thumb-before_max" data-thumb="max"></div>
+                                </div>
+                                <div class="slider-range__num slider-range__num_min">0</div>
+                            </div>
+                            <div class="slider-range__description">
+                                умелые
+                                руки
+                            </div>
+                        </div>
+                        <div class="slider-range__wrap" data-name="appearance" >
+                            <div class="slider-range__content">
+                                <div class="slider-range__num slider-range__num_max">100</div>
+                                <div class="slider-range">
+                                    <div class="thumb thumb_user" data-thumb="user">
+                                        <div class="thumb-count">0</div>
+                                    </div>
+                                    <div class="thumb-before thumb-before_user" data-thumb="user"></div>
+                                    <div class="thumb thumb_max" data-thumb="max">
+                                        <div class="thumb-count">0</div>
+                                    </div>
+                                    <div class="thumb-before thumb-before_max" data-thumb="max"></div>
+                                </div>
+                                <div class="slider-range__num slider-range__num_min">0</div>
+                            </div>
+                            <div class="slider-range__description">
+                                внешность
+                            </div>
+                        </div>
+                        <div class="slider-range__wrap" data-name="confidence">
+                            <div class="slider-range__content">
+                                <div class="slider-range__num slider-range__num_max">100</div>
+                                <div class="slider-range">
+                                    <div class="thumb thumb_user" data-thumb="user">
+                                        <div class="thumb-count">0</div>
+                                    </div>
+                                    <div class="thumb-before thumb-before_user" data-thumb="user"></div>
+                                    <div class="thumb thumb_max" data-thumb="max">
+                                        <div class="thumb-count">0</div>
+                                    </div>
+                                    <div class="thumb-before thumb-before_max" data-thumb="max"></div>
+                                </div>
+                                <div class="slider-range__num slider-range__num_min">0</div>
+                            </div>
+                            <div class="slider-range__description">
+                                уверенность
+                                в&nbsp;себе
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="result-item">
+                <div class="step-result">
+
+                    <h2 class="step__title">4 этап</h2>
+                    <div class="result-count">Решено 45 заданий.</div>
+                    <div class="step-three-wrap">
+                        <form action="#" class="step-three__form">
+                            <div class="question-wrap" data-type="radio" data-index="1">
+                                <div class="question__number">1.</div>
+                                <div class="question true-question">
+                                    <div class="question__text">Одиннадцатый месяц года – это:</div>
+                                    <div class="answers">
+                                        <div class="radio-group">
+                                            <label class="radio-label">
+                                                <input type="radio" data-name="1"  disabled>
+                                                <span class="radio-text">октябрь</span>
+                                            </label>
+                                            <label class="radio-label">
+                                                <input type="radio" data-name="2"  disabled>
+                                                <span class="radio-text">май</span>
+                                            </label>
+                                            <label class="radio-label true-label">
+                                                <input type="radio" data-name="3" checked disabled>
+                                                <span class="radio-text">ноябрь</span>
+                                            </label>
+                                            <label class="radio-label">
+                                                <input type="radio" data-name="4" disabled>
+                                                <span class="radio-text">февраль</span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="question-wrap" data-type="radio" data-index="2">
+                                <div class="question__number">2.</div>
+                                <div class="question error-question">
+                                    <div class="question__text">СУРОВЫЙ является противоположный по значению слову:</div>
+                                    <div class="answers">
+                                        <div class="radio-group">
+                                            <label class="radio-label error-label">
+                                                <input type="radio" data-name="1" checked disabled>
+                                                <span class="radio-text">октябрь</span>
+                                            </label>
+                                            <label class="radio-label true-label">
+                                                <input type="radio" data-name="2" checked disabled>
+                                                <span class="radio-text">май</span>
+                                            </label>
+                                            <label class="radio-label">
+                                                <input type="radio" data-name="3" disabled>
+                                                <span class="radio-text">ноябрь</span>
+                                            </label>
+                                            <label class="radio-label">
+                                                <input type="radio" data-name="4" disabled>
+                                                <span class="radio-text">февраль</span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="question-wrap" data-type="input" data-index="3">
+                                <div class="question__number">3.</div>
+                                <div class="question error-question">
+                                    <div class="question__text">Сколько из приведенных пар слов являются полностью
+                                        идентичными?
+                                    </div>
+                                    <div class="answers">
+                                        <div class="cols">
+                                            <div class="answers-cols">
+                                                <div class="answer-col">
+                                                    <div class="answer-col__el">Sharp, M.G.</div>
+                                                    <div class="answer-col__el">Fielder, E.H.</div>
+                                                    <div class="answer-col__el">Connor, M.G.</div>
+                                                    <div class="answer-col__el">Woesner, O.W.</div>
+                                                    <div class="answer-col__el">Soberquist, P.R.</div>
+                                                </div>
+                                                <div class="answer-col">
+                                                    <div class="answer-col__el">Sharp, M.G.</div>
+                                                    <div class="answer-col__el">Fielder, E.H.</div>
+                                                    <div class="answer-col__el">Connor, M.G.</div>
+                                                    <div class="answer-col__el">Woesner, O.W.</div>
+                                                    <div class="answer-col__el">Soberquist, P.R.</div>
+                                                </div>
+                                            </div>
+                                            <div class="input-col">
+                                                <input type="text" class="small-input answer-input number-input error-input" disabled value="33">
+                                                <div class="true-result">3434</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="question-wrap" data-type="radio" data-index="4">
+                                <div class="question__number">4.</div>
+                                <div class="question true-question">
+                                    <div class="question__text">Какой из приведенных ниже рисунков наиболее отличен от других?
+                                    </div>
+                                    <div class="image-group">
+                                        <div class="question-image-wrap">
+                                            <div class="question-image__number">1.</div>
+                                            <div class="question-image">
+                                                <img src="img/figure1.svg" alt="">
+                                            </div>
+                                        </div>
+                                        <div class="question-image-wrap">
+                                            <div class="question-image__number">2.</div>
+                                            <div class="question-image">
+                                                <img src="img/figure2.svg" alt="">
+                                            </div>
+                                        </div>
+                                        <div class="question-image-wrap">
+                                            <div class="question-image__number">3.</div>
+                                            <div class="question-image">
+                                                <img src="img/figure3.svg" alt="">
+                                            </div>
+                                        </div>
+                                        <div class="question-image-wrap">
+                                            <div class="question-image__number">4.</div>
+                                            <div class="question-image">
+                                                <img src="img/figure4.svg" alt="">
+                                            </div>
+                                        </div>
+                                        <div class="question-image-wrap">
+                                            <div class="question-image__number">5.</div>
+                                            <div class="question-image">
+                                                <img src="img/figure5.svg" alt="">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="answers">
+                                        <div class="radio-group">
+                                            <label class="radio-label">
+                                                <input type="radio" data-name="1" disabled>
+                                                <span class="radio-text">1</span>
+                                            </label>
+                                            <label class="radio-label true-label">
+                                                <input type="radio" data-name="2" disabled checked>
+                                                <span class="radio-text">2</span>
+                                            </label>
+                                            <label class="radio-label">
+                                                <input type="radio" data-name="3" disabled>
+                                                <span class="radio-text">3</span>
+                                            </label>
+                                            <label class="radio-label">
+                                                <input type="radio" data-name="4" disabled>
+                                                <span class="radio-text">4</span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </form>
+                        <div class="result-table-wrap">
+
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+
+            <div class="result-item">
+                <div class="step-result step-result_big">
+                    <h2 class="step__title">5 этап</h2>
+                    <div class="step-result__table-wrap">
+                        <table class="step-result__table">
+                            <thead class="step-result__table-head">
+                            <tr>
+                                <th>#</th>
+                                <th>Участник</th>
+                                <th>Вася</th>
+                                <th>Коля</th>
+                                <th>Маша</th>
+                                
+                                <th>Миша</th>
+                                <th>Саша</th>
+                                <th>Никита</th>
+                                <th>Вова</th>
+                                <th>Вася</th>
+                                
+                                <th>Коля</th>
+                                <th>Маша</th>
+                                <th>Миша</th>
+                                <th>Саша</th>
+                                <th>Саша</th>
+                            </tr>
+                            </thead>
+                            <tbody class="step-result__table-body">
+                            <tr>
+                                <td>1</td>
+                                <td>Вася</td>
+                                <td class="disabled-td"></td>
+                                <td></td>
+                                <td></td>
+
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>2</td>
+                                <td>Вася</td>
+                                <td>3</td>
+                                <td class="disabled-td"></td>
+                                <td ></td>
+
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>3</td>
+                                <td>Вася</td>
+                                <td>1</td>
+                                <td></td>
+                                <td class="disabled-td"></td>
+
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>4</td>
+                                <td>Вася</td>
+                                <td>3</td>
+                                <td></td>
+                                <td></td>
+
+                                <td class="disabled-td"></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>5</td>
+                                <td>Вася</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+
+                                <td></td>
+                                <td class="disabled-td"></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>6</td>
+                                <td>Вася</td>
+                                <td>5</td>
+                                <td></td>
+                                <td></td>
+
+                                <td></td>
+                                <td></td>
+                                <td class="disabled-td"></td>
+                                <td></td>
+                                <td></td>
+
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>7</td>
+                                <td>Вася</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td class="disabled-td"></td>
+                                <td></td>
+
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>8</td>
+                                <td>Вася</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td class="disabled-td"></td>
+
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>9</td>
+                                <td>Вася</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+
+                                <td class="disabled-td"> </td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>ВП</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>ВС</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>ВВ</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+            </div>
+            <div class="result-item">
+                <div class="step-result">
+                    <h2 class="step__title">6 этап</h2>
+                    <div class="result-count">Правильных ответов: 26</div>
+                </div>
+            </div>
+            <a href="#" class="step__back step__back_static">Назад</a>
+        </div>
+
+    </div>
+
+    </main>
+</div>
+<script src="js/script.js"></script>
+</body>
+</html>

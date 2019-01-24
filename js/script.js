@@ -670,8 +670,10 @@ function init() {
             sendAJAX("https://httpbin.org/post", data);
 
         }
+        if(stepTwoBtn){
+            stepTwoBtn.addEventListener('click', sendStepTwo);
+        }
 
-        stepTwoBtn.addEventListener('click', sendStepTwo);
     })();
 
     const stepFour = document.querySelector(".step_four");
@@ -797,6 +799,7 @@ function init() {
         if (!elem) {
             return false;
         }
+        console.log(111)
         let controls = elem.querySelectorAll('input');
         controls.forEach(function (input) {
             if (elem.dataset.disabled) {
