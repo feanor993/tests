@@ -220,6 +220,7 @@ function hideElems() {
     const start = document.querySelector('.start');
     const finish = document.querySelector('.finish');
     const final = document.querySelector('.hello-test_final');
+    const result = document.querySelector('.result')
     let timerBlockFunc = document.querySelector(".timer[data-finish]");
     let elemControlsArray = [];
     elemControlsArray.push(finish, start);
@@ -238,7 +239,7 @@ function hideElems() {
     }
     elemControlsArray.map(function (elem) {
         if (elem) {
-            if (auth || final) {
+            if (auth || final || result) {
                 elem.classList.add('displayNone');
             }
             else {
