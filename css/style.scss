@@ -1760,7 +1760,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 199px;
+  padding: 15px 30px;
   height: 48px;
   border-radius: 4px;
   background-color: #b1cd43;
@@ -1954,4 +1954,133 @@
     opacity: .8;
   }
 
+}
+.edit-table_group tbody td {
+  font-size: 14px;
+  font-weight: 500;
+  font-family: $medium;
+  color: #3c3c3c;
+}
+.edit-table-wrap_group.edit-table-wrap{
+  width: 1149px;
+}
+.view-result{
+  font-size: 14px;
+  font-weight: bold;
+  font-family: $bold;
+  transition: .4s ease;
+  color: #b1cd43;
+  &:hover{
+    opacity: .8;
+  }
+}
+.result-td{
+  background-color: #fff;
+}
+.edit-table__body tr{
+  transition: .4s ease;
+  background-color: #fff;
+  cursor: pointer;
+  &:hover{
+    background-color: rgba(236, 236, 236, 0.3);
+  }
+}
+.left-buttons{
+  display: flex;
+}
+.transparent-btn{
+  font-size: 16px;
+  font-weight: bold;
+  color: #b1cd43;
+  font-family: $bold;
+  border-radius: 4px;
+  border: solid 1px #b1cd43;
+  box-shadow: none;
+  -webkit-appearance: none;
+  height: 48px;
+  padding: 15px 30px;
+  cursor: pointer;
+  transition: .4s ease;
+  margin-left: 25px;
+  &:hover{
+    opacity: .8;
+  }
+}
+.edit-group{
+  padding-bottom: 50px;
+  border-bottom: 1px solid rgba(223, 224, 224, 0.6);
+  padding-top: 50px;
+}
+.edit-group__content{
+  width: 1151px;
+  margin-left: auto;
+  margin-right: auto;
+  position: relative;
+  .form-warning{
+    position: absolute;
+    bottom: -40px;
+    left: 50%;
+    transform: translate(-50%);
+  }
+  .label-warning{
+    position: absolute;
+    bottom: -20px;
+    right: 0;
+    margin-left: 0;
+  }
+}
+.edit-group__form{
+  width: 100%;
+  display: flex;
+}
+.edit-group__form{
+  input{
+    min-width: 1px;
+  }
+  .form-authorize__label{
+    flex-wrap: nowrap;
+    margin-bottom: 0;
+    margin-right: 40px;
+  }
+  .form-authorize__label-name{
+    width: auto;
+    min-width: 1px;
+    white-space: nowrap;
+    margin-right: 15px;
+  }
+  .form-authorize__input{
+    padding-left: 15px;
+  }
+}
+.form-authorize__input{
+  &.id-input{
+    width: 56px;
+  }
+  &.school-input{
+    width: 300px;
+  }
+  &.sc-input{
+    width: 84px;
+  }
+  &.email-input{
+    width: 184px;
+  }
+}
+.edit-group__submit{
+  width: 147px;
+  height: 60px;
+  border-radius: 4px;
+  background-color: #b1cd43;
+  border: none;
+  box-shadow: none;
+  transition: .4s ease;
+  -webkit-appearance: none;
+  font-size: 16px;
+  font-weight: bold;
+  color: #ffffff;
+  font-family: $bold;
+  cursor: pointer;
+  &:hover{
+    background-color: #7bab20;
+  }
 }

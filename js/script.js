@@ -12,7 +12,7 @@ function sendForm(form, url) {
     let controls = form.querySelectorAll('input');
     let data = new FormData();
     controls.forEach((cont) => data.append(cont.name, cont.value));
-    sendAJAX(url, data);
+    fetchData(url, data);
     return true;
 }
 function removeEmptyWarnings(form) {
@@ -121,6 +121,22 @@ function ready(fn) {
     } else {
         document.addEventListener("DOMContentLoaded", fn);
     }
+}
+
+function fetchData(url, data) {
+    fetch(url, {
+        method: "POST",
+        body: data,
+        headers: {
+            "Query-Type": "ajax/fetch"
+        }
+    }).then(function (response) {
+        return response.json();
+    }).then(function (data) {
+       console.log(data)})
+    .catch(function (error) {
+        console.log(error);
+    });
 }
 
 function sendAJAX(url, data) {
@@ -1193,6 +1209,18 @@ function init() {
         let deletePopup = elem.querySelector('.delete-popup');
         let closePopup = elem.querySelectorAll('.delete-popup__undo, .overlay, .delete-popup__close');
         let deleteSubmit = elem.querySelector('.delete-popup__delete');
+        let tableRows = elem.querySelectorAll('.edit-table__body tr');
+
+        tableRows.forEach(row => {
+           row.addEventListener('click', function (e) {
+               if(!(e.target.classList.contains('select-td') || e.target.classList.contains('result-td') || e.target.parentNode.classList.contains('result-td'))){
+                   if(this.dataset.href){
+                       location.href =  this.dataset.href;
+                   }
+               }
+           });
+        });
+
         controls.forEach(control => {
             control.addEventListener('click', function (e) {
                 e.stopPropagation();
@@ -1241,11 +1269,30 @@ function init() {
         deleteSubmit.addEventListener('click', function () {
            let data = new FormData();
            data.append('delete-lines', JSON.stringify(selectedArray));
-           sendAJAX("https://httpbin.org/post", data);
+           fetchData("https://httpbin.org/post", data);
         });
 
 
     })();
+
+    const editGroup =  document.querySelector('.edit-group__form');
+
+    (function editGroupActions(elem = editGroup) {
+        if(!elem){
+            return false
+        }
+        let email  = elem.querySelector('input[name="e-mail"]');
+        let emailWarning = elem.querySelector('.email-warning')
+        validateEmail(email, emailWarning);
+        removeEmptyWarnings(elem);
+        elem.addEventListener('submit', function (e) {
+            e.preventDefault();
+            validateEmpty(this);
+            if(validateEmpty(this) && validateEmail(email, emailWarning)){
+                sendForm(this, "https://httpbin.org/post")
+            }
+        })
+    })()
 
 }
 
