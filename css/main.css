@@ -2543,3 +2543,28 @@ a, a:hover {
 .step_four__label {
   position: relative; }
 
+.exit {
+  display: block;
+  position: absolute;
+  top: 50%;
+  right: 80px;
+  -webkit-transform: translate(0, -50%);
+  -ms-transform: translate(0, -50%);
+  transform: translate(0, -50%);
+  font-size: 18px;
+  font-weight: 500;
+  text-align: right;
+  color: #333333; }
+  .exit:before {
+    content: '';
+    display: block;
+    width: 19px;
+    height: 19px;
+    background: url("../img/exit.svg") no-repeat center center/contain;
+    position: absolute;
+    top: 50%;
+    -webkit-transform: translate(-100%, -50%);
+    -ms-transform: translate(-100%, -50%);
+    transform: translate(-100%, -50%);
+    left: -10px; }
+

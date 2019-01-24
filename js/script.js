@@ -229,7 +229,9 @@ function hideElems() {
     const start = document.querySelector('.start');
     const finish = document.querySelector('.finish');
     const final = document.querySelector('.hello-test_final');
-    const result = document.querySelector('.result')
+    const result = document.querySelector('.result');
+    const admin = document.querySelector('.admin');
+    const exit = document.querySelector('.exit');
     let timerBlockFunc = document.querySelector(".timer[data-finish]");
     let elemControlsArray = [];
     elemControlsArray.push(finish, start);
@@ -248,11 +250,14 @@ function hideElems() {
     }
     elemControlsArray.map(function (elem) {
         if (elem) {
-            if (auth || final || result) {
+            if (auth || final || result || admin) {
                 elem.classList.add('displayNone');
             }
             else {
                 elem.classList.remove('displayNone');
+            }
+            if(exit && !admin){
+                exit.style.display = "none";
             }
         }
     })
