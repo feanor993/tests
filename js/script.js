@@ -8,11 +8,11 @@ function activateCanvas() {
     localStorage.removeItem('canvasHTML');
     localStorage.removeItem('finishCanvas');
 }
-function sendForm(form, url) {
+function sendForm(form, url, self) {
     let controls = form.querySelectorAll('input');
     let data = new FormData();
     controls.forEach((cont) => data.append(cont.name, cont.value));
-    fetchData(url, data);
+    fetchData(url, data, self);
     return true;
 }
 function removeEmptyWarnings(form) {
@@ -123,7 +123,7 @@ function ready(fn) {
     }
 }
 
-function fetchData(url, data) {
+function fetchData(url, data, self) {
     fetch(url, {
         method: "POST",
         body: data,
@@ -133,6 +133,15 @@ function fetchData(url, data) {
     }).then(function (response) {
         return response.json();
     }).then(function (data) {
+       if(self && data.result ===  true){
+           let href = self.querySelector('.form-authorize__submit').dataset.redirect;
+           if(href){
+               location.href = href;
+           }
+       }
+       if(!self && typeof data.result === "object"){
+           location.reload()
+       }
        console.log(data)})
     .catch(function (error) {
         console.log(error);
@@ -1241,7 +1250,7 @@ function init() {
             e.preventDefault();
             validateEmpty(this);
             if(validateEmpty(this)){
-                sendForm(this, "https://httpbin.org/post")
+                sendForm(this, "https://httpbin.org/post", e.target)
             }
         })
 
