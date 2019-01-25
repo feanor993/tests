@@ -353,139 +353,24 @@ function init() {
     timer();
     setDoneWidth();
     window.addEventListener("resize", setDoneWidth);
-    let authForm = document.querySelector(".form-authorize");
-    if (authForm) {
-        let schoolInput = authForm.querySelector("input[name='userSchool']");
 
-        let schoolsURL = schoolInput.dataset.json;
-        let schools = {};
-        let email = authForm.querySelector('input[name="userEmail"]');
-        let emailWarning = authForm.querySelector('.email-warning');
-        let formWarning = authForm.querySelector('.form-warning');
-        let schoolWarning = authForm.querySelector('.school-warning');
-        let fioInput = authForm.querySelector('input[name="userName"]');
-        let fioWarning = authForm.querySelector('.fio-warning');
-
-        function schoolsListFunc(datas) {
-            schools = datas;
-            localStorage.setItem('schoolsTest', JSON.stringify(datas));
-            let schoolsList = document.createElement("ul");
-            schoolsList.classList.add("schools-list");
-            schoolsList.hidden = true;
-            let label = schoolInput.parentNode;
-            label.appendChild(schoolsList);
-            schoolInput.addEventListener("input", function (e) {
-                let val = e.target.value;
-                schoolsList.innerHTML = null;
-                if (val.length > 0) {
-                    for (let item in schools) {
-                        if (typeof schools[item] === "string") {
-                            let incVal = schools[item].includes(val);
-                            let incCap = schools[item].includes(val.capitalize());
-                            if (incVal || incCap) {
-                                if (schoolsList.hidden) {
-                                    schoolsList.hidden = false;
-                                }
-                                let li = document.createElement("li");
-                                li.textContent = schools[item];
-                                schoolsList.appendChild(li);
-                                li.addEventListener("click", function (ev) {
-                                    ev.stopImmediatePropagation();
-                                    schoolWarning.classList.remove('active');
-                                    e.target.value = ev.target.textContent;
-                                    schoolsList.innerHTML = null;
-                                    schoolsList.hidden = true;
-                                })
-                            }
-                        }
-                    }
-                }
-            });
+    const authForm = document.querySelector('.form-authorize');
+    (function authFormActions(elem = authForm) {
+        if(!elem) {
+            return false;
         }
-
-        if (window.fetch) {
-            fetch(schoolsURL)
-                .then(function (response) {
-                    return response.json();
-                })
-                .then(function (data) {
-                    schoolsListFunc(data);
-                })
-                .catch(function (error) {
-                    console.log(error);
-                });
-        }
-        else {
-            var request = new XMLHttpRequest();
-            request.open('POST', schoolsURL);
-            request.responseType = 'json';
-            request.onload = function () {
-                schoolsListFunc(request.response);
-            };
-            request.send();
-        }
-
-
-        let inputs = authForm.querySelectorAll("input");
-        inputs.forEach(function (input) {
-            input.addEventListener('input', function () {
-                let empty = Array.from(inputs).filter((input) => input.value.length < 1);
-                this.classList.remove('error');
-                if (!empty.length) {
-                    formWarning.classList.remove('active');
-                }
-            })
-        });
-
-        let regExpMail = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-        email.addEventListener('input', function () {
-            if (!(email.value.match(regExpMail))) {
-                this.classList.add('error');
-                emailWarning.classList.add('active')
-            }
-            else {
-                this.classList.remove('error');
-                emailWarning.classList.remove('active')
-            }
-        });
-        authForm.addEventListener("submit", function (e) {
-            e.stopPropagation();
+        removeEmptyWarnings(elem);
+        elem.addEventListener('submit', function (e) {
             e.preventDefault();
-            let formData = new FormData();
-            inputs = Array.from(inputs);
-            let schoolsTest = JSON.parse(localStorage.getItem('schoolsTest'));
-            let schoolsTestArray = [];
-            for (let school in schoolsTest) {
-                schoolsTestArray.push(schoolsTest[school]);
+            validateEmpty(this);
+            if(validateEmpty(this)){
+                let data =  new FormData();
+                let inputs =  this.querySelectorAll('input');
+                inputs.forEach(input => data.append(input.name, input.value));
+                sendAJAX("https://httpbin.org/post", data);
             }
-            let emailCheck = email.value.match(regExpMail);
-            let empty = inputs.filter((input) => input.value.length < 1);
-            if (empty.length) {
-                formWarning.classList.add('active');
-                empty.map((empt) => empt.classList.add('error'));
-            }
-            if (!emailCheck) {
-                email.classList.add('error');
-                emailWarning.classList.add('active');
-            }
-            if (!isCorrectFIO(fioInput.value)) {
-                fioInput.classList.add('error');
-                fioWarning.classList.add('active');
-            }
-            if (!schoolsTestArray.includes(schoolInput.value)) {
-                schoolInput.classList.add('error');
-                schoolWarning.classList.add('active');
-
-            }
-            if (!empty.length && (emailCheck && isCorrectFIO(fioInput.value) && schoolsTestArray.includes(schoolInput.value))) {
-                inputs.forEach((input) => formData.append(input.name, input.value));
-                formData.append('action', 'welcome');
-                sendAJAX("https://httpbin.org/post", formData);
-            }
-
-        });
-    }
-
+        })
+    })();
 
     let progressIndexes = document.querySelectorAll(".progress-step__index");
     if (progressIndexes) {
@@ -696,6 +581,8 @@ function init() {
         if (!elem) {
             return false;
         }
+
+
         let list = elem.querySelector('.people-list');
         let items = elem.querySelectorAll('.people');
         let results = elem.querySelectorAll('.step_four__input');
@@ -706,14 +593,18 @@ function init() {
                 textes.push(txt);
             item.addEventListener('click', function (e) {
                 e.preventDefault();
+                if(this.dataset.disable || elem.dataset.disable){
+                    return false
+                }
                 let input =  this.querySelector('input');
                 input.checked = false;
                 this.classList.add('dn');
                 let text = this.querySelector('.people-name').textContent;
+                let dId = this.querySelector('.people-name').dataset.id;
 
                 let selected =  this.parentNode.parentNode.querySelector('.step_four__input');
                 let createEl = `
-                  <div class="people-sel">
+                  <div class="people-sel" data-id="${dId}">
                             <div class="people-sel__text">${text}</div>
                             <div class="people-sel__delete"></div>
                         </div>
@@ -724,6 +615,9 @@ function init() {
         results.forEach(result => {
             result.addEventListener('click', function (ev) {
                 let self =  this;
+                if(this.dataset.disable || elem.dataset.disable){
+                    return false
+                }
                 if(!ev.target.closest('.people-sel')){
                     results.forEach(r => r.classList.remove('selected'));
                     this.classList.add('selected');
@@ -796,13 +690,23 @@ function init() {
                 let selected = [];
                 let items =  result.querySelectorAll('.people-sel__text');
                 items.forEach(item => {
-                    selected.push(item.textContent);
+                    selected.push(item.parentNode.dataset.id);
                 });
                 data.append(name, JSON.stringify(selected));
 
-            })
+            });
             fetchData("https://httpbin.org/post", data);
-        })
+        });
+
+        check(disableStepFour, elem);
+
+        function disableStepFour() {
+            items.forEach(item => item.dataset.disable = true);
+            results.forEach(result => result.dataset.disable = true);
+            elem.dataset.disable = true;
+            let lists = elem.querySelectorAll('.people-list');
+            lists.forEach(l => l.style.display = "none");
+        }
     })();
 
     const stepFive = document.querySelector(".step_five");

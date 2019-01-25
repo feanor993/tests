@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="css/main.css">
+    <title>Тесты</title>
+</head>
+<body>
+<div class="wrapper">
+    <header class="header">
+        <div class="start"><img src="img/start.svg" alt=""></div>
+        <a href="#" class="logo"><img src="img/logo.svg" alt=""></a>
+        <div class="finish"><img src="img/finish.svg" alt=""></div>
+        <div class="timer  timer_header" data-finish="30">
+            <div class="timer__time" >
+                <div class="timer__minutes">00</div>
+                <span>:</span>
+                <div class="timer__seconds">00</div>
+            </div>
+        </div>
+        <a href="#" class="exit">
+            Выход
+        </a>
+    </header>
+    <main class="main">
+        <div class="authorize">
+            <div class="authorize-banner" style="background-image: url(img/banner.jpg);"></div>
+            <div class="form-authorize-wrap">
+                <h1 class="authorize-title">Давай знакомиться!</h1>
+
+                <form class="form-authorize tests-form">
+                    <div class="form-warning">Чтобы начать тестирование, заполните все поля формы.</div>
+                    <label class="form-authorize__label">
+                        <span class="form-authorize__label-name">ФИО</span>
+                        <input type="text" class="form-authorize__input" autocomplete="off" name="userName" placeholder="Иванов Иван">
+                        <span class="label-warning fio-warning">Введите ФИО полностью на кириллице</span>
+                    </label>
+                    <label class="form-authorize__label">
+                        <span class="form-authorize__label-name">Школа</span>
+                        <input type="text" class="form-authorize__input" autocomplete="off" name="userSchool" placeholder="Школа №537" data-json="/json/schools.json">
+                        <span class="school-warning label-warning">Выберите школу из списка</span>
+                    </label>
+                    <label class="form-authorize__label">
+                        <span class="form-authorize__label-name">Класс</span>
+                        <input type="text" class="form-authorize__input" autocomplete="off" name="userSchoolClass" placeholder="5 класс">
+                        <span class="class-warning label-warning"></span>
+                    </label>
+                    <label class="form-authorize__label">
+                        <span class="form-authorize__label-name">E-mail</span>
+                        <input type="text" class="form-authorize__input" autocomplete="off" name="userEmail" placeholder="ivanov@gmail.com">
+                        <span class="email-warning label-warning">Введите корректный e-mail</span>
+                    </label>
+                    <button class="form-authorize__submit" type="submit">Приступить</button>
+                </form>
+            </div>
+
+        </div>
+    </main>
+</div>
+<script src="js/script.js"></script>
+</body>
+</html>
