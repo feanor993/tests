@@ -657,7 +657,8 @@ a, a:hover {
   -webkit-transition: opacity .4s ease;
   -o-transition: opacity .4s ease;
   transition: opacity .4s ease;
-  font-family: "Geometria-Medium", sans-serif; }
+  font-family: "Geometria-Medium", sans-serif;
+  z-index: 999; }
   .step__back span {
     display: block;
     padding-top: 3px;
