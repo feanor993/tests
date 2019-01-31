@@ -404,6 +404,8 @@ function init() {
             inputs = Array.from(inputs);
             var schoolsTest = JSON.parse(localStorage.getItem('schoolsTest'));
             var schoolsTestArray = [];
+
+
             for (var school in schoolsTest) {
                 schoolsTestArray.push(schoolsTest[school]);
             }

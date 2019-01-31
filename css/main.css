@@ -49,6 +49,11 @@ a, a:hover {
   padding: 0;
   vertical-align: baseline; }
 
+input, button, textarea, select {
+  -webkit-appearance: none !important;
+  -moz-appearance: none !important;
+  appearance: none !important; }
+
 .wrapper {
   max-width: 100vw;
   overflow-x: hidden; }
@@ -115,7 +120,7 @@ a, a:hover {
 
 .authorize {
   width: 960px;
-  max-width: 100%;
+  max-width: 95%;
   margin-left: auto;
   margin-right: auto;
   padding-top: 47px; }
@@ -407,7 +412,8 @@ a, a:hover {
   width: 850px;
   margin-left: auto;
   margin-right: auto;
-  margin-top: 109px; }
+  margin-top: 109px;
+  max-width: 95%; }
 
 .hello-test__title {
   font-size: 30px;
@@ -525,7 +531,8 @@ a, a:hover {
 .step_one-list {
   width: 881px;
   margin-left: auto;
-  margin-right: auto; }
+  margin-right: auto;
+  max-width: 95%; }
 
 .step_one-item {
   width: 100%;
@@ -837,7 +844,10 @@ a, a:hover {
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
-  margin-bottom: 70px; }
+  margin-bottom: 70px;
+  max-width: 95%;
+  margin-left: auto;
+  margin-right: auto; }
 
 .slider-range__content {
   position: relative; }
@@ -986,7 +996,8 @@ a, a:hover {
   width: 750px;
   margin-left: auto;
   margin-right: auto;
-  margin-top: 27px; }
+  margin-top: 27px;
+  max-width: 95%; }
 
 .words-string {
   word-wrap: break-word;
@@ -1099,7 +1110,8 @@ a, a:hover {
   -ms-flex-align: center;
   align-items: center;
   display: none;
-  padding-right: 20px; }
+  padding-right: 20px;
+  max-width: 56%; }
   .time-finish.active {
     display: -webkit-box;
     display: -webkit-flex;
@@ -1120,7 +1132,8 @@ a, a:hover {
 
 .step-three-wrap {
   width: 882px;
-  margin: 30px auto 60px auto; }
+  margin: 30px auto 60px auto;
+  max-width: 95%; }
 
 .question-wrap {
   width: 100%;
@@ -1906,7 +1919,8 @@ a, a:hover {
   width: 908px;
   margin-left: auto;
   margin-right: auto;
-  padding-top: 50px; }
+  padding-top: 50px;
+  max-width: 95%; }
 
 .edit-table__title {
   font-size: 32px;
@@ -2241,7 +2255,8 @@ a, a:hover {
   width: 1151px;
   margin-left: auto;
   margin-right: auto;
-  position: relative; }
+  position: relative;
+  max-width: 95%; }
   .edit-group__content .form-warning {
     position: absolute;
     bottom: -40px;
@@ -2369,7 +2384,8 @@ a, a:hover {
 .step-result {
   width: 873px;
   margin-left: auto;
-  margin-right: auto; }
+  margin-right: auto;
+  max-width: 95%; }
   .step-result .step__title {
     font-size: 24px;
     font-weight: bold;
@@ -2568,4 +2584,96 @@ a, a:hover {
     -ms-transform: translate(-100%, -50%);
     transform: translate(-100%, -50%);
     left: -10px; }
+
+.final-item-form__title {
+  font-size: 24px;
+  font-weight: bold;
+  line-height: 1.17;
+  text-align: center;
+  color: #333333;
+  font-family: "Geometria-Bold", sans-serif;
+  margin-bottom: 40px; }
+
+.final-item-form__form {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-box-align: start;
+  -webkit-align-items: flex-start;
+  -ms-flex-align: start;
+  align-items: flex-start;
+  position: relative; }
+  .final-item-form__form .form-warning {
+    position: absolute;
+    bottom: -50px;
+    left: 0;
+    width: 100%;
+    text-align: center;
+    color: #bb0032; }
+  .final-item-form__form .label-warning {
+    margin-left: 0;
+    margin-right: 0;
+    margin-top: 12px;
+    color: #bb0032; }
+
+.final-item-form__input {
+  width: 360px;
+  height: 60px;
+  -webkit-border-radius: 4px;
+  border-radius: 4px;
+  border: solid 1px #dfe0e0;
+  background-color: #ffffff;
+  padding-left: 20px;
+  color: #333333;
+  font-weight: 500;
+  font-family: "Geometria-Medium", sans-serif;
+  font-size: 15px;
+  display: block;
+  margin-right: 20px; }
+  .final-item-form__input::-webkit-input-placeholder {
+    font-size: 15px;
+    font-weight: 500;
+    color: #cdd0d0;
+    font-family: "Geometria-Medium", sans-serif; }
+  .final-item-form__input::-moz-placeholder {
+    font-size: 15px;
+    font-weight: 500;
+    color: #cdd0d0;
+    font-family: "Geometria-Medium", sans-serif; }
+  .final-item-form__input::-ms-input-placeholder {
+    font-size: 15px;
+    font-weight: 500;
+    color: #cdd0d0;
+    font-family: "Geometria-Medium", sans-serif; }
+  .final-item-form__input::placeholder {
+    font-size: 15px;
+    font-weight: 500;
+    color: #cdd0d0;
+    font-family: "Geometria-Medium", sans-serif; }
+
+.final-item-form__button {
+  width: 285px;
+  height: 60px;
+  -webkit-border-radius: 4px;
+  border-radius: 4px;
+  background-color: #b1cd43;
+  display: block;
+  -webkit-transition: .4s ease;
+  -o-transition: .4s ease;
+  transition: .4s ease;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+  border: none;
+  font-size: 16px;
+  font-weight: bold;
+  color: #ffffff;
+  font-family: "Geometria-Bold", sans-serif;
+  cursor: pointer; }
+  .final-item-form__button:hover {
+    background-color: #7bab20; }
 

@@ -4,10 +4,12 @@ String.prototype.capitalize = function () {
     });
 };
 let regExpMail = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+
 function activateCanvas() {
     localStorage.removeItem('canvasHTML');
     localStorage.removeItem('finishCanvas');
 }
+
 function sendForm(form, url, self) {
     let controls = form.querySelectorAll('input');
     let data = new FormData();
@@ -15,6 +17,7 @@ function sendForm(form, url, self) {
     fetchData(url, data, self);
     return true;
 }
+
 function removeEmptyWarnings(form) {
     let inputs = Array.from(form.querySelectorAll("input")).filter(i => !i.disabled);
     let formWarning = form.querySelector('.form-warning');
@@ -28,6 +31,7 @@ function removeEmptyWarnings(form) {
         })
     });
 }
+
 function validateEmpty(form) {
     let inputs = form.querySelectorAll("input");
     inputs = Array.from(inputs).filter(item => !item.disabled);
@@ -41,6 +45,7 @@ function validateEmpty(form) {
         return true
     }
 }
+
 function validateEmail(email, emailWarning) {
     email.addEventListener('input', function () {
         if (!(email.value.match(regExpMail))) {
@@ -54,6 +59,7 @@ function validateEmail(email, emailWarning) {
     });
     return email.value.match(regExpMail);
 }
+
 function which(click, buttons) {
     for (let i in buttons) {
         let button = buttons[i];
@@ -96,6 +102,7 @@ function which(click, buttons) {
 
     return min_id;
 }
+
 function isCorrectFIO(fio) {
     if (!fio) {
         return false;
@@ -133,19 +140,20 @@ function fetchData(url, data, self) {
     }).then(function (response) {
         return response.json();
     }).then(function (data) {
-       if(self && data.result ===  true){
-           let href = self.querySelector('.form-authorize__submit').dataset.redirect;
-           if(href){
-               location.href = href;
-           }
-       }
-       if(!self && typeof data.result === "object"){
-           location.reload()
-       }
-       console.log(data)})
-    .catch(function (error) {
-        console.log(error);
-    });
+        if (self && data.result === true) {
+            let href = self.querySelector('.form-authorize__submit').dataset.redirect;
+            if (href) {
+                location.href = href;
+            }
+        }
+        if (!self && typeof data.result === "object") {
+            location.reload()
+        }
+        console.log(data)
+    })
+        .catch(function (error) {
+            console.log(error);
+        });
 }
 
 function sendAJAX(url, data) {
@@ -153,7 +161,7 @@ function sendAJAX(url, data) {
 
     function ajaxActions(resp) {
         console.log(resp);
-        if(resp.indexOf('<main class="main') > -1){
+        if (resp.indexOf('<main class="main') > -1) {
             console.log(resp);
             let main = document.querySelector('.wrapper');
             main.removeChild(document.querySelector('.main'));
@@ -164,21 +172,21 @@ function sendAJAX(url, data) {
             eval(setDoneWidth());
             script = '';
         }
-        else{
+        else {
             let objResp = JSON.parse(resp);
             let formErrorsArray = ['userName', 'userSchool', 'userSchoolClass', 'userEmail'];
             let errorsArray = {};
             formErrorsArray.forEach(err => {
-                if(objResp[err]){
+                if (objResp[err]) {
                     errorsArray[err] = objResp[err];
                 }
             });
-            for(let item in errorsArray){
+            for (let item in errorsArray) {
                 let input = document.querySelector(`input[name=${item}]`);
-                if(input){
+                if (input) {
                     input.classList.add('error');
                     let span = input.parentNode.querySelector('.label-warning');
-                    if(span){
+                    if (span) {
                         span.textContent = errorsArray[item];
                         span.classList.add('active');
                     }
@@ -187,7 +195,8 @@ function sendAJAX(url, data) {
         }
 
     }
-    if(window.fetch){
+
+    if (window.fetch) {
         fetch(url, {
             method: "POST",
             body: data,
@@ -202,7 +211,7 @@ function sendAJAX(url, data) {
             console.log(error);
         });
     }
-    else{
+    else {
         let xhr = new XMLHttpRequest();
         xhr.open("POST", url, true);
         xhr.setRequestHeader("Query-Type", "ajax/fetch");
@@ -256,7 +265,7 @@ function hideElems() {
             else {
                 elem.classList.remove('displayNone');
             }
-            if(exit && !admin){
+            if (exit && !admin) {
                 exit.style.display = "none";
             }
         }
@@ -273,15 +282,20 @@ function disableSend(elem) {
 
 function check(func, elem) {
     let send = false;
-    let checkInterval = setInterval(function () {
-        if (document.querySelector(".timer[data-finish]").dataset.finally) {
-            send = true;
-            clearInterval(checkInterval);
-            if (send) {
-                func(elem);
+    if (!document.querySelector(".timer[data-finish]")) {
+        return false
+    } else {
+        let checkInterval = setInterval(function () {
+            if (document.querySelector(".timer[data-finish]").dataset.finally) {
+                send = true;
+                clearInterval(checkInterval);
+                if (send) {
+                    func(elem);
+                }
             }
-        }
-    }, 1000);
+        }, 1000);
+    }
+
 }
 
 function timer(elem = document.querySelector(".timer[data-finish]")) {
@@ -356,16 +370,16 @@ function init() {
 
     const authForm = document.querySelector('.form-authorize');
     (function authFormActions(elem = authForm) {
-        if(!elem) {
+        if (!elem) {
             return false;
         }
         removeEmptyWarnings(elem);
         elem.addEventListener('submit', function (e) {
             e.preventDefault();
             validateEmpty(this);
-            if(validateEmpty(this)){
-                let data =  new FormData();
-                let inputs =  this.querySelectorAll('input');
+            if (validateEmpty(this)) {
+                let data = new FormData();
+                let inputs = this.querySelectorAll('input');
                 inputs.forEach(input => data.append(input.name, input.value));
                 sendAJAX("https://httpbin.org/post", data);
             }
@@ -483,6 +497,23 @@ function init() {
                     customDrag(thumbMax, range, e);
                 }
             });
+            thumbUser.addEventListener("touchstart", function (e) {
+                if (e.target.closest('.step_two').dataset.disabled) {
+                    return false
+                }
+                else {
+                    customDrag(thumbUser, range, e);
+                }
+
+            });
+            thumbMax.addEventListener("touchstart", function (e) {
+                if (e.target.closest('.step_two').dataset.disabled) {
+                    return false
+                }
+                else {
+                    customDrag(thumbMax, range, e);
+                }
+            });
             thumbUser.ondragstart = function () {
                 return false;
             };
@@ -502,7 +533,8 @@ function init() {
             let thumbBefore =
                 parent
                     .querySelector(`.thumb-before[data-thumb="${thumbData}"]`);
-            document.onmousemove = function (e) {
+
+            function mouseMoveD(e) {
                 document.documentElement.style.cursor = "grabbing";
                 let parentRange = e.target.closest('.slider-range__wrap');
                 let elemName = elem.dataset.thumb;
@@ -525,14 +557,18 @@ function init() {
                     percent = 100;
                 }
                 percentElem.textContent = percent.toFixed();
-                parentRange.setAttribute(`data-${elemName}`, percent.toFixed());
+                if (parentRange) {
+                    parentRange.setAttribute(`data-${elemName}`, percent.toFixed());
+                }
+
                 if (newTop > sliderHeight - self.clientHeight - 10) {
                     newTop = sliderHeight - self.clientHeight - 5;
                 }
                 self.style.top = newTop + "px";
                 elem.classList.add("animated");
-            };
-            document.onmouseup = function () {
+            }
+
+            function mouseUpD() {
                 document.documentElement.style.cursor = "default";
                 elem.style.cursor = "pointer";
                 elem.classList.remove("animated");
@@ -548,7 +584,21 @@ function init() {
                 if (noSelRan.length < 1) {
                     stepTwoBtn.disabled = false;
                 }
+            }
+
+            document.onmousemove = function (e) {
+                mouseMoveD(e)
             };
+            document.ontouchmove = function (e) {
+                mouseMoveD(e)
+            }
+
+            document.onmouseup = function () {
+                mouseUpD()
+            };
+            document.ontouchend = function () {
+                mouseUpD()
+            }
             return false;
         }
 
@@ -570,97 +620,102 @@ function init() {
             sendAJAX("https://httpbin.org/post", data);
 
         }
-        if(stepTwoBtn){
+
+        if (stepTwoBtn) {
             stepTwoBtn.addEventListener('click', sendStepTwo);
         }
 
     })();
 
-    const stepFour = document.querySelector(".step_four");
-    (function stepFourActions(elem = stepFour) {
+    var stepFour = document.querySelector(".step_four");
+    (function stepFourActions() {
+        var elem = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : stepFour;
+
         if (!elem) {
             return false;
         }
 
-
-        let list = elem.querySelector('.people-list');
-        let items = elem.querySelectorAll('.people');
-        let results = elem.querySelectorAll('.step_four__input');
-        let textes = [];
-        let btn = elem.querySelector('.step_four__button');
-        items.forEach(item => {
-            let txt =  item.querySelector('.people-name').textContent;
-                textes.push(txt);
+        var list = elem.querySelector('.people-list');
+        var items = elem.querySelectorAll('.people');
+        var results = elem.querySelectorAll('.step_four__input');
+        var textes = [];
+        var btn = elem.querySelector('.step_four__button');
+        items.forEach(function (item) {
+            var txt = item.querySelector('.people-name').textContent;
+            textes.push(txt);
             item.addEventListener('click', function (e) {
                 e.preventDefault();
-                if(this.dataset.disable || elem.dataset.disable){
-                    return false
+                if (this.dataset.disable || elem.dataset.disable) {
+                    return false;
                 }
-                let input =  this.querySelector('input');
+                var input = this.querySelector('input');
                 input.checked = false;
                 this.classList.add('dn');
-                let text = this.querySelector('.people-name').textContent;
-                let dId = this.querySelector('.people-name').dataset.id;
+                var text = this.querySelector('.people-name').textContent;
+                var dId = this.querySelector('.people-name').dataset.id;
 
-                let selected =  this.parentNode.parentNode.querySelector('.step_four__input');
-                let createEl = `
-                  <div class="people-sel" data-id="${dId}">
-                            <div class="people-sel__text">${text}</div>
-                            <div class="people-sel__delete"></div>
-                        </div>
-                `;
-                selected.innerHTML+= createEl;
-            })
+                var selected = this.parentNode.parentNode.querySelector('.step_four__input');
+                var createEl = '\n                  <div class="people-sel" data-id="' + dId + '">\n                            <div class="people-sel__text">' + text + '</div>\n                            <div class="people-sel__delete"></div>\n                        </div>\n                ';
+                selected.innerHTML += createEl;
+            });
         });
-        results.forEach(result => {
+        results.forEach(function (result) {
             result.addEventListener('click', function (ev) {
-                let self =  this;
-                if(this.dataset.disable || elem.dataset.disable){
-                    return false
+                var self = this;
+                if (this.dataset.disable || elem.dataset.disable) {
+                    return false;
                 }
-                if(!ev.target.closest('.people-sel')){
-                    results.forEach(r => r.classList.remove('selected'));
+                if (!ev.target.closest('.people-sel')) {
+                    results.forEach(function (r) {
+                        return r.classList.remove('selected');
+                    });
                     this.classList.add('selected');
-                    if(!result.parentNode.querySelector('.people-list')){
+                    if (!result.parentNode.querySelector('.people-list')) {
                         list.style.display = "block";
                         result.parentNode.appendChild(list);
                     } else {
                         result.parentNode.querySelector('.people-list').style.display = "block";
                     }
 
-
                     items = Array.from(items);
-                    let value = this.dataset.value.split(',');
-                    let hidden = [];
-                    items.map(item => {
-                        if(value.includes(item.querySelector('.people-name').textContent)){
-                            hidden.push(item)
+                    var value = this.dataset.value.split(',');
+                    var hidden = [];
+                    items.map(function (item) {
+                        if (value.includes(item.querySelector('.people-name').textContent)) {
+                            hidden.push(item);
                         }
                     });
-                    items.map(i => i.classList.remove('dn'));
-                    hidden.map(h => h.classList.add('dn'));
-                    let myItems = self.querySelectorAll('.people-sel');
-                    myItems.forEach(item => {
-                        let text = item.querySelector('.people-sel__text').textContent;
-                        if(textes.includes(text)){
-                           let dnItems =  Array.from(self.parentNode.querySelectorAll('li .people-name')).filter(item => item.textContent === text);
-                           if(dnItems.length){
-                               dnItems.map(item => {
-                                   item.parentNode.classList.add('dn')
-                               })
-                           }
+                    items.map(function (i) {
+                        return i.classList.remove('dn');
+                    });
+                    hidden.map(function (h) {
+                        return h.classList.add('dn');
+                    });
+                    var myItems = self.querySelectorAll('.people-sel');
+                    myItems.forEach(function (item) {
+                        var text = item.querySelector('.people-sel__text').textContent;
+                        if (textes.includes(text)) {
+                            var dnItems = Array.from(self.parentNode.querySelectorAll('li .people-name')).filter(function (item) {
+                                return item.textContent === text;
+                            });
+                            if (dnItems.length) {
+                                dnItems.map(function (item) {
+                                    item.parentNode.classList.add('dn');
+                                });
+                            }
                         }
-
-                    })
+                    });
                 } else {
-                    let elementToDel = ev.target.closest('.people-sel');
-                    let parent = elementToDel.parentNode;
-                    let text = elementToDel.querySelector('.people-sel__text').textContent;
+                    var elementToDel = ev.target.closest('.people-sel');
+                    var parent = elementToDel.parentNode;
+                    var text = elementToDel.querySelector('.people-sel__text').textContent;
                     parent.removeChild(elementToDel);
-                    let selectedArray =  self.dataset.value.split(',');
-                    let myList = self.parentNode.querySelector('.people-list');
-                    let iskEl = Array.from(myList.querySelectorAll('li')).filter(item => item.querySelector('.people-name').textContent === text);
-                    if(iskEl){
+                    var selectedArray = self.dataset.value.split(',');
+                    var myList = self.parentNode.querySelector('.people-list');
+                    var iskEl = Array.from(myList.querySelectorAll('li')).filter(function (item) {
+                        return item.querySelector('.people-name').textContent === text;
+                    });
+                    if (iskEl) {
                         iskEl[0].classList.remove('dn');
                     }
 
@@ -668,32 +723,39 @@ function init() {
                         selectedArray.splice(selectedArray.indexOf(text), 1);
                         self.dataset.value = selectedArray;
                     }
-                    // console.log(text)
                 }
-            })
+            });
         });
         document.addEventListener('click', function (e) {
-            if(!(e.target.closest('.people-list') || (e.target.closest('.step_four__input') ))){
-                results.forEach(result => result.classList.remove('selected'));
-                list.style.display = "none";
-                items.forEach(item => {
-                    item.classList.remove('dn');
-                    let input =  this.querySelector('input');
-                    input.checked =  false;
-                });
+            var _this = this;
+
+            if (!(e.target.closest('.people-list') || e.target.closest('.step_four__input'))) {
+                console.log(111);
+                if (elem) {
+                    results.forEach(function (result) {
+                        return result.classList.remove('selected');
+                    });
+                    list.style.display = "none";
+                    items.forEach(function (item) {
+                        item.classList.remove('dn');
+                        var input = _this.querySelector('input');
+                        if (input) {
+                            input.checked = false;
+                        }
+                    });
+                }
             }
         });
         btn.addEventListener('click', function () {
-            let data = new FormData();
-            results.forEach(result => {
-                let name = result.dataset.name;
-                let selected = [];
-                let items =  result.querySelectorAll('.people-sel__text');
-                items.forEach(item => {
+            var data = new FormData();
+            results.forEach(function (result) {
+                var name = result.dataset.name;
+                var selected = [];
+                var items = result.querySelectorAll('.people-sel__text');
+                items.forEach(function (item) {
                     selected.push(item.parentNode.dataset.id);
                 });
                 data.append(name, JSON.stringify(selected));
-
             });
             fetchData("https://httpbin.org/post", data);
         });
@@ -701,11 +763,16 @@ function init() {
         check(disableStepFour, elem);
 
         function disableStepFour() {
-            items.forEach(item => item.dataset.disable = true);
-            results.forEach(result => result.dataset.disable = true);
-            elem.dataset.disable = true;
-            let lists = elem.querySelectorAll('.people-list');
-            lists.forEach(l => l.style.display = "none");
+            items.forEach(function (item) {
+                return item.dataset.disable = true;
+            });
+            results.forEach(function (result) {
+                return result.dataset.disable = true;
+            });
+            var lists = elem.querySelectorAll('.people-list');
+            lists.forEach(function (l) {
+                return l.style.display = "none";
+            });
         }
     })();
 
@@ -721,13 +788,15 @@ function init() {
         let wordsCount = elem.querySelector('.user-words__count span');
         let btn = elem.querySelector('.step_five__button');
         check(disableSend, elem);
+
         function wordsFunc(datas) {
             let words = datas.words;
             let wordsArr = words.split(', ');
             let resultArray = [];
             let HTMLarray = [];
             let parser = new DOMParser();
-            wordsString.addEventListener('mouseup', function (e) {
+
+            function mouseUpSel() {
                 if (!elem.dataset.disabled) {
                     let selection = window.getSelection().toString();
                     if (wordsArr.includes(selection) && !resultArray.includes(selection)) {
@@ -741,8 +810,12 @@ function init() {
                         console.log("Ура, все слова найдены!");
                     }
                 }
-            });
+            }
+
+            wordsString.addEventListener('mouseup', mouseUpSel);
+            wordsString.addEventListener('touchend', mouseUpSel)
         }
+
         if (window.fetch) {
             (async function getArray() {
                 let response = await fetch(jsonURL);
@@ -751,11 +824,11 @@ function init() {
 
             })();
         }
-        else{
+        else {
             var request = new XMLHttpRequest();
             request.open('GET', jsonURL);
             request.responseType = 'json';
-            request.onload = function() {
+            request.onload = function () {
                 wordsFunc(request.response)
             };
             request.send();
@@ -865,7 +938,7 @@ function init() {
         }
 
         let canvasAnswer = elem.querySelector('.question-wrap[data-type="canvas"]');
-        let clearBtn  = elem.querySelector('.clear-canvas');
+        let clearBtn = elem.querySelector('.clear-canvas');
         let userObj = [];
         let rects = elem.querySelectorAll('.canvas-block');
         let points = elem.querySelectorAll('.canvas-point');
@@ -926,10 +999,10 @@ function init() {
             currentClick: [],
             prevClick: []
         };
-        if(localStorage.getItem('canvasHTML')){
-            let question  = canvasAnswer.querySelector('.question');
+        if (localStorage.getItem('canvasHTML')) {
+            let question = canvasAnswer.querySelector('.question');
             question.removeChild(question.querySelector('.answers'));
-            question.innerHTML +=  localStorage.getItem('canvasHTML');
+            question.innerHTML += localStorage.getItem('canvasHTML');
             question.querySelector('.clear-canvas').classList.remove('active');
 
         }
@@ -939,7 +1012,7 @@ function init() {
                     points.forEach(point => point.removeAttribute('data-hover'));
                 }
                 point.addEventListener('click', function (e) {
-                    if(elem.dataset.disabled){
+                    if (elem.dataset.disabled) {
                         return false;
                     }
                     clearBtn.classList.add('active');
@@ -1023,7 +1096,7 @@ function init() {
             this.classList.remove('active');
             userObj = [];
             this.classList.remove('active');
-            let lines =  [...horizontals, ...verticals];
+            let lines = [...horizontals, ...verticals];
             lines.map((line) => line.classList.remove('active'));
             localStorage.removeItem('finishCanvas');
             clickCounter = 0;
@@ -1112,15 +1185,17 @@ function init() {
     })();
 
 
-    const final =  document.querySelector('.hello-test_final');
-    (function finalActions(elem = final){
+    const final = document.querySelector('.hello-test_final');
+    (function finalActions(elem = final) {
         if (!elem) {
             return false;
         }
+
         function setCssDiagram(line, percent, color) {
             line.style.width = percent + '%';
             line.style.backgroundColor = color;
         }
+
         let diagramsItem = elem.querySelectorAll('.diagram__item');
         diagramsItem.forEach(function (item) {
             let questions = Number(item.dataset.questions);
@@ -1147,18 +1222,36 @@ function init() {
                     setCssDiagram(subLine, 0, '#8FA36A');
             }
         });
+
+        let finalForm = elem.querySelector('.final-item-form__form');
+        let email = elem.querySelector('input[name="e-mail"]');
+        let emailWarning = elem.querySelector('.email-warning');
+        validateEmail(email, emailWarning);
+        removeEmptyWarnings(elem);
+        finalForm.addEventListener('submit', function (e) {
+            e.preventDefault();
+            validateEmpty(this);
+            if (validateEmail(email, emailWarning) && validateEmpty(this)) {
+                let inputs = Array.from(this.querySelectorAll('input'));
+                let data = new FormData();
+                inputs.map(input => data.append(input.name, input.value));
+                sendAJAX("https://httpbin.org/post", data);
+            }
+        })
+
+
     })();
 
     const enterForm = document.querySelector('.enter-form');
     (function enterActions(elem = enterForm) {
-        if(!elem) {
+        if (!elem) {
             return false;
         }
         removeEmptyWarnings(elem);
         elem.addEventListener('submit', function (e) {
             e.preventDefault();
             validateEmpty(this);
-            if(validateEmpty(this)){
+            if (validateEmpty(this)) {
                 sendForm(this, "https://httpbin.org/post", e.target)
             }
         })
@@ -1167,17 +1260,14 @@ function init() {
 
     const createUser = document.querySelector('.create-user');
     (function createUserActions(elem = createUser) {
-        if(!elem) {
+        if (!elem) {
             return false;
         }
-        let email  = elem.querySelector('input[name="e-mail"]');
-        let emailWarning = elem.querySelector('.email-warning')
-        validateEmail(email, emailWarning);
         removeEmptyWarnings(elem);
         elem.addEventListener('submit', function (e) {
             e.preventDefault();
             validateEmpty(this);
-            if(validateEmpty(this) && validateEmail(email, emailWarning)){
+            if (validateEmpty(this)) {
                 sendForm(this, "https://httpbin.org/post")
             }
         })
@@ -1185,21 +1275,21 @@ function init() {
     })();
 
     const editUser = document.querySelector('.edit-user');
-    (function editUserActions (elem = editUser) {
-        if(!elem) {
+    (function editUserActions(elem = editUser) {
+        if (!elem) {
             return false;
         }
-        let email  = elem.querySelector('input[name="e-mail"]');
+        let email = elem.querySelector('input[name="e-mail"]');
         let emailWarning = elem.querySelector('.email-warning');
         validateEmail(email, emailWarning);
         removeEmptyWarnings(elem);
         elem.addEventListener('submit', function (e) {
             e.preventDefault();
             validateEmpty(this);
-            if(validateEmail(email, emailWarning) && validateEmpty(this)){
+            if (validateEmail(email, emailWarning) && validateEmpty(this)) {
                 let inputs = Array.from(this.querySelectorAll('input')).filter(i => !i.disabled);
                 let id = this.querySelector('input[name="id"]');
-                let data =  new FormData();
+                let data = new FormData();
                 inputs.map(input => data.append(input.name, input.value));
                 data.append('id', id.value);
                 sendAJAX("https://httpbin.org/post", data);
@@ -1210,8 +1300,8 @@ function init() {
 
     const editTable = document.querySelector('.edit-table-wrap');
 
-    (function editTableActions (elem = editTable) {
-        if(!elem){
+    (function editTableActions(elem = editTable) {
+        if (!elem) {
             return false
         }
         let selectedArray = [];
@@ -1224,13 +1314,13 @@ function init() {
         let tableRows = elem.querySelectorAll('.edit-table__body tr');
 
         tableRows.forEach(row => {
-           row.addEventListener('click', function (e) {
-               if(!(e.target.classList.contains('select-td') || e.target.classList.contains('result-td') || e.target.parentNode.classList.contains('result-td'))){
-                   if(this.dataset.href){
-                       location.href =  this.dataset.href;
-                   }
-               }
-           });
+            row.addEventListener('click', function (e) {
+                if (!(e.target.classList.contains('select-td') || e.target.classList.contains('result-td') || e.target.parentNode.classList.contains('result-td'))) {
+                    if (this.dataset.href) {
+                        location.href = this.dataset.href;
+                    }
+                }
+            });
         });
 
         controls.forEach(control => {
@@ -1238,25 +1328,25 @@ function init() {
                 e.stopPropagation();
                 e.preventDefault();
                 this.querySelector('input').checked = !this.querySelector('input').checked;
-                if(this.parentNode.tagName === "TD"){
+                if (this.parentNode.tagName === "TD") {
                     let id = e.target.closest('tr').dataset.id;
                     if (selectedArray.includes(id)) {
                         selectedArray.splice(selectedArray.indexOf(id), 1)
                     } else {
                         selectedArray.push(id)
                     }
-                    if(conrolsLen  === selectedArray.length + 1){
+                    if (conrolsLen === selectedArray.length + 1) {
                         elem.querySelector('th input').checked = true;
                     } else {
                         elem.querySelector('th input').checked = false;
                     }
                 } else if (this.parentNode.tagName === "TH") {
-                    if(this.querySelector('input').checked) {
+                    if (this.querySelector('input').checked) {
                         selectedArray = [];
                         controls.forEach(item => {
                             item.querySelector('input').checked = true;
                             let id = item.parentNode.parentNode.dataset.id;
-                            if(id){
+                            if (id) {
                                 selectedArray.push(id)
                             }
                         });
@@ -1265,10 +1355,10 @@ function init() {
                         controls.forEach(item => item.querySelector('input').checked = false);
                     }
                 }
-                selectedArray.length ? deleteDtn.disabled = false :  deleteDtn.disabled = true;
+                selectedArray.length ? deleteDtn.disabled = false : deleteDtn.disabled = true;
             })
         });
-        deleteDtn.addEventListener('click',  () => {
+        deleteDtn.addEventListener('click', () => {
             deletePopup.classList.add('active');
             document.documentElement.style.overflow = "hidden"
         });
@@ -1279,29 +1369,29 @@ function init() {
             })
         });
         deleteSubmit.addEventListener('click', function () {
-           let data = new FormData();
-           data.append('delete-lines', JSON.stringify(selectedArray));
-           fetchData("https://httpbin.org/post", data);
+            let data = new FormData();
+            data.append('delete-lines', JSON.stringify(selectedArray));
+            fetchData("https://httpbin.org/post", data);
         });
 
 
     })();
 
-    const editGroup =  document.querySelector('.edit-group__form');
+    const editGroup = document.querySelector('.edit-group__form');
 
     (function editGroupActions(elem = editGroup) {
-        if(!elem){
+        if (!elem) {
             return false
         }
-        let email  = elem.querySelector('input[name="e-mail"]');
-        let emailWarning = elem.querySelector('.email-warning')
+        let email = elem.querySelector('input[name="e-mail"]');
+        let emailWarning = elem.querySelector('.email-warning');
         validateEmail(email, emailWarning);
         removeEmptyWarnings(elem);
         elem.addEventListener('submit', function (e) {
             e.preventDefault();
             validateEmpty(this);
-            if(validateEmpty(this) && validateEmail(email, emailWarning)){
-                sendForm(this, "https://httpbin.org/post")
+            if (validateEmpty(this) && validateEmail(email, emailWarning)) {
+                sendForm(this, this.action)
             }
         })
     })()

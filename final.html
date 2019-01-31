@@ -2,8 +2,6 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="css/main.css">
     <title>Тесты</title>
@@ -422,6 +420,19 @@
                         </div>
                     </div>
                 </div>
+                <div class="final-item final-item-form">
+                    <div class="final-item-form__title">Хочешь получить результаты теста на почту?</div>
+                    <form action="https://httpbin.org/post" class="final-item-form__form">
+                        <label>
+                            <input type="text" class="final-item-form__input" placeholder="ivanov@gmail.com" name="e-mail">
+                            <span class="email-warning label-warning">Введите корректный e-mail</span>
+                        </label>
+                        <input type="hidden" name="hidden-id" value="3456">
+                        <button class="final-item-form__button" type="submit">Получить</button>
+                        <div class="form-warning label-warning">Заполните все поля</div>
+                    </form>
+
+                </div>
                 <div class="final-item final-item_final">
                     <h2 class="final-item__title">Внимание</h2>
                     <div class="final-item__block intelligence-block">
@@ -442,6 +453,7 @@
                         </div>
                     </div>
                 </div>
+
             </div>
 
             <div class="final-bottom">
